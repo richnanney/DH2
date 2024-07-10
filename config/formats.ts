@@ -18,20 +18,17 @@ The column value will be ignored for repeat sections.
 */
 
 export const Formats: FormatList = [
-	///////////////////////////////////////////////////////////////
-	///////////////////// Gen 9 Pet Mods //////////////////////////
-	///////////////////////////////////////////////////////////////
 	{
 		section: "Pokemon Unbound",
 		column: 1,
 	},
 	{
 		name: "[Gen 8] Unbound Singles",
-		mod: 'Unbound',
+		mod: 'unbound',
 	},
 	{
 		name: "[Gen 8] Unbound Doubles",
-		mod: 'Unbound',
+		mod: 'unbound',
 		gameType: 'doubles',
 	},
 ];
