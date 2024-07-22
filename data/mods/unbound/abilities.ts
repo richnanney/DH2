@@ -8,7 +8,6 @@ export const Abilities: {[k: string]: ModdedAbilityData} = {
 		shortDesc: "Grass moves hit first.",
 		rating: 4.0,
 		num: 307,
-		gen: 7,
 	},
 	evaporate: {
 		onStart(source) {
