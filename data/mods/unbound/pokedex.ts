@@ -10,7 +10,15 @@ export const Pokedex: {[k: string]: ModdedSpeciesData} = {
 	fearow: {
 		inherit: true,
 		abilities: {0:"Keen Eye",1:"Sniper",H:"Drill Beak"},
-	}
+	},
+	girafarig: {
+		inherit: true,
+		abilities: {0:"Inner Focus",1:"Sap Sipper",H:"Brain Bond"},
+	},
+	seviper: {
+		inherit: true,
+		abilities: {0:"Shed Skin",1:"Infiltrator",H:"Slippery Tail"},
+	},
 	/*
 	-Aegislash has its Gen 7 stats 
 	*/
