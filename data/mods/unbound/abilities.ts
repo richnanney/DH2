@@ -42,7 +42,6 @@ export const Abilities: {[k: string]: ModdedAbilityData} = {
 		shortDesc: "No more water or rain!",
 		rating: 3.5,
 		num: 308,
-		gen:7
 	},
 	galewings: {
 		inherit: true,
@@ -62,7 +61,6 @@ export const Abilities: {[k: string]: ModdedAbilityData} = {
 		shortDesc: "'Drill' moves crit.",
 		rating: 4.0,
 		num:309,
-		gen:7
 	},
 	brainbond: {
 		onPrepareHit(source, target, move) {
@@ -84,7 +82,6 @@ export const Abilities: {[k: string]: ModdedAbilityData} = {
 		shortDesc:"Attacks hit twice.",
 		rating: 4.5,
 		num: 310,
-		gen:7
 	},
 	slipperytail: {
 		onModifyPriority(priority, pokemon, target, move) {
@@ -95,7 +92,6 @@ export const Abilities: {[k: string]: ModdedAbilityData} = {
 		shortDesc: "'Tail' moves go first.",
 		rating: 4.0,
 		num: 311,
-		gen:7
 	},
 	portalpower: {
 		onSourceModifyDamage(damage, source, target, move) {
@@ -106,6 +102,5 @@ export const Abilities: {[k: string]: ModdedAbilityData} = {
 		name: "Portal Power",
 		rating: 3.5,
 		num: 312,
-		gen:7
 	}
 };

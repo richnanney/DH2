@@ -27,6 +27,10 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 		inherit: true,
 		basePower: 80,
 	},
+	flamethrower: {
+		inherit: true,
+		basePower: 95,
+	},
 	fly: {
 		inherit: true,
 		basePower: 100,
@@ -70,11 +74,19 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 		basePower: 75,
 		priority: 1,
 	},
+	dragonpulse: {
+		inherit: true,
+		basePower: 90,
+	},
+	icebeam: {
+		inherit: true,
+		basePower: 95,
+	}
+
+
 
 
 	/*
-	TODO:
-	Attack Powers:
 	Moves With Power nerfed to 85 as of XY: 90
 	Moves With Power nerfed to 90 as of XY: 95
 	Moves With Power nerfed to 95 as of XY: 100
