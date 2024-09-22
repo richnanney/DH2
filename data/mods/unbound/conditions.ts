@@ -37,7 +37,7 @@ export const Conditions: {[k: string]: ModdedConditionData} = {
         onModifyMove(move) {
             if (move.secondaries) {
 				for (const secondary of move.secondaries) {
-					if (secondary.volatileStatus === 'frz' && secondary.chance) secondary.chance *= 2;
+					if (secondary.status === 'frz' && secondary.chance) secondary.chance *= 2;
 				}
 			}
 		},
