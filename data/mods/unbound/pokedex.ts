@@ -19,7 +19,12 @@ export const Pokedex: {[k: string]: ModdedSpeciesData} = {
 		inherit: true,
 		abilities: {0:"Shed Skin",1:"Infiltrator",H:"Slippery Tail"},
 	},
-	/*
-	-Aegislash has its Gen 7 stats 
-	*/
+	aegislash: {
+		inherit: true,
+		baseStats: {hp: 60, atk: 50, def: 150, spa: 50, spd: 150, spe: 60},
+	},
+	aegislashblade: {
+		inherit: true,
+		baseStats: {hp: 60, atk: 150, def: 50, spa: 150, spd: 50, spe: 60},
+	}
 };

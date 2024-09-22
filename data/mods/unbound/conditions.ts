@@ -31,10 +31,16 @@ export const Conditions: {[k: string]: ModdedConditionData} = {
 		onResidual(pokemon) {
 			this.damage(pokemon.baseMaxhp / 8);
 		},
-
 	},
-	/*
-	Freeze -> Frostbite (halves special attack)
-	Frostbite does 1/8 damage (like burn)
-	*/
+    hail: {
+        inherit: true,
+        onModifyMove(move) {
+            if (move.secondaries) {
+				for (const secondary of move.secondaries) {
+					if (secondary.volatileStatus === 'frz' && secondary.chance) secondary.chance *= 2;
+				}
+			}
+		},
+    }
+
 };
