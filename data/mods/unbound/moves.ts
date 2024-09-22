@@ -19,10 +19,6 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 		inherit: true,
 		basePower: 50,
 	},
-	meteormash: {
-		inherit: true,
-		basePower: 100,
-	},
 	snore: {
 		inherit: true,
 		basePower: 80,
@@ -52,6 +48,22 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 		inherit: true,
 		accuracy: 100,
 	},
+	steelyhit: {
+		accuracy: 100,
+		basePower: 40,
+		category: "Physical",
+		desc: "A physical attack in which the user charges, full body, into the foe.",
+		shortDesc: "A weak hit.",
+		name: "Steelyhit",
+		gen: 7,
+		pp: 35,
+		priority: 0,
+		flags: {contact: 1},
+		secondary: null,
+		target: "normal",
+		type: "Steel",
+		contestType: "Tough",
+	},
 	leechfang: {
 		accuracy: 100,
 		basePower: 80,
@@ -74,28 +86,88 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 		basePower: 75,
 		priority: 1,
 	},
+	aurasphere: {
+		inherit: true,
+		basePower: 90,
+	},
+	blizzard: {
+		inherit: true,
+		basePower: 120,
+	},
+	dracometeor: {
+		inherit: true,
+		basePower: 140,
+	},
 	dragonpulse: {
 		inherit: true,
 		basePower: 90,
 	},
+	fireblast: {
+		inherit: true,
+		basePower: 120,
+	},
+	heatwave: {
+		inherit: true,
+		basePower: 100,
+	},
+	hurricane: {
+		inherit: true,
+		basePower: 120
+	},
+	hydropump: {
+		inherit: true,
+		basePower: 120
+	},
 	icebeam: {
 		inherit: true,
 		basePower: 95,
-	}
+		secondary:
+		{
+			chance: 100,
+			status: 'frz',
+		},
+	},
+	leafstorm: {
+		inherit: true,
+		basePower: 140
+	},
+	magmastorm: {
+		inherit: true,
+		basePower: 120
+	},
+	meteormash: {
+		inherit: true,
+		basePower: 100,
+	},
+	muddywater: {
+		inherit: true,
+		basePower: 95
+	},
+	overheat: {
+		inherit: true,
+		basePower: 140
+	},
+	surf: {
+		inherit: true,
+		basePower: 95
+	},
+	thunder: {
+		inherit: true,
+		basePower: 120
+	},
+	thunderbolt: {
+		inherit: true,
+		basePower: 95
+	},
+
+
+
 
 
 
 
 	/*
-	Moves With Power nerfed to 85 as of XY: 90
-	Moves With Power nerfed to 90 as of XY: 95
-	Moves With Power nerfed to 95 as of XY: 100
-	Moves With Power nerfed to 110 as of XY: 120
-	Moves With Power nerfed to 130 as of XY: 140
 	PLA Attacks: Altered based on similar moves -- Figure out what this means.
-
-	Steelyhit
-
 	King's Shield lowers Attack by 2 on contact (Gen 7)
 	New PLA attacks with increased action speed are priority moves
 	Freeze-Dry has a 30% chance to inflict frostbite, Freezing Glare 20% (and still doubles in Hail)
