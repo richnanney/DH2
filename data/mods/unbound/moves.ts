@@ -121,11 +121,6 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 	icebeam: {
 		inherit: true,
 		basePower: 95,
-		secondary:
-		{
-			chance: 50,
-			status: 'frz',
-		},
 	},
 	leafstorm: {
 		inherit: true,
@@ -218,13 +213,18 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 		zMove: {effect: 'clearnegativeboost'},
 		contestType: "Cool",
 	},
-
-
-	/*
-	PLA Attacks: Altered based on similar moves -- Figure out what this means.
-	King's Shield lowers Attack by 2 on contact (Gen 7)
-	New PLA attacks with increased action speed are priority moves
-	Freeze-Dry has a 30% chance to inflict frostbite, Freezing Glare 20% (and still doubles in Hail)
-	Infernal Parade & Bitter Malice only double damage on burn and frostbite respectively
-	*/
+	freezedry : {
+		inherit: true,
+		secondary: {
+			chance: 30,
+			status: "frz",
+		}
+	},
+	freezingglare : {
+		inherit: true,
+		secondary: {
+			chance: 20,
+			status: "frz",
+		}
+	},
 };
