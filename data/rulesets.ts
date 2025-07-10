@@ -495,7 +495,7 @@ export const Rulesets: {[k: string]: FormatData} = {
 			// this.add('-weather', 'Rain Dance');
 			// this.field.weather = 'raindance' as ID;
 			// this.field.weatherState = { id: 'raindance'};
-		}
+		},
 	},
 	forcemonotype: {
 		effectType: 'ValidatorRule',
