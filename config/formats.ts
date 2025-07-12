@@ -39,7 +39,7 @@ export const Formats: FormatList = [
 		name: "[Gen 8] Water Gym",
 		mod: 'watergym',
 		ruleset: ['watergym']
-	},
+	},/*
 	{
 		name: "[Gen 8] Ghost Gym",
 		mod: 'ghostgym',
@@ -59,5 +59,5 @@ export const Formats: FormatList = [
 			{
 		name: "[Gen 8] Psychic Gym",
 		mod: 'psychicgym',
-	},
+	},*/
 ];
