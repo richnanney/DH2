@@ -31,4 +31,33 @@ export const Formats: FormatList = [
 		mod: 'unbound',
 		gameType: 'doubles',
 	},
+		{
+		section: "Gym Gimmick Testing",
+		column: 1,
+	},
+	{
+		name: "[Gen 8] Water Gym",
+		mod: 'watergym',
+		ruleset: ['watergym']
+	},
+	{
+		name: "[Gen 8] Ghost Gym",
+		mod: 'ghostgym',
+	},
+	{
+		name: "[Gen 8] Steel Gym",
+		mod: 'steelgym',
+	},
+		{
+		name: "[Gen 8] Flying Gym",
+		mod: 'flyinggym',
+	},
+			{
+		name: "[Gen 8] Dragon Gym",
+		mod: 'dragongym',
+	},
+			{
+		name: "[Gen 8] Psychic Gym",
+		mod: 'psychicgym',
+	},
 ];
