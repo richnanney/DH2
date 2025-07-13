@@ -31,7 +31,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'GrassGym',
 		desc: "Permanent Grassy Terrain.",
 		onBegin() {
-			this.add('-terrain', 'Grassy Terrain');
+			this.field.setTerrain('Grassy Terrain');
 			this.field.terrain = 'grassyterrain' as ID;
 			this.field.terrainState = { id: 'grassyterrain'};
 		},
@@ -72,7 +72,6 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				return null;
 			}
 		},
-
 	},
 	steelgym: {
 		effectType: 'Rule',
