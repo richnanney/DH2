@@ -78,7 +78,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'SteelGym',
 		desc: "All Steel type pokemon get levitate.",
 		onTryHit(source, target, move) {
-			if (target.hasType('Steel')) {
+			if (source.hasType('Steel')) {
 				if (move.type === 'Ground') return false;
 			}
 		},
