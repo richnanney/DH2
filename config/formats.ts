@@ -58,7 +58,7 @@ export const Formats: FormatList = [
 	{
 		name: "[Gen 8] Unbound Flying Gym",
 		mod: 'unbound',
-		ruleset: ['Flyinggym']
+		ruleset: ['flyinggym']
 	},
 	{
 		name: "[Gen 8] Unbound Psychic Gym",
@@ -73,7 +73,7 @@ export const Formats: FormatList = [
 	{
 		name: "[Gen 8] Unbound Dark Gym",
 		mod: 'unbound',
-		ruleset: ['Darkgym']
+		ruleset: ['darkgym']
 	},
 	{
 		name: "[Gen 8] Unbound Ice Gym",

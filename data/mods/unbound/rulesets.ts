@@ -1,7 +1,7 @@
 export const Rulesets: {[k: string]: ModdedFormatData} = {
 	watergym: {
 		effectType: 'Rule',
-		name: 'WaterGym',
+		name: 'Water Gym',
 		desc: "All Water-type Pokémon gain Aqua Ring at the end of each turn.",
 		onResidual(battle) {
 			for (const side of this.sides) {
@@ -18,7 +18,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 	},
 	firegym: {
 		effectType: 'Rule',
-		name: 'FireGym',
+		name: 'Fire Gym',
 		desc: "Permanent sun.",
 		onBegin() {
 			this.add('-weather', 'Sunny Day');
@@ -28,7 +28,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 	},
 	grassgym: {
 		effectType: 'Rule',
-		name: 'GrassGym',
+		name: 'Grass Gym',
 		desc: "Permanent Grassy Terrain.",
 		onBegin() {
 			this.add('-fieldstart', 'Grassy Terrain')
@@ -38,23 +38,30 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 	},
 	ghostgym: {
 		effectType: 'Rule',
-		name: 'GhostGym',
-		desc: "All Ghost-Type Pokemon also benefit from Marvel Scale.",
+		name: 'Ghost Gym',
+		desc: "All Ghost-Type Pokemon also benefit from Marvel Scale and are immune to hazards.",
 		onModifyDef(relayVar, target, source, move) {
 			if (target.hasType('Ghost') && target.status) {
 				return this.chainModify(1.5);
 			}
 		},
+		/*
 		onSwitchIn(pokemon) {
 			if (pokemon.hasType('Ghost')) return;
 		},
+		*/
 		onEntryHazard(pokemon) {
-			if (pokemon.hasType('Ghost')) return;
+			if (pokemon.hasType('Ghost')) {
+				const sideConditions = ['spikes', 'toxicspikes', 'stealthrock', 'stickyweb', 'gmaxsteelsurge'];
+				for (const condition of sideConditions) {
+						pokemon.side.removeSideCondition(condition);
+				}
+			};
 		},
 	},
 	flyinggym: {
 		effectType: 'Rule',
-		name: 'FlyingGym',
+		name: 'Flying Gym',
 		desc: "Flying type pokemon get permanent tail wind.",
 		onModifySpe(spe, pokemon) {
 			if (pokemon.hasType('Flying')) {
@@ -62,14 +69,14 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			}
 		},
 		onTryHit(source, target, move) {
-			if (source.hasType("Flying")) {
-				this.add('-message', `${source.name} moves faster thanks to the strong winds!`)
+			if (target.hasType("Flying")) {
+				this.add('-message', `${target.name} moves faster thanks to the strong winds!`)
 			}
 		},
 	},
 	psychicgym: {
 		effectType: 'Rule',
-		name: 'PsychicGym',
+		name: 'Psychic Gym',
 		desc: "All Psychic type pokemon get Magic Bounce.",
 		onTryHit(target, source, move) {
 			if (target === source || move.hasBounced || !move.flags['reflectable']) {
@@ -86,7 +93,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 	},
 	steelgym: {
 		effectType: 'Rule',
-		name: 'SteelGym',
+		name: 'Steel Gym',
 		desc: "All Steel type pokemon get levitate.",
 		onTryHit(source, target, move) {
 			if (source.hasType('Steel')) {
@@ -107,7 +114,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 	},
 	icegym: {
 		effectType: 'Rule',
-		name: 'IceGym',
+		name: 'Ice Gym',
 		desc: "Permanent snow.",
 		onBegin() {
 			this.add('-weather', 'Snow');
@@ -117,7 +124,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 	},
 	groundgym: {
 		effectType: 'Rule',
-		name: 'GroundGym',
+		name: 'Ground Gym',
 		desc: "A vicious sandstorm takes place and deals 1/8th hp of damage to non-ground types.",
 		onBegin() {
 			this.add('-weather', 'Vicious Sandstorm');
@@ -127,7 +134,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 	},
 	poisongym: {
 		effectType: 'Rule',
-		name: 'PoisonGym',
+		name: 'Poison Gym',
 		desc: "Poisons all pokemon.",
 		onResidual(battle) {
 			const pokemon = this.activePokemon
@@ -138,7 +145,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 	},
 	dragongym: {
 		effectType: 'Rule',
-		name: 'DragonGym',
+		name: 'Dragon Gym',
 		desc: "All Dragon type pokemon benefit from Serene Grace.",
 		onModifyMove(move, pokemon, target) {
 			if (move.secondaries && pokemon.hasType('Dragon')) {
