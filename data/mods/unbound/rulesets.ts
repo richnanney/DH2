@@ -45,6 +45,9 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				return this.chainModify(1.5);
 			}
 		},
+		onSwitchIn(pokemon) {
+			if (pokemon.hasType('Ghost')) return;
+		},
 		onEntryHazard(pokemon) {
 			if (pokemon.hasType('Ghost')) return;
 		},
@@ -55,8 +58,12 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		desc: "Flying type pokemon get permanent tail wind.",
 		onModifySpe(spe, pokemon) {
 			if (pokemon.hasType('Flying')) {
-				this.add('-message', `${pokemon.name} is moving faster thanks to the gym effect!`)
 				return this.modify(spe, 2);
+			}
+		},
+		onTryHit(source, target, move) {
+			if (source.hasType("Flying")) {
+				this.add('-message', `${source.name} moves faster thanks to the strong winds!`)
 			}
 		},
 	},
@@ -123,15 +130,11 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'PoisonGym',
 		desc: "Poisons all pokemon.",
 		onResidual(battle) {
-			for (const side of this.sides) {
-				for (const pokemon of side.active) {
-					if (!pokemon || pokemon.fainted) continue;
-					if (!pokemon.status && pokemon.setStatus('psn')) {
-						this.add('-status', pokemon, 'psn');
-					}
-				}
+			const pokemon = this.activePokemon
+			if ((pokemon && !pokemon.fainted && !pokemon.status && pokemon.setStatus('psn'))) {
+					this.add('-status', pokemon, 'psn');
 			}
-		},
+		}
 	},
 	dragongym: {
 		effectType: 'Rule',
