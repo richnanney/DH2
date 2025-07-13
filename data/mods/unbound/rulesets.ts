@@ -55,8 +55,8 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		desc: "Flying type pokemon get permanent tail wind.",
 		onModifySpe(spe, pokemon) {
 			if (pokemon.hasType('Flying')) {
-				this.add('-message', `${pokemon.name} is moving faster thanks to the gym effect! (debug: going from ${spe} to ${this.chainModify(2)}`)
-				return this.chainModify(2);
+				this.add('-message', `${pokemon.name} is moving faster thanks to the gym effect!`)
+				return this.modify(spe, 2);
 			}
 		},
 	},
@@ -121,16 +121,15 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 	poisongym: {
 		effectType: 'Rule',
 		name: 'PoisonGym',
-		desc: "Two layes of toxic spikes poison the field.",
-		onBegin() {
+		desc: "Poisons all pokemon.",
+		onResidual(battle) {
 			for (const side of this.sides) {
-				side.addSideCondition('toxicspikes');
-			}
-		},
-		onTryMove(source, target, move) {
-			if (move.fullname === 'Rapid Spin') {
-				this.add('-message', 'The debris couldn\'t be removed!')
-				return false;
+				for (const pokemon of side.active) {
+					if (!pokemon || pokemon.fainted) continue;
+					if (!pokemon.status && pokemon.setStatus('psn')) {
+						this.add('-status', pokemon, 'psn');
+					}
+				}
 			}
 		},
 	},
