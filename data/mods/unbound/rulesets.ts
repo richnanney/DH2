@@ -31,6 +31,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'GrassGym',
 		desc: "Permanent Grassy Terrain.",
 		onBegin() {
+			this.add('-fieldactivate', 'grassyterrain')
 			this.field.terrain = 'grassyterrain' as ID;
 			this.field.terrainState = { id: 'grassyterrain'};
 		},
