@@ -45,6 +45,9 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				return this.chainModify(1.5);
 			}
 		},
+		onEntryHazard(pokemon) {
+			if (pokemon.hasType('Ghost')) return;
+		},
 	},
 	flyinggym: {
 		effectType: 'Rule',
@@ -52,7 +55,8 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		desc: "Flying type pokemon get permanent tail wind.",
 		onModifySpe(spe, pokemon) {
 			if (pokemon.hasType('Flying')) {
-				return this.chainModify(1.5);
+				this.add('-message', `${pokemon.name} is moving faster thanks to the gym effect! (debug: going from ${spe} to ${this.chainModify(2)}`)
+				return this.chainModify(2);
 			}
 		},
 	},
@@ -82,12 +86,6 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				if (move.type === 'Ground') return false;
 			}
 		},
-		onImmunity(type, pokemon) {
-			if (pokemon.hasType('Steel')) {
-				if (type === 'Ground') return false;
-			}
-		},
-
 	},
 	darkgym: {
 		effectType: 'Rule',
@@ -127,12 +125,11 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		onBegin() {
 			for (const side of this.sides) {
 				side.addSideCondition('toxicspikes');
-				side.addSideCondition('toxicspikes');
 			}
 		},
 		onTryMove(source, target, move) {
 			if (move.fullname === 'Rapid Spin') {
-				this.add('The debris couldn\'t be removed!')
+				this.add('-message', 'The debris couldn\'t be removed!')
 				return false;
 			}
 		},
