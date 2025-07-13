@@ -45,16 +45,13 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				return this.chainModify(1.5);
 			}
 		},
-		/*
 		onSwitchIn(pokemon) {
-			if (pokemon.hasType('Ghost')) return;
-		},
-		*/
-		onEntryHazard(pokemon) {
 			if (pokemon.hasType('Ghost')) {
 				const sideConditions = ['spikes', 'toxicspikes', 'stealthrock', 'stickyweb', 'gmaxsteelsurge'];
 				for (const condition of sideConditions) {
-						pokemon.side.removeSideCondition(condition);
+					if (pokemon.side.removeSideCondition(condition)){
+						this.add('-sideend', pokemon.side, this.dex.conditions.get(condition).name);
+					}
 				}
 			};
 		},
