@@ -41,6 +41,24 @@ export const Conditions: {[k: string]: ModdedConditionData} = {
 				}
 			}
 		},
-    }
+    },
+	vicioussandstorm: {
+		name: 'Vicious Sandstorm',
+		effectType: 'Weather',
+		duration: 0,
+		onModifySpDPriority: 10,
+		onModifySpD(spd, pokemon) {
+			if (pokemon.hasType(['Rock', 'Ground']) && this.field.isWeather('vicioussandstorm')) {
+				return this.modify(spd, 1.5);
+			}
+		},
+		onFieldStart(field, source, effect) {
+			this.add('-weather', 'Vicious Sandstorm');
+		},
+		onFieldResidualOrder: 1,
+		onWeather(target) {
+			this.damage(target.baseMaxhp / 8);
+		},
+	}
 
 };

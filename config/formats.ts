@@ -36,28 +36,63 @@ export const Formats: FormatList = [
 		column: 1,
 	},
 	{
-		name: "[Gen 8] Water Gym",
-		mod: 'watergym',
+		name: "[Gen 8] Unbound Water Gym",
+		mod: 'unbound',
 		ruleset: ['watergym']
-	},/*
-	{
-		name: "[Gen 8] Ghost Gym",
-		mod: 'ghostgym',
 	},
 	{
-		name: "[Gen 8] Steel Gym",
-		mod: 'steelgym',
+		name: "[Gen 8] Unbound Fire Gym",
+		mod: 'unbound',
+		ruleset: ['firegym']
 	},
-		{
-		name: "[Gen 8] Flying Gym",
-		mod: 'flyinggym',
+	{
+		name: "[Gen 8] Unbound Grass Gym",
+		mod: 'unbound',
+		ruleset: ['grassgym']
 	},
-			{
-		name: "[Gen 8] Dragon Gym",
-		mod: 'dragongym',
+	{
+		name: "[Gen 8] Unbound Ghost Gym",
+		mod: 'unbound',
+		ruleset: ['ghostgym']
 	},
-			{
-		name: "[Gen 8] Psychic Gym",
-		mod: 'psychicgym',
-	},*/
+	{
+		name: "[Gen 8] Unbound Flying Gym",
+		mod: 'unbound',
+		ruleset: ['Flyinggym']
+	},
+	{
+		name: "[Gen 8] Unbound Psychic Gym",
+		mod: 'unbound',
+		ruleset: ['psychicgym']
+	},
+	{
+		name: "[Gen 8] Unbound Steel Gym",
+		mod: 'unbound',
+		ruleset: ['steelgym']
+	},
+	{
+		name: "[Gen 8] Unbound Dark Gym",
+		mod: 'unbound',
+		ruleset: ['Darkgym']
+	},
+	{
+		name: "[Gen 8] Unbound Ice Gym",
+		mod: 'unbound',
+		ruleset: ['icegym']
+	},
+	{
+		name: "[Gen 8] Unbound Ground Gym",
+		mod: 'unbound',
+		ruleset: ['groundgym']
+	},
+	{
+		name: "[Gen 8] Unbound Poison Gym",
+		mod: 'unbound',
+		ruleset: ['poisongym']
+	},
+	{
+		name: "[Gen 8] Unbound Dragon Gym",
+		mod: 'unbound',
+		ruleset: ['dragongym']
+	},
 ];
