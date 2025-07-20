@@ -47,14 +47,14 @@ export const Conditions: {[k: string]: ModdedConditionData} = {
 		onFieldResidualOrder: 1,
 		onFieldResidual(field) {
 			this.add('-weather', 'Sandstorm', '[upkeep]');
-			for (const pokemon of this.getAllActive()) {
-				if (!pokemon.hasType(['Rock', 'Ground', 'Steel']) &&
-					!pokemon.hasAbility(['overcoat', 'magicguard']) &&
-					!pokemon.volatiles['tarshot'] &&
-					!pokemon.hasItem('safetygoggles')) {
-					this.add('-message', `${pokemon.fullname} is battered by the vicious sandstorm!`)
-					this.damage(pokemon.baseMaxhp / 8); // changed from 1/16 to 1/8
-				}
+		},
+		onWeather(target, source, effect) {
+			if (!target.hasType(['Rock', 'Ground', 'Steel']) &&
+				!target.hasAbility(['overcoat', 'magicguard']) &&
+				!target.volatiles['tarshot'] &&
+				!target.hasItem('safetygoggles')) {
+				this.add('-message', `${target.fullname} is battered by the vicious sandstorm!`)
+				this.damage(target.baseMaxhp / 8); // changed from 1/16 to 1/8
 			}
 		},
 		onModifySpD(spd, pokemon) {
