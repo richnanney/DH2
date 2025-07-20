@@ -49,13 +49,8 @@ export const Conditions: {[k: string]: ModdedConditionData} = {
 			this.add('-weather', 'Sandstorm', '[upkeep]');
 		},
 		onWeather(target, source, effect) {
-			if (!target.hasType(['Rock', 'Ground', 'Steel']) &&
-				!target.hasAbility(['overcoat', 'magicguard']) &&
-				!target.volatiles['tarshot'] &&
-				!target.hasItem('safetygoggles')) {
 				this.add('-message', `${target.fullname} is battered by the vicious sandstorm!`)
 				this.damage(target.baseMaxhp / 8); // changed from 1/16 to 1/8
-			}
 		},
 		onModifySpD(spd, pokemon) {
 			if (pokemon.hasType(['Rock', 'Ground']) && this.field.isWeather('sandstorm')) {
