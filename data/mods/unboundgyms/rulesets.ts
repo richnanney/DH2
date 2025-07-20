@@ -102,18 +102,18 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		effectType: 'Rule',
 		name: 'Dark Gym',
 		desc: "All non-dark and non-ghost pokemon take 1/16 hp as damage each turn.",
+
 		onResidual(target, source, effect) {
-			for (const side of this.sides) {
-				for (const pokemon of side.active) {
-					if (!pokemon || pokemon.fainted) {
-						this.add('-message', `Debug: No damage to ${pokemon.fullname}`)
-						continue;
-					}
-					if (!pokemon.hasType('Dark') && !pokemon.hasType('Ghost')) {
-						this.add('-message', `Debug: Doing darkness damage to ${pokemon.fullname}`)
-						this.damage(pokemon.baseMaxhp / 16);
-					}
-				}
+			this.add('-message', `Target: ${target.name}`) 
+			this.add('-message', `Source: ${source.name}`) 
+			this.add('-message', `effect: ${effect.name}`)
+			if (!target || target.fainted) {
+				this.add('-message', `Debug: No darkness damage to ${target.fullname}`)
+				return;
+			}
+			if (!target.hasType('Dark') && !target.hasType('Ghost')) {
+				this.add('-message', `Debug: Doing darkness damage to ${target.fullname}`)
+				this.damage(target.baseMaxhp / 16);
 			}
 		},
 	},
