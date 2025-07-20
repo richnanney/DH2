@@ -42,40 +42,25 @@ export const Conditions: {[k: string]: ModdedConditionData} = {
 			}
 		},
     },
-	vicioussandstorm: {
-		name: 'ViciousSandstorm',
-		effectType: 'Weather',
-		duration: 5,
-		onFieldStart(field, source, effect) {
-			this.add('-weather', 'ViciousSandstorm');
-		},
+	sandstorm: {
+		inherit: true,
 		onFieldResidualOrder: 1,
 		onFieldResidual(field) {
-			this.add('-weather', 'ViciousSandstorm', '[upkeep]');
-		},
-		onWeather(target) {
-						if (
-				target.hasType('Rock') ||
-				target.hasType('Ground') ||
-				target.hasType('Steel') ||
-				target.hasAbility('Overcoat') ||
-				target.hasAbility('Magic Guard') ||
-				target.hasItem('Safety Goggles')
-			) {
-				this.add('-message', `Debug: No damage to ${target.fullname}`)
-				return;
+			this.add('-weather', 'Sandstorm', '[upkeep]');
+			for (const pokemon of this.getAllActive()) {
+				if (!pokemon.hasType(['Rock', 'Ground', 'Steel']) &&
+					!pokemon.hasAbility(['overcoat', 'magicguard']) &&
+					!pokemon.volatiles['tarshot'] &&
+					!pokemon.hasItem('safetygoggles')) {
+					this.add('-message', `${pokemon.fullname} is battered by the vicious sandstorm!`)
+					this.damage(pokemon.baseMaxhp / 8); // changed from 1/16 to 1/8
+				}
 			}
-			this.add('-message', `Debug: Doing sand damage to ${target.fullname}`)
-			this.damage(target.baseMaxhp / 8, target);
 		},
-		onModifySpDPriority: 10,
 		onModifySpD(spd, pokemon) {
-			if ((pokemon.hasType('Ground') || pokemon.hasType('Rock')) && this.field.isWeather('vicioussandstorm')) {
+			if (pokemon.hasType(['Rock', 'Ground']) && this.field.isWeather('sandstorm')) {
 				return this.modify(spd, 1.5);
 			}
 		},
-
-
-	}
-
+	},
 };
