@@ -111,7 +111,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 					}
 					if (!pokemon.hasType('Dark') && !pokemon.hasType('Ghost')) {
 						this.add('-message', `Debug: Doing darkness damage to ${pokemon.fullname}`)
-						target.damage(pokemon.baseMaxhp / 16);
+						this.damage(pokemon.baseMaxhp / 16);
 					}
 				}
 			}
