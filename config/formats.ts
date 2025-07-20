@@ -36,63 +36,63 @@ export const Formats: FormatList = [
 		column: 1,
 	},
 	{
-		name: "[Gen 8] Unbound Water Gym",
-		mod: 'unbound',
+		name: "[Gen 9] Unbound Water Gym",
+		mod: 'unboundgyms',
 		ruleset: ['watergym']
 	},
 	{
-		name: "[Gen 8] Unbound Fire Gym",
-		mod: 'unbound',
+		name: "[Gen 9] Unbound Fire Gym",
+		mod: 'unboundgyms',
 		ruleset: ['firegym']
 	},
 	{
-		name: "[Gen 8] Unbound Grass Gym",
-		mod: 'unbound',
+		name: "[Gen 9] Unbound Grass Gym",
+		mod: 'unboundgyms',
 		ruleset: ['grassgym']
 	},
 	{
-		name: "[Gen 8] Unbound Ghost Gym",
-		mod: 'unbound',
+		name: "[Gen 9] Unbound Ghost Gym",
+		mod: 'unboundgyms',
 		ruleset: ['ghostgym']
 	},
 	{
-		name: "[Gen 8] Unbound Flying Gym",
-		mod: 'unbound',
+		name: "[Gen 9] Unbound Flying Gym",
+		mod: 'unboundgyms',
 		ruleset: ['flyinggym']
 	},
 	{
-		name: "[Gen 8] Unbound Psychic Gym",
-		mod: 'unbound',
+		name: "[Gen 9] Unbound Psychic Gym",
+		mod: 'unboundgyms',
 		ruleset: ['psychicgym']
 	},
 	{
-		name: "[Gen 8] Unbound Steel Gym",
-		mod: 'unbound',
+		name: "[Gen 9] Unbound Steel Gym",
+		mod: 'unboundgyms',
 		ruleset: ['steelgym']
 	},
 	{
-		name: "[Gen 8] Unbound Dark Gym",
-		mod: 'unbound',
+		name: "[Gen 9] Unbound Dark Gym",
+		mod: 'unboundgyms',
 		ruleset: ['darkgym']
 	},
 	{
-		name: "[Gen 8] Unbound Ice Gym",
-		mod: 'unbound',
+		name: "[Gen 9] Unbound Ice Gym",
+		mod: 'unboundgyms',
 		ruleset: ['icegym']
 	},
 	{
-		name: "[Gen 8] Unbound Ground Gym",
-		mod: 'unbound',
+		name: "[Gen 9] Unbound Ground Gym",
+		mod: 'unboundgyms',
 		ruleset: ['groundgym']
 	},
 	{
-		name: "[Gen 8] Unbound Poison Gym",
-		mod: 'unbound',
+		name: "[Gen 9] Unbound Poison Gym",
+		mod: 'unboundgyms',
 		ruleset: ['poisongym']
 	},
 	{
-		name: "[Gen 8] Unbound Dragon Gym",
-		mod: 'unbound',
+		name: "[Gen 9] Unbound Dragon Gym",
+		mod: 'unboundgyms',
 		ruleset: ['dragongym']
 	},
 ];

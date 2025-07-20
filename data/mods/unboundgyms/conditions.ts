@@ -32,7 +32,7 @@ export const Conditions: {[k: string]: ModdedConditionData} = {
 			this.damage(pokemon.baseMaxhp / 8);
 		},
 	},
-    hail: {
+    snow: {
         inherit: true,
         onModifyMove(move) {
             if (move.secondaries) {
@@ -42,5 +42,38 @@ export const Conditions: {[k: string]: ModdedConditionData} = {
 			}
 		},
     },
+	vicioussandstorm: {
+		name: 'Vicious Sandstorm',
+		effectType: 'Weather',
+		duration: 0,
+		onFieldStart(field, source, effect) {
+			this.add('-weather', 'Vicious Sandstorm');
+		},
+		onFieldResidualOrder: 1,
+		onFieldResidual(field) {
+			this.add('-weather', 'Vicious Sandstorm', '[upkeep]');
+		},
+		onWeather(target) {
+						if (
+				target.hasType('Rock') ||
+				target.hasType('Ground') ||
+				target.hasType('Steel') ||
+				target.hasAbility('Overcoat') ||
+				target.hasAbility('Magic Guard') ||
+				target.hasItem('Safety Goggles')
+			) {
+				return;
+			}
+			this.damage(target.baseMaxhp / 8);
+		},
+		onModifySpDPriority: 10,
+		onModifySpD(spd, pokemon) {
+			if (pokemon.hasType(['Rock', 'Ground']) && this.field.isWeather('vicioussandstorm')) {
+				return this.modify(spd, 1.5);
+			}
+		},
+
+
+	}
 
 };

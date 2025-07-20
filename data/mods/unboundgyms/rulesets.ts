@@ -103,11 +103,15 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'Dark Gym',
 		desc: "All non-dark and non-ghost pokemon take 1/16 hp as damage each turn.",
 		onResidual(target, source, effect) {
-			if (!target.hasType(['Dark','Ghost'])) {
-				target.damage(target.baseMaxhp / 16);
+			for (const side of this.sides) {
+				for (const pokemon of side.active) {
+					if (!pokemon || pokemon.fainted) continue;
+					if (!pokemon.hasType('Dark') && !pokemon.hasType('Ghost')) {
+						target.damage(pokemon.baseMaxhp / 16);
+					}
+				}
 			}
 		},
-
 	},
 	icegym: {
 		effectType: 'Rule',
