@@ -25,19 +25,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			this.field.weather = 'sunnyday' as ID;
 			this.field.weatherState = { id: 'sunnyday'};
 		},
-		onAnySetWeather(target, source, weather) {
-			this.add('-message', 'Debug: Weather is being set!')
-			if (this.field.weather == 'sunnyday') {
-				this.add('-message', 'The sun from the gym effect can\'t be overwritten!')
-				if (source != null){
-					this.add('-message', `Debug: Weather source is ${source.fullname}`)
-					this.add('-message', `Debug: Weather source is ${source}`)
-
-				}
-				return;
-			}
-		},
-		onWeatherChange(target, source, sourceEffect) {
+		onSetWeather(target, source, weather) {
 			this.add('-message', 'Debug: Weather is being set!')
 			if (this.field.weather == 'sunnyday') {
 				this.add('-message', 'The sun from the gym effect can\'t be overwritten!')
