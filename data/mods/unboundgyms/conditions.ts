@@ -42,20 +42,4 @@ export const Conditions: {[k: string]: ModdedConditionData} = {
 			}
 		},
     },
-	sandstorm: {
-		inherit: true,
-		onFieldResidualOrder: 1,
-		onFieldResidual(field) {
-			this.add('-weather', 'Sandstorm', '[upkeep]');
-		},
-		onWeather(target, source, effect) {
-				this.add('-message', `${target.fullname} is battered by the vicious sandstorm!`)
-				this.damage(target.baseMaxhp / 8); // changed from 1/16 to 1/8
-		},
-		onModifySpD(spd, pokemon) {
-			if (pokemon.hasType(['Rock', 'Ground']) && this.field.isWeather('sandstorm')) {
-				return this.modify(spd, 1.5);
-			}
-		},
-	},
 };

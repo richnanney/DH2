@@ -127,9 +127,9 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'Ground Gym',
 		desc: "A vicious sandstorm takes place and deals 1/8th hp of damage to non-ground/rock types.",
 		onBegin() {
-			this.add('-weather', 'sandstorm');
-			this.field.weather = 'sandstorm' as ID;
-			this.field.weatherState = { id: 'sandstorm'};
+			this.add('-weather', 'alotofbees');
+			this.field.weather = 'alotofbees' as ID;
+			this.field.weatherState = { id: 'alotofbees'};
 		},
 	},
 	poisongym: {
