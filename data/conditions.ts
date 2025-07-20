@@ -744,9 +744,6 @@ export const Conditions: {[k: string]: ConditionData} = {
 			}
 			return 5;
 		},
-		onWeatherModifyDamage(damage, attacker, defender, move) {
-			if (defender.hasItem('utilityumbrella')) return;
-		},
 		onFieldStart(field, source, effect) {
 			this.add('-weather', 'Vicious Sandstorm');
 		},
@@ -760,7 +757,7 @@ export const Conditions: {[k: string]: ConditionData} = {
 				if(['Ground', 'Rock', 'Steel'].includes(type)) return;
 			}
 			this.add('-message', `${target.name} was damaged by the vicious sandstorm!`);
-			this.damage(target.baseMaxhp / 16);
+			this.damage(target.baseMaxhp / 8);
 		},
 		onFieldEnd() {
 			this.add('-weather', 'none', '[silent]');

@@ -76,10 +76,20 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'Psychic Gym',
 		desc: "All Psychic type pokemon get Magic Bounce.",
 		onTryHit(target, source, move) {
-			if (target === source || move.hasBounced || !move.flags['reflectable']) {
+			if (target === source) {
+				this.add('-message',`Debug: Target is source and thus won't bounce.`)
+				return;
+			}
+			if (move.hasBounced) {
+				this.add('-message',`Debug: Move has already bounced and thus won't bounce again.`)
+				return;
+			}
+			if (!move.flags['reflectable']) {
+				this.add('-message',`Debug: Move isn't considered 'reflectable' and thus won't bounce.`)
 				return;
 			}
 			if (target.hasType('Psychic')) {
+				this.add('-message',`Debug: ${target.fullname} reflects the move thanks to the gym effect!`)
 				const newMove = this.dex.getActiveMove(move.id);
 				newMove.hasBounced = true;
 				newMove.pranksterBoosted = false;
