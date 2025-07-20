@@ -102,17 +102,12 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		effectType: 'Rule',
 		name: 'Dark Gym',
 		desc: "All non-dark and non-ghost pokemon take 1/16 hp as damage each turn.",
-
 		onResidual(target, source, effect) {
-			if (target !== null) {this.add('-message', `Target: ${target.name}`)} 
-			if (source !== null) {this.add('-message', `Source: ${source.name}`)} 
-			if (effect !== null) {this.add('-message', `effect: ${effect.name}`)}
 			if (!target || target.fainted) {
-				this.add('-message', `Debug: No darkness damage to ${target.fullname}`)
 				return;
 			}
 			if (!target.hasType('Dark') && !target.hasType('Ghost')) {
-				this.add('-message', `Debug: Doing darkness damage to ${target.fullname}`)
+				this.add('-message', `${target.fullname} takes damage from the Gym's Dark Aura!`)
 				this.damage(target.baseMaxhp / 16);
 			}
 		},
@@ -132,7 +127,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'Ground Gym',
 		desc: "A vicious sandstorm takes place and deals 1/8th hp of damage to non-ground/rock types.",
 		onBegin() {
-			this.add('-weather', 'Vicious Sandstorm');
+			this.add('-weather', 'ViciousSandstorm');
 			this.field.weather = 'vicioussandstorm' as ID;
 			this.field.weatherState = { id: 'vicioussandstorm'};
 		},

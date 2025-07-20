@@ -43,15 +43,15 @@ export const Conditions: {[k: string]: ModdedConditionData} = {
 		},
     },
 	vicioussandstorm: {
-		name: 'Vicious Sandstorm',
+		name: 'ViciousSandstorm',
 		effectType: 'Weather',
 		duration: 5,
 		onFieldStart(field, source, effect) {
-			this.add('-weather', 'Vicious Sandstorm');
+			this.add('-weather', 'ViciousSandstorm');
 		},
 		onFieldResidualOrder: 1,
 		onFieldResidual(field) {
-			this.add('-weather', 'Vicious Sandstorm', '[upkeep]');
+			this.add('-weather', 'ViciousSandstorm', '[upkeep]');
 		},
 		onWeather(target) {
 						if (
