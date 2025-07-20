@@ -45,7 +45,7 @@ export const Conditions: {[k: string]: ModdedConditionData} = {
 	vicioussandstorm: {
 		name: 'Vicious Sandstorm',
 		effectType: 'Weather',
-		duration: 0,
+		duration: 5,
 		onFieldStart(field, source, effect) {
 			this.add('-weather', 'Vicious Sandstorm');
 		},
@@ -62,13 +62,15 @@ export const Conditions: {[k: string]: ModdedConditionData} = {
 				target.hasAbility('Magic Guard') ||
 				target.hasItem('Safety Goggles')
 			) {
+				this.add('-message', `Debug: No damage to ${target.fullname}`)
 				return;
 			}
-			this.damage(target.baseMaxhp / 8);
+			this.add('-message', `Debug: Doing sand damage to ${target.fullname}`)
+			this.damage(target.baseMaxhp / 8, target);
 		},
 		onModifySpDPriority: 10,
 		onModifySpD(spd, pokemon) {
-			if (pokemon.hasType(['Rock', 'Ground']) && this.field.isWeather('vicioussandstorm')) {
+			if ((pokemon.hasType('Ground') || pokemon.hasType('Rock')) && this.field.isWeather('vicioussandstorm')) {
 				return this.modify(spd, 1.5);
 			}
 		},

@@ -105,8 +105,12 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		onResidual(target, source, effect) {
 			for (const side of this.sides) {
 				for (const pokemon of side.active) {
-					if (!pokemon || pokemon.fainted) continue;
+					if (!pokemon || pokemon.fainted) {
+						this.add('-message', `Debug: No damage to ${pokemon.fullname}`)
+						continue;
+					}
 					if (!pokemon.hasType('Dark') && !pokemon.hasType('Ghost')) {
+						this.add('-message', `Debug: Doing darkness damage to ${pokemon.fullname}`)
 						target.damage(pokemon.baseMaxhp / 16);
 					}
 				}
@@ -126,7 +130,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 	groundgym: {
 		effectType: 'Rule',
 		name: 'Ground Gym',
-		desc: "A vicious sandstorm takes place and deals 1/8th hp of damage to non-ground types.",
+		desc: "A vicious sandstorm takes place and deals 1/8th hp of damage to non-ground/rock types.",
 		onBegin() {
 			this.add('-weather', 'Vicious Sandstorm');
 			this.field.weather = 'vicioussandstorm' as ID;
