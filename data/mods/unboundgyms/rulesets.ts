@@ -37,6 +37,18 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				return;
 			}
 		},
+		onWeatherChange(target, source, sourceEffect) {
+			this.add('-message', 'Debug: Weather is being set!')
+			if (this.field.weather == 'sunnyday') {
+				this.add('-message', 'The sun from the gym effect can\'t be overwritten!')
+				if (source != null){
+					this.add('-message', `Debug: Weather source is ${source.fullname}`)
+					this.add('-message', `Debug: Weather source is ${source}`)
+
+				}
+				return;
+			}
+		},
 	},
 	grassgym: {
 		effectType: 'Rule',
