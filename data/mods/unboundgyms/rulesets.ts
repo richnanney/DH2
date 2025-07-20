@@ -34,7 +34,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 					this.add('-message', `Debug: Weather source is ${source}`)
 
 				}
-				return;
+				return false;
 			}
 		},
 	},
