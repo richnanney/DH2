@@ -104,9 +104,9 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		desc: "All non-dark and non-ghost pokemon take 1/16 hp as damage each turn.",
 
 		onResidual(target, source, effect) {
-			if (target.name) {this.add('-message', `Target: ${target.name}`)} 
-			if (source.name) {this.add('-message', `Source: ${source.name}`)} 
-			if (effect.name) {this.add('-message', `effect: ${effect.name}`)}
+			if (target.name !== null) {this.add('-message', `Target: ${target.name}`)} 
+			if (source.name !== null) {this.add('-message', `Source: ${source.name}`)} 
+			if (effect.name !== null) {this.add('-message', `effect: ${effect.name}`)}
 			if (!target || target.fainted) {
 				this.add('-message', `Debug: No darkness damage to ${target.fullname}`)
 				return;
