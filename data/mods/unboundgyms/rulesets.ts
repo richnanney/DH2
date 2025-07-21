@@ -14,6 +14,17 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				}
 			}
 		},
+		onBegin() {
+			this.add('-weather', 'Rain Dance');
+			this.field.weather = 'raindance' as ID;
+			this.field.weatherState = { id: 'raindance'};
+		},
+		onSetWeather(target, source, weather) {
+			if (this.field.weather == 'raindance') {
+				this.add('-message', 'The rain from the gym effect can\'t be removed!')
+				return false;
+			}
+		},
 
 	},
 	firegym: {
@@ -88,6 +99,28 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		effectType: 'Rule',
 		name: 'Psychic Gym',
 		desc: "All Psychic type pokemon get Magic Bounce.",
+		onTryHitField(target, source, move) {
+			if (target === source) {
+				this.add('-message',`Debug: Target is source and thus won't bounce.`)
+				return;
+			}
+			if (move.hasBounced) {
+				this.add('-message',`Debug: Move has already bounced and thus won't bounce again.`)
+				return;
+			}
+			if (!move.flags['reflectable']) {
+				this.add('-message',`Debug: Move isn't considered 'reflectable' and thus won't bounce.`)
+				return;
+			}
+			if (target.hasType('Psychic')) {
+				this.add('-message',`Debug: ${target.fullname} reflects the move thanks to the gym effect!`)
+				const newMove = this.dex.getActiveMove(move.id);
+				newMove.hasBounced = true;
+				newMove.pranksterBoosted = false;
+				this.actions.useMove(newMove, target, source);
+				return null;
+			}
+		},
 		onTryHit(target, source, move) {
 			if (target === source) {
 				this.add('-message',`Debug: Target is source and thus won't bounce.`)
