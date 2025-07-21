@@ -144,6 +144,12 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			this.field.weather = 'snow' as ID;
 			this.field.weatherState = { id: 'snow'};
 		},
+		onSetWeather(target, source, weather) {
+			if (this.field.weather == 'snow') {
+				this.add('-message', 'The snow from the gym effect can\'t be removed!')
+				return false;
+			}
+		},
 	},
 	groundgym: {
 		effectType: 'Rule',
