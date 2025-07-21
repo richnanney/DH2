@@ -26,14 +26,8 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			this.field.weatherState = { id: 'sunnyday'};
 		},
 		onSetWeather(target, source, weather) {
-			this.add('-message', 'Debug: Weather is being set!')
 			if (this.field.weather == 'sunnyday') {
-				this.add('-message', 'The sun from the gym effect can\'t be overwritten!')
-				if (source != null){
-					this.add('-message', `Debug: Weather source is ${source.fullname}`)
-					this.add('-message', `Debug: Weather source is ${source}`)
-
-				}
+				this.add('-message', 'The sun from the gym effect can\'t be removed!')
 				return false;
 			}
 		},
@@ -47,6 +41,13 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			this.field.terrain = 'grassyterrain' as ID;
 			this.field.terrainState = { id: 'grassyterrain'};
 		},
+		onTerrainChange(target, source, sourceEffect) {
+			this.add('-message', 'But the grassy terrain remained!')
+			this.add('-fieldstart', 'Grassy Terrain')
+			this.field.terrain = 'grassyterrain' as ID;
+			this.field.terrainState = { id: 'grassyterrain'};
+		},
+
 	},
 	ghostgym: {
 		effectType: 'Rule',
@@ -152,6 +153,12 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			this.add('-weather', 'vicioussandstorm');
 			this.field.weather = 'vicioussandstorm' as ID;
 			this.field.weatherState = { id: 'vicioussandstorm'};
+		},
+		onSetWeather(target, source, weather) {
+			if (this.field.weather == 'vicioussandstorm') {
+				this.add('-message', 'The sandstorm from the gym effect can\'t be removed!')
+				return false;
+			}
 		},
 	},
 	poisongym: {
