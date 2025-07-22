@@ -754,10 +754,10 @@ export const Conditions: {[k: string]: ConditionData} = {
 		},
 		onWeather(target) {
 			if (target.hasType(['rock','ground','steel'])) {
-					return;
+					return false;
 				}
-				this.add('-message', `${target.name} was damaged by the vicious sandstorm!`);
-				this.damage(target.baseMaxhp / 8);
+			this.add('-message', `${target.name} was damaged by the vicious sandstorm!`);
+			this.damage(target.baseMaxhp / 8);
 			},
 		onFieldEnd() {
 			this.add('-weather', 'none', '[silent]');

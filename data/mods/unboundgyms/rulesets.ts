@@ -100,6 +100,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'Psychic Gym',
 		desc: "All Psychic type pokemon get Magic Bounce.",
 		onTryHitField(target, source, move) {
+			this.add('-message',`Debug: TryHitField triggered.`)
 			if (target === source) {
 				this.add('-message',`Debug: Target is source and thus won't bounce.`)
 				return;
@@ -122,6 +123,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			}
 		},
 		onTryHit(target, source, move) {
+			this.add('-message',`Debug: TryHit triggered.`)
 			if (target === source) {
 				this.add('-message',`Debug: Target is source and thus won't bounce.`)
 				return;
