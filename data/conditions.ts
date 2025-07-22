@@ -753,9 +753,6 @@ export const Conditions: {[k: string]: ConditionData} = {
 			if (this.field.isWeather('vicioussandstorm')) this.eachEvent('Weather');
 		},
 		onWeather(target) {
-			if (target.hasType(['rock','ground','steel'])) {
-					return false;
-				}
 			this.add('-message', `${target.name} was damaged by the vicious sandstorm!`);
 			this.damage(target.baseMaxhp / 8);
 			},
