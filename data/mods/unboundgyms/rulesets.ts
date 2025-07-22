@@ -207,6 +207,11 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				return false;
 			}
 		},
+		onWeather(target, source, effect) {
+			if (target.hasType(['ground','rock','steel']) && effect.id == 'vicioussandstorm') {
+				return false;
+			}
+		},
 	},
 	poisongym: {
 		effectType: 'Rule',
