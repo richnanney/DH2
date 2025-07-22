@@ -317,6 +317,13 @@ export const DefaultText: {[k: string]: DefaultText} = {
 		activate: "  The mysterious strong winds weakened the attack!",
 		block: "  The mysterious strong winds blow on regardless!",
 	},
+	vicioussandstorm: {
+		weatherName: "Vicious Sandstorm",
+		start: "  A vicious sandstorm has blown in!",
+		end: "  The vicious sandstorm subsided.",
+		upkeep: "  (The vicious sandstorm blusters.)",
+		damage: "  [POKEMON] is blasted by the vicious sandstorm!",
+	},
 
 	// terrain
 	electricterrain: {
