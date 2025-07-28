@@ -102,19 +102,16 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		onTryHitSide(target, source, move) {
 			this.add('-message',`Debug: TryHitSide triggered.`)
 			if (target === source) {
-				this.add('-message',`Debug: Target is source and thus won't bounce.`)
 				return;
 			}
 			if (move.hasBounced) {
-				this.add('-message',`Debug: Move has already bounced and thus won't bounce again.`)
 				return;
 			}
 			if (!move.flags['reflectable']) {
-				this.add('-message',`Debug: Move isn't considered 'reflectable' and thus won't bounce.`)
 				return;
 			}
 			if (target.hasType('Psychic')) {
-				this.add('-message',`Debug: ${target.fullname} reflects the move thanks to the gym effect!`)
+				this.add('-message',`${target.name} reflects the move thanks to the gym effect!`)
 				const newMove = this.dex.getActiveMove(move.id);
 				newMove.hasBounced = true;
 				newMove.pranksterBoosted = false;
@@ -125,19 +122,16 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		onTryHit(target, source, move) {
 			this.add('-message',`Debug: TryHit triggered.`)
 			if (target === source) {
-				this.add('-message',`Debug: Target is source and thus won't bounce.`)
 				return;
 			}
 			if (move.hasBounced) {
-				this.add('-message',`Debug: Move has already bounced and thus won't bounce again.`)
 				return;
 			}
 			if (!move.flags['reflectable']) {
-				this.add('-message',`Debug: Move isn't considered 'reflectable' and thus won't bounce.`)
 				return;
 			}
 			if (target.hasType('Psychic')) {
-				this.add('-message',`Debug: ${target.fullname} reflects the move thanks to the gym effect!`)
+				this.add('-message',`${target.name} reflects the move thanks to the gym effect!`)
 				const newMove = this.dex.getActiveMove(move.id);
 				newMove.hasBounced = true;
 				newMove.pranksterBoosted = false;
