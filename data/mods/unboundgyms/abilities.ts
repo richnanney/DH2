@@ -151,4 +151,17 @@ export const Abilities: {[k: string]: ModdedAbilityData} = {
 		rating: 2,
 		num: 247,
 	},
+	overcoat: {
+
+	},
+	sandforce: {
+
+	},
+	sandrush: {
+
+	},
+	sandveil: {
+
+	},
+	
 };

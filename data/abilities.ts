@@ -3012,7 +3012,7 @@ export const Abilities: {[abilityid: string]: AbilityData} = {
 	},
 	overcoat: {
 		onImmunity(type, pokemon) {
-			if (type === 'sandstorm' || type === 'hail' || type === 'powder') return false;
+			if (type === 'sandstorm' || type === 'hail' || type === 'powder' || type === 'vicioussandstorm') return false;
 		},
 		onTryHitPriority: 1,
 		onTryHit(target, source, move) {
@@ -3867,7 +3867,7 @@ export const Abilities: {[abilityid: string]: AbilityData} = {
 	sandforce: {
 		onBasePowerPriority: 21,
 		onBasePower(basePower, attacker, defender, move) {
-			if (this.field.isWeather('sandstorm')) {
+			if (this.field.isWeather('sandstorm') || this.field.isWeather('vicioussandstorm') ) {
 				if (move.type === 'Rock' || move.type === 'Ground' || move.type === 'Steel') {
 					this.debug('Sand Force boost');
 					return this.chainModify([5325, 4096]);
@@ -3875,7 +3875,7 @@ export const Abilities: {[abilityid: string]: AbilityData} = {
 			}
 		},
 		onImmunity(type, pokemon) {
-			if (type === 'sandstorm') return false;
+			if (type === 'sandstorm' || type === 'vicioussandstorm') return false;
 		},
 		flags: {},
 		name: "Sand Force",
@@ -3884,12 +3884,12 @@ export const Abilities: {[abilityid: string]: AbilityData} = {
 	},
 	sandrush: {
 		onModifySpe(spe, pokemon) {
-			if (this.field.isWeather('sandstorm')) {
+			if (this.field.isWeather('sandstorm') || this.field.isWeather('vicioussandstorm')) {
 				return this.chainModify(2);
 			}
 		},
 		onImmunity(type, pokemon) {
-			if (type === 'sandstorm') return false;
+			if (type === 'sandstorm' || type ==='vicioussandstorm') return false;
 		},
 		flags: {},
 		name: "Sand Rush",
@@ -3916,12 +3916,12 @@ export const Abilities: {[abilityid: string]: AbilityData} = {
 	},
 	sandveil: {
 		onImmunity(type, pokemon) {
-			if (type === 'sandstorm') return false;
+			if (type === 'sandstorm' || type === 'vicioussandstorm') return false;
 		},
 		onModifyAccuracyPriority: -1,
 		onModifyAccuracy(accuracy) {
 			if (typeof accuracy !== 'number') return;
-			if (this.field.isWeather('sandstorm')) {
+			if (this.field.isWeather('sandstorm') || this.field.isWeather('vicioussandstorm')) {
 				this.debug('Sand Veil - decreasing accuracy');
 				return this.chainModify([3277, 4096]);
 			}

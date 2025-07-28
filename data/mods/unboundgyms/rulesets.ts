@@ -100,10 +100,22 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'Psychic Gym',
 		desc: "All Psychic type pokemon get Magic Bounce.",
 		onEntryHazard(pokemon) {
-			this.add('-message',`Debug: onEntryHazard triggered.`)
+			this.add('-message',`Debug: EntryHazard triggered.`)
 		},
 		onAnyTryAddVolatile(status, target, source, sourceEffect) {
-			this.add('-message',`Debug: OnAnyTryAddVolatile triggered.`)
+			this.add('-message',`Debug: AnyTryAddVolatile triggered.`)
+		},
+		onTryMove(source, target, move) {
+			this.add('-message',`Debug: TryMove triggered.`)
+		},
+		onTryHitSide(target, source, move) {
+			this.add('-message',`Debug: TryHitSide triggered.`)
+		},
+		onAnyTryHit(source, target, move) {
+			this.add('-message',`Debug: AnyTryHit triggered.`)
+		},
+		onAnyTryHitField(target, source, move) {
+			this.add('-message',`Debug: AnyTryHitField triggered.`)
 		},
 		onTryHitField(target, source, move) {
 			this.add('-message',`Debug: TryHitField triggered.`)
