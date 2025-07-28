@@ -150,18 +150,5 @@ export const Abilities: {[k: string]: ModdedAbilityData} = {
 		name: "Ripen",
 		rating: 2,
 		num: 247,
-	},
-	overcoat: {
-
-	},
-	sandforce: {
-
-	},
-	sandrush: {
-
-	},
-	sandveil: {
-
-	},
-	
+	},	
 };
