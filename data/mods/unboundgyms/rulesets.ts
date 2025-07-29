@@ -63,10 +63,11 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 	ghostgym: {
 		effectType: 'Rule',
 		name: 'Ghost Gym',
-		desc: "All Ghost-Type Pokemon also benefit from Marvel Scale and are immune to hazards.",
-		onModifyDef(relayVar, target, source, move) {
-			if (target.hasType('Ghost') && target.status) {
-				return this.chainModify(1.5);
+		desc: "All Ghost-Type Pokemon also benefit from MultiScale and are immune to hazards.",
+		onSourceModifyDamage(relayVar, source, target, move) {
+			if (target.hp >= target.maxhp && target.hasType('Ghost')) {
+				this.add('-message', `${target.name} takes less damage thanks to the gym effect!`)
+				return this.chainModify(0.5);
 			}
 		},
 		onSwitchIn(pokemon) {
@@ -204,13 +205,15 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 	poisongym: {
 		effectType: 'Rule',
 		name: 'Poison Gym',
-		desc: "Poisons all pokemon.",
-		onResidual(battle) {
-			const pokemon = this.activePokemon
-			if ((pokemon && !pokemon.fainted && !pokemon.status && pokemon.setStatus('psn'))) {
-					this.add('-status', pokemon, 'psn');
+		desc: "Poison type pokemon get toxic debris.",
+		onDamagingHit(damage, target, source, move) {
+			const side = source.isAlly(target) ? source.side.foe : source.side;
+			const toxicSpikes = side.sideConditions['toxicspikes'];
+			if (move.category === 'Physical' && (!toxicSpikes || toxicSpikes.layers < 2)) {
+				this.add('-activate', target, 'ability: Toxic Debris');
+				side.addSideCondition('toxicspikes', target);
 			}
-		}
+		},
 	},
 	dragongym: {
 		effectType: 'Rule',
@@ -218,11 +221,15 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		desc: "All Dragon type pokemon benefit from Serene Grace.",
 		onModifyMove(move, pokemon, target) {
 			if (move.secondaries && pokemon.hasType('Dragon')) {
+				this.add('-message', 'The move is a little luckier thanks to the gym effect!')
 				for (const secondary of move.secondaries) {
 					if (secondary.chance) secondary.chance *= 2;
 				}
 			}
-			if (move.self?.chance) move.self.chance *= 2;
+			if (move.self?.chance && pokemon.hasType('dragon')) {
+				this.add('-message', 'The move is a little luckier thanks to the gym effect!')
+				move.self.chance *= 2;
+			}
 		},
 	},
 };
