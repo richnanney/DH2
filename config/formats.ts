@@ -95,4 +95,9 @@ export const Formats: FormatList = [
 		mod: 'unboundgyms',
 		ruleset: ['dragongym']
 	},
+	{
+		name: "[Gen 9] Unbound Fairy Gym",
+		mod: 'unboundgyms',
+		ruleset: ['fairygym']
+	},
 ];

@@ -58,13 +58,15 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			this.field.terrain = 'grassyterrain' as ID;
 			this.field.terrainState = { id: 'grassyterrain'};
 		},
-
 	},
 	ghostgym: {
 		effectType: 'Rule',
 		name: 'Ghost Gym',
 		desc: "All Ghost-Type Pokemon also benefit from MultiScale and are immune to hazards.",
 		onSourceModifyDamage(relayVar, source, target, move) {
+			this.add('-message', `OnSourceModifyDamage procced.`)
+			this.add('-message', `${target.name} is the target.`)
+			this.add('-message', `${source.name} is the source.`)
 			if (target.hp >= target.maxhp && target.hasType('Ghost')) {
 				this.add('-message', `${target.name} takes less damage thanks to the gym effect!`)
 				return this.chainModify(0.5);
@@ -230,6 +232,20 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				this.add('-message', 'The move is a little luckier thanks to the gym effect!')
 				move.self.chance *= 2;
 			}
+		},
+	},
+	fairygym: {
+		effectType: 'Rule',
+		name: 'Fairy Gym',
+		desc: "Permanent Wonder Room.",
+		onBegin() {
+			this.add('-psuedoweather', 'wonderroom');
+			this.field.addPseudoWeather('wonderroom');
+		},
+		onAnyPseudoWeatherChange(target, source, pseudoWeather) {
+			this.add('-message', 'But the wonder room remained!')
+			this.add('-psuedoweather', 'wonderroom');
+			this.field.addPseudoWeather('wonderroom');
 		},
 	},
 };
