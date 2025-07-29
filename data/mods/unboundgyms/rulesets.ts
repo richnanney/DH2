@@ -64,28 +64,8 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'Ghost Gym',
 		desc: "All Ghost-Type Pokemon also benefit from MultiScale and are immune to hazards.",
 		onModifyDamage(relayVar, source, target, move) {
-			this.add('-message', `OnModifyDamage procced.`)
-			this.add('-message', `${target.name} is the target.`)
-			this.add('-message', `${source.name} is the source.`)
 			if (target.hp >= target.maxhp && target.hasType('Ghost')) {
 				this.add('-message', `${target.name} takes less damage thanks to the gym effect!1`)
-				return this.chainModify(0.5);
-			}
-		},
-		onTryHit(source, target, move) {
-			this.add('-message', `OnTryHit procced.`)
-			this.add('-message', `${target.name} is the target.`)
-			this.add('-message', `${source.name} is the source.`)
-			if (target.hp >= target.maxhp && target.hasType('Ghost')) {
-				this.add('-message', `${target.name} takes less damage thanks to the gym effect!2`)
-			}
-		},
-		onSourceModifyDamage(relayVar, source, target, move) {
-			this.add('-message', `OnSourceModifyDamage procced.`)
-			this.add('-message', `${target.name} is the target.`)
-			this.add('-message', `${source.name} is the source.`)
-			if (target.hp >= target.maxhp && target.hasType('Ghost')) {
-				this.add('-message', `${target.name} takes less damage thanks to the gym effect!3`)
 				return this.chainModify(0.5);
 			}
 		},
