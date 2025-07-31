@@ -1,3 +1,5 @@
+import { EffectState } from "../../../sim/pokemon";
+
 export const Rulesets: {[k: string]: ModdedFormatData} = {
 	watergym: {
 		effectType: 'Rule',
@@ -144,11 +146,23 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		effectType: 'Rule',
 		name: 'Steel Gym',
 		desc: "All Steel type pokemon get levitate.",
+		onSwitchIn(pokemon) {
+			if (pokemon.hasType('Steel')) {
+				pokemon.isGrounded(false);
+			}
+		},
+		onType(types, pokemon) {
+			if (pokemon.hasType('Steel')) {
+				pokemon.isGrounded(false);
+			}
+		},
+		/*
 		onTryHit(source, target, move) {
 			if (source.hasType('Steel')) {
 				if (move.type === 'Ground') return false;
 			}
 		},
+		*/
 	},
 	darkgym: {
 		effectType: 'Rule',
@@ -236,11 +250,13 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'Fairy Gym',
 		desc: "Permanent Wonder Room.",
 		onBegin() {
-			this.field.addPseudoWeather('wonderroom');
+			this.add('-fieldstart', 'Wonder Room');
+			this.field.addPseudoWeather('wonderroom', 'debug');
 		},
 		onAnyPseudoWeatherChange(target, source, pseudoWeather) {
-			this.add('-message', 'But the wonder room remained!')
-			this.field.addPseudoWeather('wonderroom');
+			this.add('-message', 'But the wonder room remained!');
+			this.add('-fieldstart', 'Wonder Room');
+			this.field.addPseudoWeather('wonderroom', 'debug');
 		},
 	},
 };
