@@ -2040,7 +2040,6 @@ export class Pokemon {
 		if (this.hasAbility('levitate') && !this.battle.suppressingAbility(this)) return null;
 		if ('magnetrise' in this.volatiles) return false;
 		if ('telekinesis' in this.volatiles) return false;
-		if ('Floatin' in this.volatiles) return false;
 		return item !== 'airballoon';
 	}
 

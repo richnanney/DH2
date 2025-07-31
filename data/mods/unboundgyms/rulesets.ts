@@ -67,7 +67,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		desc: "All Ghost-Type Pokemon also benefit from MultiScale and are immune to hazards.",
 		onModifyDamage(relayVar, source, target, move) {
 			if (target.hp >= target.maxhp && target.hasType('Ghost')) {
-				this.add('-message', `${target.name} takes less damage thanks to the gym effect!1`)
+				this.add('-message', `${target.name} takes less damage thanks to the gym effect!`)
 				return this.chainModify(0.5);
 			}
 		},
@@ -148,12 +148,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		desc: "All Steel type pokemon get levitate.",
 		onSwitchIn(pokemon) {
 			if (pokemon.hasType('Steel')) {
-				pokemon.addVolatile('Floatin')
-			}
-		},
-		onModifyType(move, pokemon, target) {
-			if (pokemon.hasType('Steel')) {
-				pokemon.addVolatile('Floatin')
+				pokemon.addVolatile('magnetrise');
 			}
 		},
 	},
@@ -242,9 +237,12 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		effectType: 'Rule',
 		name: 'Fairy Gym',
 		desc: "Permanent Wonder Room.",
+		onBeforeTurn(pokemon) {
+			this.add('-message', `Debug this is onBeforeturn.`);
+		},
 		onBegin() {
 			this.add('-fieldstart', 'Wonder Room');
-			this.field.addPseudoWeather('wonderroom', 'debug');
+			this.field.pseudoWeather['wonderroom'] = {condition: this.dex.moves.get('wonderroom').condition};
 		},
 		onAnyPseudoWeatherChange(target, source, pseudoWeather) {
 			this.add('-message', 'But the wonder room remained!');
