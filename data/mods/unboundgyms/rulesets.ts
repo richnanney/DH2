@@ -148,21 +148,14 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		desc: "All Steel type pokemon get levitate.",
 		onSwitchIn(pokemon) {
 			if (pokemon.hasType('Steel')) {
-				pokemon.isGrounded(false);
+				pokemon.addVolatile('Floatin')
 			}
 		},
-		onType(types, pokemon) {
+		onModifyType(move, pokemon, target) {
 			if (pokemon.hasType('Steel')) {
-				pokemon.isGrounded(false);
+				pokemon.addVolatile('Floatin')
 			}
 		},
-		/*
-		onTryHit(source, target, move) {
-			if (source.hasType('Steel')) {
-				if (move.type === 'Ground') return false;
-			}
-		},
-		*/
 	},
 	darkgym: {
 		effectType: 'Rule',
