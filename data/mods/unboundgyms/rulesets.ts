@@ -215,7 +215,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		onDamagingHit(damage, target, source, move) {
 			const side = source.isAlly(target) ? source.side.foe : source.side;
 			const toxicSpikes = side.sideConditions['toxicspikes'];
-			if (move.category === 'Physical' && (!toxicSpikes || toxicSpikes.layers < 2)) {
+			if (move.category === 'Physical' && (!toxicSpikes || toxicSpikes.layers < 2) && target.hasType('Poison')) {
 				this.add('-activate', target, 'ability: Toxic Debris');
 				side.addSideCondition('toxicspikes', target);
 			}
@@ -246,7 +246,14 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			this.add('-fieldstart', 'move: Wonder Room');
 			this.field.pseudoWeather.wonderroom = { id: 'wonderroom' };
 		},
+		onAnyPseudoWeatherChange(target, source, pseudoWeather) {
+			this.add('-message', `Debug: pseudoweather had changed to ${pseudoWeather}`);
+			this.add('-message', `The spotlights are too strong to set up!`);
+			this.field.pseudoWeather.wonderroom = { id: 'wonderroom' };
+			return false;
+		},
 		onTryMove(source, target, move) {
+			this.add('-message', `Debug: onTryMove is ${move.name}`);
 			if (move.name in ['wonderroom', 'trickroom', 'magicroom', 'Wonder Room', 'Trick Room', 'Magic Room']) {
 				this.add('-message', `The spotlights are too strong to set up ${move.name}!`);
 				return false;
