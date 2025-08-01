@@ -244,33 +244,13 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		desc: "Permanent Wonder Room.",
 		onBegin() {
 			this.add('-fieldstart', 'Wonder Room');
-			this.field.pseudoWeather['wonderroom'] = {condition: 
-				{
-					duration: 0,
-					durationCallback() {
-						return 0;
-					},
-					onFieldStart() {
-						for (const mon of this.getAllActive()) {
-							this.singleEvent('End', mon.getItem(), mon.itemState, mon);
-						}
-					},
-					onFieldRestart() {
-						this.field.removePseudoWeather('magicroom');
-					},
-					// Item suppression implemented in Pokemon.ignoringItem() within sim/pokemon.js
-					onFieldResidualOrder: 27,
-					onFieldResidualSubOrder: 6,
-					onFieldEnd() {
-						this.add('-fieldend', 'move: Magic Room', '[of] ' + this.effectState.source);
-					},
-				},
-			};
+			this.field.pseudoWeather.trickroom = { id: 'wonderroom' };
 		},
 		onAnyPseudoWeatherChange(target, source, pseudoWeather) {
 			this.add('-message', 'But the wonder room remained!');
 			this.add('-fieldstart', 'Wonder Room');
-			this.field.addPseudoWeather('wonderroom', 'debug');
+			this.field.pseudoWeather.trickroom = { id: 'wonderroom' };
+			return false;
 		},
 	},
 };
