@@ -147,7 +147,12 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'Steel Gym',
 		desc: "All Steel type pokemon get levitate.",
 		onSwitchIn(pokemon) {
-			if (pokemon.hasType('Steel')) {
+			if (pokemon.hasType(['Electric', 'Steel'])) {
+				pokemon.addVolatile('magnetrise');
+			}
+		},
+		onModifyType(move, pokemon, target) {
+			if (pokemon.hasType(['Electric', 'Steel'])) {
 				pokemon.addVolatile('magnetrise');
 			}
 		},
@@ -237,12 +242,30 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		effectType: 'Rule',
 		name: 'Fairy Gym',
 		desc: "Permanent Wonder Room.",
-		onBeforeTurn(pokemon) {
-			this.add('-message', `Debug this is onBeforeturn.`);
-		},
 		onBegin() {
 			this.add('-fieldstart', 'Wonder Room');
-			this.field.pseudoWeather['wonderroom'] = {condition: this.dex.moves.get('wonderroom').condition};
+			this.field.pseudoWeather['wonderroom'] = {condition: 
+				{
+					duration: 0,
+					durationCallback() {
+						return 0;
+					},
+					onFieldStart() {
+						for (const mon of this.getAllActive()) {
+							this.singleEvent('End', mon.getItem(), mon.itemState, mon);
+						}
+					},
+					onFieldRestart() {
+						this.field.removePseudoWeather('magicroom');
+					},
+					// Item suppression implemented in Pokemon.ignoringItem() within sim/pokemon.js
+					onFieldResidualOrder: 27,
+					onFieldResidualSubOrder: 6,
+					onFieldEnd() {
+						this.add('-fieldend', 'move: Magic Room', '[of] ' + this.effectState.source);
+					},
+				},
+			};
 		},
 		onAnyPseudoWeatherChange(target, source, pseudoWeather) {
 			this.add('-message', 'But the wonder room remained!');
