@@ -246,15 +246,8 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			this.add('-fieldstart', 'move: Wonder Room');
 			this.field.pseudoWeather.wonderroom = { id: 'wonderroom' };
 		},
-		onAnyPseudoWeatherChange(target, source, pseudoWeather) {
-			this.add('-message', `Debug: pseudoweather had changed to ${pseudoWeather}`);
-			this.add('-message', `The spotlights are too strong to set up!`);
-			this.field.pseudoWeather.wonderroom = { id: 'wonderroom' };
-			return false;
-		},
 		onTryMove(source, target, move) {
-			this.add('-message', `Debug: onTryMove is ${move.name}`);
-			if (move.name in ['wonderroom', 'trickroom', 'magicroom', 'Wonder Room', 'Trick Room', 'Magic Room']) {
+			if (['Wonder Room', 'Trick Room', 'Magic Room'].includes(move.name)) {
 				this.add('-message', `The spotlights are too strong to set up ${move.name}!`);
 				return false;
 			}
