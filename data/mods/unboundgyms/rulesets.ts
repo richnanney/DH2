@@ -166,7 +166,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				return;
 			}
 			if (!target.hasType('Dark') && !target.hasType('Ghost')) {
-				this.add('-message', `${target.fullname} takes damage from the Gym's Dark Aura!`)
+				this.add('-message', `${target.fullname} takes damage from the Gym's Dark Aura!`);
 				this.damage(target.baseMaxhp / 16);
 			}
 		},
@@ -246,11 +246,11 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			this.add('-fieldstart', 'move: Wonder Room');
 			this.field.pseudoWeather.wonderroom = { id: 'wonderroom' };
 		},
-		onAnyPseudoWeatherChange(target, source, pseudoWeather) {
-			this.add('-message', 'But the wonder room remained!');
-			this.add('-fieldstart', 'Wonder Room');
-			this.field.pseudoWeather.wonderroom = { id: 'wonderroom' };
-			return false;
+		onTryMove(source, target, move) {
+			if (move.name in ['wonder room', 'trick room', 'magic room']) {
+				this.add('-message', `The gym's Wonder Room is too strong to be overwritten!`);
+				return false;
+			}
 		},
 	},
 };
