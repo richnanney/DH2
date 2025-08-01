@@ -243,13 +243,13 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'Fairy Gym',
 		desc: "Permanent Wonder Room.",
 		onBegin() {
-			this.add('-fieldstart', 'Wonder Room');
-			this.field.pseudoWeather.trickroom = { id: 'wonderroom' };
+			this.add('-fieldstart', 'move: Wonder Room');
+			this.field.pseudoWeather.wonderroom = { id: 'wonderroom' };
 		},
 		onAnyPseudoWeatherChange(target, source, pseudoWeather) {
 			this.add('-message', 'But the wonder room remained!');
 			this.add('-fieldstart', 'Wonder Room');
-			this.field.pseudoWeather.trickroom = { id: 'wonderroom' };
+			this.field.pseudoWeather.wonderroom = { id: 'wonderroom' };
 			return false;
 		},
 	},
