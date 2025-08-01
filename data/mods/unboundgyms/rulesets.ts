@@ -247,8 +247,8 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			this.field.pseudoWeather.wonderroom = { id: 'wonderroom' };
 		},
 		onTryMove(source, target, move) {
-			if (move.name in ['wonder room', 'trick room', 'magic room']) {
-				this.add('-message', `The gym's Wonder Room is too strong to be overwritten!`);
+			if (move.name in ['wonderroom', 'trickroom', 'magicroom', 'Wonder Room', 'Trick Room', 'Magic Room']) {
+				this.add('-message', `The spotlights are too strong to set up ${move.name}!`);
 				return false;
 			}
 		},
