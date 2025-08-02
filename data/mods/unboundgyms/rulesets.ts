@@ -12,6 +12,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 					if (pokemon.hasType('Water') && !pokemon.volatiles['aquaring']) {
 						this.add('-activate', pokemon, 'move: Aqua Ring');
 						pokemon.addVolatile('aquaring');
+						this.add('-message', `The water from the lake forms a ring around ${pokemon.name}!`)
 					}
 				}
 			}
@@ -23,7 +24,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		},
 		onSetWeather(target, source, weather) {
 			if (this.field.weather == 'raindance') {
-				this.add('-message', 'The rain from the gym effect can\'t be removed!')
+				this.add('-message', 'The downpour is too strong to be removed!')
 				return false;
 			}
 		},
@@ -40,7 +41,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		},
 		onSetWeather(target, source, weather) {
 			if (this.field.weather == 'sunnyday') {
-				this.add('-message', 'The sun from the gym effect can\'t be removed!')
+				this.add('-message', `The heat from the volcano evaporated the ${weather.name}!`)
 				return false;
 			}
 		},
@@ -55,7 +56,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			this.field.terrainState = { id: 'grassyterrain'};
 		},
 		onTerrainChange(target, source, sourceEffect) {
-			this.add('-message', 'But the grassy terrain remained!')
+			this.add('-message', 'The grassy terrain regrew instantly!')
 			this.add('-fieldstart', 'Grassy Terrain')
 			this.field.terrain = 'grassyterrain' as ID;
 			this.field.terrainState = { id: 'grassyterrain'};
@@ -65,6 +66,9 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		effectType: 'Rule',
 		name: 'Ghost Gym',
 		desc: "All Ghost-Type Pokemon also benefit from MultiScale and are immune to hazards.",
+		onBegin() {
+			this.add('-message', `A shadowy veil protects all ghost type pokemon!`)
+		},
 		onModifyDamage(relayVar, source, target, move) {
 			if (target.hp >= target.maxhp && target.hasType('Ghost')) {
 				this.add('-message', `${target.name} takes less damage thanks to the gym effect!`)
@@ -77,6 +81,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				for (const condition of sideConditions) {
 					if (pokemon.side.removeSideCondition(condition)){
 						this.add('-sideend', pokemon.side, this.dex.conditions.get(condition).name);
+						this.add('-message', `Mysterious fources made the ${condition} vanish!`)
 					}
 				}
 			};
@@ -86,14 +91,12 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		effectType: 'Rule',
 		name: 'Flying Gym',
 		desc: "Flying type pokemon get permanent tail wind.",
+		onBegin() {
+			this.add('-message', `A tailwind blows in behind all Flying type pokemon!`);
+		},
 		onModifySpe(spe, pokemon) {
 			if (pokemon.hasType('Flying')) {
 				return this.modify(spe, 2);
-			}
-		},
-		onTryHit(source, target, move) {
-			if (target.hasType("Flying")) {
-				this.add('-message', `${target.name} moves faster thanks to the strong winds!`)
 			}
 		},
 	},
@@ -102,7 +105,6 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'Psychic Gym',
 		desc: "All Psychic type pokemon get Magic Bounce.",
 		onTryHitSide(target, source, move) {
-			this.add('-message',`Debug: TryHitSide triggered.`)
 			if (target === source) {
 				return;
 			}
@@ -113,7 +115,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				return;
 			}
 			if (target.hasType('Psychic')) {
-				this.add('-message',`${target.name} reflects the move thanks to the gym effect!`)
+				this.add('-message',`Telekinetic forces pushed the status move back to your side!`)
 				const newMove = this.dex.getActiveMove(move.id);
 				newMove.hasBounced = true;
 				newMove.pranksterBoosted = false;
@@ -133,7 +135,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				return;
 			}
 			if (target.hasType('Psychic')) {
-				this.add('-message',`${target.name} reflects the move thanks to the gym effect!`)
+				this.add('-message',`Telekinetic forces pushed the field move back to your side!`)
 				const newMove = this.dex.getActiveMove(move.id);
 				newMove.hasBounced = true;
 				newMove.pranksterBoosted = false;
@@ -148,11 +150,13 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		desc: "All Steel type pokemon get levitate.",
 		onSwitchIn(pokemon) {
 			if (pokemon.hasType(['Electric', 'Steel'])) {
+				this.add('-message', `${pokemon.name} started levitating from the magnetic field!`)
 				pokemon.addVolatile('magnetrise');
 			}
 		},
 		onModifyType(move, pokemon, target) {
 			if (pokemon.hasType(['Electric', 'Steel'])) {
+				this.add('-message', `${pokemon.name} started levitating from the magnetic field!`)
 				pokemon.addVolatile('magnetrise');
 			}
 		},
@@ -161,12 +165,15 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		effectType: 'Rule',
 		name: 'Dark Gym',
 		desc: "All non-dark and non-ghost pokemon take 1/16 hp as damage each turn.",
+		onBegin() {
+			this.add('-message', `Negative emotions fill the air!`)
+		},
 		onResidual(target, source, effect) {
 			if (!target || target.fainted) {
 				return;
 			}
 			if (!target.hasType('Dark') && !target.hasType('Ghost')) {
-				this.add('-message', `${target.fullname} takes damage from the Gym's Dark Aura!`);
+				this.add('-message', `${target.name} is tomented by the negative emotions!`);
 				this.damage(target.baseMaxhp / 16);
 			}
 		},
@@ -182,7 +189,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		},
 		onSetWeather(target, source, weather) {
 			if (this.field.weather == 'snow') {
-				this.add('-message', 'The snow from the gym effect can\'t be removed!')
+				this.add('-message', `The snow machine blew away the ${weather.name}!`)
 				return false;
 			}
 		},
@@ -198,7 +205,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		},
 		onSetWeather(target, source, weather) {
 			if (this.field.weather == 'vicioussandstorm') {
-				this.add('-message', 'The sandstorm from the gym effect can\'t be removed!')
+				this.add('-message', `The sandstorm is too strong to set up ${weather.name}!`)
 				return false;
 			}
 		},
@@ -218,6 +225,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			if (move.category === 'Physical' && (!toxicSpikes || toxicSpikes.layers < 2) && target.hasType('Poison')) {
 				this.add('-activate', target, 'ability: Toxic Debris');
 				side.addSideCondition('toxicspikes', target);
+				this.add('-message', `Toxic spikes broke off of ${target.name} and were scattered across the opponent's side of the field!`)
 			}
 		},
 	},
@@ -225,15 +233,19 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		effectType: 'Rule',
 		name: 'Dragon Gym',
 		desc: "All Dragon type pokemon benefit from Serene Grace.",
+		onBegin() {
+			this.add('-message', `A rainbow appeared in the sky across the entire battlefield!`)
+			this.add('-message', `The secondary chances of moves used by Dragon types have been boosted!`)
+		},
 		onModifyMove(move, pokemon, target) {
 			if (move.secondaries && pokemon.hasType('Dragon')) {
-				this.add('-message', 'The move is a little luckier thanks to the gym effect!')
+				this.add('-message', `${move.name} is a little luckier thanks to the gym effect!`)
 				for (const secondary of move.secondaries) {
 					if (secondary.chance) secondary.chance *= 2;
 				}
 			}
 			if (move.self?.chance && pokemon.hasType('dragon')) {
-				this.add('-message', 'The move is a little luckier thanks to the gym effect!')
+				this.add('-message', `${move.name} is a little luckier thanks to the gym effect!`)
 				move.self.chance *= 2;
 			}
 		},
