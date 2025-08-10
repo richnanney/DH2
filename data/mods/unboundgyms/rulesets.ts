@@ -56,10 +56,12 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			this.field.terrainState = { id: 'grassyterrain'};
 		},
 		onTerrainChange(target, source, sourceEffect) {
-			this.add('-message', 'The grassy terrain regrew instantly!')
-			this.add('-fieldstart', 'Grassy Terrain')
-			this.field.terrain = 'grassyterrain' as ID;
-			this.field.terrainState = { id: 'grassyterrain'};
+			if (sourceEffect.name != 'grassyterrain') {
+			    this.add('-message', 'The grassy terrain regrew instantly!')
+			    this.add('-fieldstart', 'Grassy Terrain')
+			    this.field.terrain = 'grassyterrain' as ID;
+			    this.field.terrainState = { id: 'grassyterrain'};
+			}
 		},
 	},
 	ghostgym: {
