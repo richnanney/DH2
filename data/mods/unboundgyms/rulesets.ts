@@ -255,10 +255,10 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 	fairygym: {
 		effectType: 'Rule',
 		name: 'Fairy Gym',
-		desc: "Permanent Wonder Room.",
+		desc: "Permanent Trick Room.",
 		onBegin() {
-			this.add('-fieldstart', 'move: Wonder Room');
-			this.field.pseudoWeather.wonderroom = { id: 'wonderroom' };
+			this.add('-fieldstart', 'move: Trick Room');
+			this.field.pseudoWeather.trickroom = { id: 'trickroom' };
 		},
 		onTryMove(source, target, move) {
 			if (['Wonder Room', 'Trick Room', 'Magic Room'].includes(move.name)) {
