@@ -273,15 +273,14 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		desc: "Bugs get Arena Trap.",
 		onTrapPokemon(pokemon) {
 			for (const target of pokemon.side.foe.active) {
-				if (target && target.hasType('Bug') && !target.fainted) {
+				if (target && target.hasType('Bug') && !target.fainted && pokemon.isGrounded()) {
 					pokemon.tryTrap(true);
-					pokemon.maybeTrapped = true; 
 				}
 			}
 		},
 		onMaybeTrapPokemon(pokemon) {
 			for (const foe of pokemon.side.foe.active) {
-				if (foe && foe.isActive && !foe.fainted && foe.hasType('Bug')) {
+				if (foe && foe.isActive && !foe.fainted && foe.hasType('Bug') && pokemon.isGrounded()) {
 					pokemon.maybeTrapped = true;
 				}
 			}
