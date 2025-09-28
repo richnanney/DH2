@@ -267,4 +267,24 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			}
 		},
 	},
+	buggym: {
+		effectType: 'Rule',
+		name: 'Bug Gym',
+		desc: "Bugs get Arena Trap.",
+		onTrapPokemon(pokemon) {
+			for (const target of pokemon.side.foe.active) {
+				if (target && target.hasType('Bug') && !target.fainted) {
+					pokemon.tryTrap(true);
+					pokemon.maybeTrapped = true; 
+				}
+			}
+		},
+		onMaybeTrapPokemon(pokemon) {
+			for (const foe of pokemon.side.foe.active) {
+				if (foe && foe.isActive && !foe.fainted && foe.hasType('Bug')) {
+					pokemon.maybeTrapped = true;
+				}
+			}
+		},
+	},
 };
