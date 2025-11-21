@@ -237,9 +237,11 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 		shortDesc: "Crits on the 4th hit.",
 		flags: {protect: 1, mirror: 1, metronome: 1},
 		onHit(target, source, move) {
-				this.add('-message', `This is multihit ${move.multihit}!`);
-				this.add('-message', `This is multihit ${move.hit}!`);
-				if (move.multihit === 4) move.critRatio = 5;
+				this.add('-message', `This is hit ${move.hit}!`);
+				if (move.hit === 4){
+					this.add('-message', `This one should crit!`);
+					move.critRatio = 5;
+				} 
 		},
 		pp: 15,
 		priority: 0,
