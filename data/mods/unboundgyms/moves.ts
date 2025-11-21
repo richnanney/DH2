@@ -54,7 +54,7 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 		category: "Physical",
 		desc: "A physical attack in which the user charges, full body, into the foe.",
 		shortDesc: "A weak hit.",
-		name: "Steelyhit",
+		name: "Steely Hit",
 		gen: 7,
 		pp: 35,
 		priority: 0,
@@ -233,6 +233,9 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 		basePower: 20,
 		category: "Special",
 		name: "Four of a Kind",
+		desc: "Hits the foe with cards up to 4 times. The fourth hit always crits.",
+		shortDesc: "Crits on the 4th hit.",
+		gen: 7,
 		flags: {protect: 1, mirror: 1, metronome: 1},
 		condition:{
 			onModifyCritRatio(critRatio, source, target, move) {
@@ -248,5 +251,5 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 		zMove: {basePower: 140},
 		maxMove: {basePower: 130},
 		contestType: "Cool",
-	}
+	},
 };
