@@ -237,7 +237,9 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 		shortDesc: "Crits on the 4th hit.",
 		flags: {protect: 1, mirror: 1, metronome: 1},
 		onTryHit(target, source, move) {
-			if (source.item === 'loadeddice') delete move.multiaccuracy;
+			if (move.multihit && Array.isArray(move.multihit) && move.multihit.length && source.item === 'loadeddice') {
+				move.multihit = move.multihit[1];
+			}
 			if (move.hit === 4){
 				this.add('-message', `${source.name} finds the Ace!`);
 				move.critRatio = 5;
