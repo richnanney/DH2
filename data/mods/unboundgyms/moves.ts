@@ -227,4 +227,26 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 			status: "frz",
 		}
 	},
+	fourofakind : {
+		num:	1111,
+		accuracy: 90,
+		basePower: 20,
+		category: "Special",
+		name: "Four of a Kind",
+		flags: {protect: 1, mirror: 1, metronome: 1},
+		condition:{
+			onModifyCritRatio(critRatio, source, target, move) {
+				if (move.hit === 4) return 5;
+			},
+		},
+		pp: 15,
+		priority: 0,
+		multihit: [2,4],
+		secondary: null,
+		target: "normal",
+		type: "Psychic",
+		zMove: {basePower: 140},
+		maxMove: {basePower: 130},
+		contestType: "Cool",
+	}
 };
