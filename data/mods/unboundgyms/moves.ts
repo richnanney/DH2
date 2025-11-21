@@ -237,11 +237,13 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 		shortDesc: "Crits on the 4th hit.",
 		flags: {protect: 1, mirror: 1, metronome: 1},
 		onTryHit(target, source, move) {
-				this.add('-message', `This is hit ${move.hit}!`);
-				if (move.hit === 4){
-					this.add('-message', `This one should crit!`);
-					move.critRatio = 5;
-				} 
+			this.add('-message', `${source.name} is holding ${source.item}`);
+			if (source.item == 'loadeddice') move.accuracy = 100;
+			
+			if (move.hit === 4){
+				this.add('-message', `${source.name} finds the Ace!`);
+				move.critRatio = 5;
+			} 
 		},
 		pp: 15,
 		priority: 0,
