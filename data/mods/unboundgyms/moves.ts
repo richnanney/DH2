@@ -239,6 +239,8 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 		flags: {protect: 1, mirror: 1, metronome: 1},
 		condition:{
 			onModifyCritRatio(critRatio, source, target, move) {
+				this.add('-message', `This is multihit ${move.multihit}!`);
+				this.add('-message', `This is multihit ${move.hit}!`);
 				if (move.multihit === 4) return 5;
 			},
 		},
