@@ -239,7 +239,7 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 		flags: {protect: 1, mirror: 1, metronome: 1},
 		condition:{
 			onModifyCritRatio(critRatio, source, target, move) {
-				if (move.hit === 4) return 5;
+				if (move.multihit === 4) return 5;
 			},
 		},
 		pp: 15,
