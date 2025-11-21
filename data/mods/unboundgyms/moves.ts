@@ -236,7 +236,7 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 		desc: "Hits the foe with cards up to 4 times. The fourth hit always crits.",
 		shortDesc: "Crits on the 4th hit.",
 		flags: {protect: 1, mirror: 1, metronome: 1},
-		onHit(target, source, move) {
+		onTryHit(target, source, move) {
 				this.add('-message', `This is hit ${move.hit}!`);
 				if (move.hit === 4){
 					this.add('-message', `This one should crit!`);
