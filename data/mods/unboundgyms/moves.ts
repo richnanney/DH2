@@ -235,13 +235,14 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 		name: "Four of a Kind",
 		desc: "Hits the foe with cards up to 4 times. The fourth hit always crits.",
 		shortDesc: "Crits on the 4th hit.",
-		gen: 7,
 		flags: {protect: 1, mirror: 1, metronome: 1},
+		volatileStatus: 'fourofakind',
 		condition:{
 			onModifyCritRatio(critRatio, source, target, move) {
 				this.add('-message', `This is multihit ${move.multihit}!`);
 				this.add('-message', `This is multihit ${move.hit}!`);
 				if (move.multihit === 4) return 5;
+				return critRatio;
 			},
 		},
 		pp: 15,
