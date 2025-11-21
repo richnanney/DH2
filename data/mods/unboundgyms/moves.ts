@@ -236,10 +236,12 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 		desc: "Hits the foe with cards up to 4 times. The fourth hit always crits.",
 		shortDesc: "Crits on the 4th hit.",
 		flags: {protect: 1, mirror: 1, metronome: 1},
-		onTryHit(target, source, move) {
-			if (move.multihit && Array.isArray(move.multihit) && move.multihit.length && source.item === 'loadeddice') {
+		onModifyMove(move, pokemon, target) {
+			if (move.multihit && Array.isArray(move.multihit) && move.multihit.length && pokemon.item === 'loadeddice') {
 				move.multihit = move.multihit[1];
 			}
+		},
+		onTryHit(target, source, move) {
 			if (move.hit === 4){
 				this.add('-message', `${source.name} finds the Ace!`);
 				move.critRatio = 5;
