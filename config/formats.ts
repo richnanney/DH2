@@ -110,8 +110,8 @@ export const Formats: FormatList = [
 		mod: 'unboundgyms',
 		ruleset: ['electricgym']
 	},
-			{
-		section: "Gym Gimmick Testing",
+	{
+		section: "Gym Gimmick Testing Doubles",
 		column: 2,
 	},
 	{
