@@ -105,4 +105,9 @@ export const Formats: FormatList = [
 		mod: 'unboundgyms',
 		ruleset: ['buggym']
 	},
+	{
+		name: "[Gen 9] Unbound Electric Gym",
+		mod: 'unboundgyms',
+		ruleset: ['electricgym']
+	},
 ];

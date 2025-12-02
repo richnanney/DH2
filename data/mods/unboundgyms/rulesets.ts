@@ -64,6 +64,24 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			}
 		},
 	},
+		electricgym: {
+		effectType: 'Rule',
+		name: 'Electric Gym',
+		desc: "Permanent Electric Terrain.",
+		onBegin() {
+			this.add('-fieldstart', 'Electric Terrain')
+			this.field.terrain = 'electricterrain' as ID;
+			this.field.terrainState = { id: 'electricterrain'};
+		},
+		onTerrainChange(target, source, sourceEffect) {
+			if (sourceEffect.name != 'electricterrain') {
+			    this.add('-message', 'The electric terrain was restored instantly!')
+			    this.add('-fieldstart', 'Electric Terrain')
+			    this.field.terrain = 'electricterrain' as ID;
+			    this.field.terrainState = { id: 'electricterrain'};
+			}
+		},
+	},
 	ghostgym: {
 		effectType: 'Rule',
 		name: 'Ghost Gym',

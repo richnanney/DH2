@@ -229,7 +229,7 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 	},
 	fourofakind : {
 		num:	1111,
-		accuracy: 90,
+		accuracy: 100,
 		basePower: 20,
 		category: "Special",
 		name: "Four of a Kind",
@@ -247,7 +247,7 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 				move.critRatio = 5;
 			} 
 		},
-		pp: 15,
+		pp: 10,
 		priority: 0,
 		multihit: [2,4],
 		secondary: null,
