@@ -110,4 +110,98 @@ export const Formats: FormatList = [
 		mod: 'unboundgyms',
 		ruleset: ['electricgym']
 	},
+			{
+		section: "Gym Gimmick Testing",
+		column: 2,
+	},
+	{
+		name: "[Gen 9] Unbound Water Gym Doubles",
+		mod: 'unboundgyms',
+		gameType: 'doubles',
+		ruleset: ['watergym']
+	},
+	{
+		name: "[Gen 9] Unbound Fire Gym Doubles",
+		mod: 'unboundgyms',
+		gameType: 'doubles',
+		ruleset: ['firegym']
+	},
+	{
+		name: "[Gen 9] Unbound Grass Gym Doubles",
+		mod: 'unboundgyms',
+		gameType: 'doubles',
+		ruleset: ['grassgym']
+	},
+	{
+		name: "[Gen 9] Unbound Ghost Gym Doubles",
+		mod: 'unboundgyms',
+		gameType: 'doubles',
+		ruleset: ['ghostgym']
+	},
+	{
+		name: "[Gen 9] Unbound Flying Gym Doubles",
+		mod: 'unboundgyms',
+		gameType: 'doubles',
+		ruleset: ['flyinggym']
+	},
+	{
+		name: "[Gen 9] Unbound Psychic Gym Doubles",
+		mod: 'unboundgyms',
+		gameType: 'doubles',
+		ruleset: ['psychicgym']
+	},
+	{
+		name: "[Gen 9] Unbound Steel Gym Doubles",
+		mod: 'unboundgyms',
+		gameType: 'doubles',
+		ruleset: ['steelgym']
+	},
+	{
+		name: "[Gen 9] Unbound Dark Gym Doubles",
+		mod: 'unboundgyms',
+		gameType: 'doubles',
+		ruleset: ['darkgym']
+	},
+	{
+		name: "[Gen 9] Unbound Ice Gym Doubles",
+		mod: 'unboundgyms',
+		gameType: 'doubles',
+		ruleset: ['icegym']
+	},
+	{
+		name: "[Gen 9] Unbound Ground Gym Doubles",
+		mod: 'unboundgyms',
+		gameType: 'doubles',
+		ruleset: ['groundgym']
+	},
+	{
+		name: "[Gen 9] Unbound Poison Gym Doubles",
+		mod: 'unboundgyms',
+		gameType: 'doubles',
+		ruleset: ['poisongym']
+	},
+	{
+		name: "[Gen 9] Unbound Dragon Gym Doubles",
+		mod: 'unboundgyms',
+		gameType: 'doubles',
+		ruleset: ['dragongym']
+	},
+	{
+		name: "[Gen 9] Unbound Fairy Gym Doubles",
+		mod: 'unboundgyms',
+		gameType: 'doubles',
+		ruleset: ['fairygym']
+	},
+	{
+		name: "[Gen 9] Unbound Bug Gym Doubles",
+		mod: 'unboundgyms',
+		gameType: 'doubles',
+		ruleset: ['buggym']
+	},
+	{
+		name: "[Gen 9] Unbound Electric Gym Doubles",
+		mod: 'unboundgyms',
+		gameType: 'doubles',
+		ruleset: ['electricgym']
+	},
 ];
