@@ -85,6 +85,28 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 	ghostgym: {
 		effectType: 'Rule',
 		name: 'Ghost Gym',
+		desc: "All pokemon are affected by Perish Song.",
+		onBegin() {
+			this.add('-message', `A deathly song enchants the battlefield!`)
+		},
+		onResidual(battle) {
+			for (const side of this.sides) {
+				for (const pokemon of side.active) {
+					if (!pokemon || pokemon.fainted) continue;
+					if (!pokemon.hasAbility('Soundproof') && !pokemon.volatiles['perishsong']) {
+						this.add('-activate', pokemon, 'move: Perish Song');
+						pokemon.addVolatile('perishsong');
+						this.add('-message', `${pokemon.name} is affected the cursed music!`)
+					}
+				}
+			}
+		},
+
+	},
+	/*
+	ghostgym: {
+		effectType: 'Rule',
+		name: 'Ghost Gym',
 		desc: "All Ghost-Type Pokemon also benefit from MultiScale and are immune to hazards.",
 		onBegin() {
 			this.add('-message', `A shadowy veil protects all ghost type pokemon!`)
@@ -107,6 +129,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			};
 		},
 	},
+	*/
 	flyinggym: {
 		effectType: 'Rule',
 		name: 'Flying Gym',
@@ -167,20 +190,32 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 	steelgym: {
 		effectType: 'Rule',
 		name: 'Steel Gym',
-		desc: "All Steel type pokemon get levitate.",
+		desc: "All Steel type pokemon get magnet rise.",
 		onSwitchIn(pokemon) {
-			if (pokemon.hasType(['Electric', 'Steel'])) {
+			if (pokemon.hasType(['Steel'])) {
 				this.add('-message', `${pokemon.name} started levitating from the magnetic field!`)
 				pokemon.addVolatile('magnetrise');
 			}
 		},
 		onModifyType(move, pokemon, target) {
-			if (pokemon.hasType(['Electric', 'Steel'])) {
+			if (pokemon.hasType(['Steel'])) {
 				this.add('-message', `${pokemon.name} started levitating from the magnetic field!`)
 				pokemon.addVolatile('magnetrise');
 			}
 		},
 	},
+	darkgym: {
+		effectType: 'Rule',
+		name: 'Dark Gym',
+		desc: "KO-ing a Dark type Pokemon lowers your stats.",
+		onDamagingHit(damage, target, source, move) {
+			if (!target.hp && target.hasType("Dark")) {
+				this.add('-message', `${this.getPokemon.name} is guilted for knocking out ${target.name}!`);
+				this.boost({spa: -1, atk: -1}, source, target, null, true);
+			}
+		},
+	},
+	/*
 	darkgym: {
 		effectType: 'Rule',
 		name: 'Dark Gym',
@@ -198,6 +233,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			}
 		},
 	},
+	*/
 	icegym: {
 		effectType: 'Rule',
 		name: 'Ice Gym',
