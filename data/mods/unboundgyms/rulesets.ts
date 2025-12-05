@@ -88,8 +88,8 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		desc: "All pokemon are affected by Perish Song.",
 		onBegin() {
 			this.add('-message', `A deathly song enchants the battlefield!`)
+			
 		},
-		onResidualOrder: 25,
 		onResidual(battle) {
 			for (const side of this.sides) {
 				for (const pokemon of side.active) {
@@ -97,7 +97,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 					if (!pokemon.hasAbility('Soundproof') && !pokemon.volatiles['perishsong']) {
 						this.add('-activate', pokemon, 'move: Perish Song');
 						pokemon.addVolatile('perishsong');
-						this.add('-message', `${pokemon.name} is affected the cursed music!`)
+						this.add('-start', pokemon, 'perish3', '[silent]');
 					}
 				}
 			}
