@@ -89,7 +89,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		onBegin() {
 			this.add('-message', `A deathly song enchants the battlefield!`)
 		},
-		onResidualOrder:1,
+		onResidualOrder: 25,
 		onResidual(battle) {
 			for (const side of this.sides) {
 				for (const pokemon of side.active) {
