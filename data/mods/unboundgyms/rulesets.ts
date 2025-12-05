@@ -90,17 +90,23 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			this.add('-message', `A deathly song enchants the battlefield!`)
 			
 		},
-		onResidual(battle) {
+		onResidual() {
 			for (const side of this.sides) {
 				for (const pokemon of side.active) {
 					if (!pokemon || pokemon.fainted) continue;
-					if (!pokemon.hasAbility('Soundproof') && !pokemon.volatiles['perishsong']) {
+					if (!pokemon.hasAbility('Soundproof') && !pokemon.volatiles["perishsong"]) {
 						this.add('-activate', pokemon, 'move: Perish Song');
 						pokemon.addVolatile('perishsong');
-						this.add('-start', pokemon, 'perish3', '[silent]');
 					}
 				}
 			}
+		},
+		onTryAddVolatile(status, target, source, sourceEffect) {
+			this.add('-message', `TryAddVolatile ${status.name} ${status.id} ${status.duration}`)
+			if (status.id === 'perishsong') {
+				status.duration = 3;
+			}
+			this.add('-message', `TryAddVolatile ${status.name} ${status.duration}`)
 		},
 
 	},
