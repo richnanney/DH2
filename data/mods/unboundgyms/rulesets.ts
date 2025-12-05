@@ -92,7 +92,6 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				for (const pokemon of side.active) {
 					if (!pokemon || pokemon.fainted) continue;
 					if (!pokemon.hasAbility('Soundproof') && !pokemon.volatiles["perishsong"]) {
-						this.add('-activate', pokemon, 'move: Perish Song');
 						pokemon.addVolatile('perishsong');
 					}
 				}
@@ -100,7 +99,6 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		},
 		onSwitchIn(pokemon) {
 			if (!pokemon.hasAbility('Soundproof') && !pokemon.volatiles["perishsong"]) {
-				this.add('-activate', pokemon, 'move: Perish Song');
 				pokemon.addVolatile('perishsong');
 			}
 		},
