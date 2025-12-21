@@ -274,11 +274,11 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		effectType: 'Rule',
 		name: 'Poison Gym',
 		desc: "Poison type pokemon get Corrosion.",
-		onSetStatus(status, target, source, effect) {
-			if (['tox', 'psn'].includes(status.id) && source.hasType('Poison')) {
-				this.add('-message',  `${status.id} ${target.name} ${source.name} ${effect.name}`)
-				target.setStatus(status, target, effect, true)
-			}
+		onAnyTryMove(source, target, move) {
+			this.add('-message',  `${move.id} ${target.name} ${source.name} ${move.condition} ${move.status} ${move.forceStatus}`)
+		},
+		onTryAddVolatile(status, target, source, sourceEffect) {
+			this.add('-message',  `${status.id} ${target.name} ${source.name} ${sourceEffect.id}`)
 		},
 	},
 	dragongym: {
