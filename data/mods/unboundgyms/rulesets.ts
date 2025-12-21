@@ -274,18 +274,18 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		effectType: 'Rule',
 		name: 'Poison Gym',
 		desc: "Poison type pokemon get Corrosion.",
-		onTryMove(source, target, move) {
-			this.add('-message',  `move ${move.id} target ${target.name} source ${source.name} condition${move.condition} status${move.status} secondary${move.secondary} secondaries${move.secondaries}!`)
-		},
 		onTryHit(source, target, move) {
-			this.add('-message',  `HIT move ${move.id} target ${target.name} source ${source.name} condition${move.condition} status${move.status} secondary${move.secondary} secondaries${move.secondaries}!`)
+			this.add('-message',  `ONTRYHIT move ${move.id} target ${target.name} source ${source.name} condition${move.condition} status${move.status} secondary${move.secondary} secondaries${move.secondaries}!`)
+			if (move.id == 'Toxic' && target.hasType('Poison')) {
+				source.setStatus('tox',target,move,true)
+			}
 		},
 		onHit(target, source, move) {
 				this.add('-message',  `ONHIT move ${move.id} target ${target.name} source ${source.name} condition${move.condition} status${move.status} secondary${move.secondary} secondaries${move.secondaries}!`)
 		},
 		onResidual(target, source, effect) {
 			if (effect !== null){
-				this.add('-message',  `effect ${effect.id} target ${target.name} source ${source.name} status${effect.status}!`)
+				this.add('-message',  `ONRESIDUAL effect ${effect.id} target ${target.name} source ${source.name} status${effect.status}!`)
 			}
 		},
 	},
