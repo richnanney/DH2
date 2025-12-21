@@ -280,6 +280,9 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		onTryAddVolatile(status, target, source, sourceEffect) {
 			this.add('-message',  `man ${status.id} ${target.name} ${source.name} ${sourceEffect.id} oh no!`)
 		},
+		onTryMove(source, target, move) {
+			this.add('-message',  `pee ${move.id} ${target.name} ${source.name} ${move.condition} ${move.status} ${move.forceStatus} poo!`)
+		},
 	},
 	dragongym: {
 		effectType: 'Rule',
