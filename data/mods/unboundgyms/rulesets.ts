@@ -280,6 +280,9 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		onTryHit(source, target, move) {
 			this.add('-message',  `HIT move ${move.id} target ${target.name} source ${source.name} condition${move.condition} status${move.status} secondary${move.secondary} secondaries${move.secondaries}!`)
 		},
+		onHit(target, source, move) {
+				this.add('-message',  `ONHIT move ${move.id} target ${target.name} source ${source.name} condition${move.condition} status${move.status} secondary${move.secondary} secondaries${move.secondaries}!`)
+		},
 		onResidual(target, source, effect) {
 			if (effect !== null){
 				this.add('-message',  `effect ${effect.id} target ${target.name} source ${source.name} status${effect.status}!`)
