@@ -275,49 +275,28 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'Poison Gym',
 		desc: "Poison type pokemon get Corrosion.",
 
-		onAnyImmunity(type, pokemon) {
-			this.add('-message', `IMMUNE MOMENT ${this.lastMove?.name} ${this.activeMove?.name} ${type} ${pokemon.name}`)
-		},
 		onTryHit(source, target, move) {
-			this.add('-message',  `ONTRYHIT move ${move.id} target ${target.name} source ${source.name} condition${move.condition} status${move.status} secondary${move.secondary} secondaries${move.secondaries}!`)
-			if (['toxic', 'mortalspin'].includes(move.id)  && target.hasType('Poison')) {
-				this.add('-message',  `toxic time!`)
+		// allow these moves to hit steel types
+			this.add('-message',  `ONTRYHIT!`)
+			if (['toxic', 'poisongas', 'poisonpowder','toxicthread','gmaxmalodor'].includes(move.id)  && target.hasType('Poison')) {
 				move.ignoreImmunity = true;
-				//source.setStatus('tox',target,move,true)
-			}
-			/*
-			if (move.id == 'banefulbunker' && target.hasType('Poison')) {
-				source.setStatus('tox',target,move,true)
-			}
-			if (move.id == 'fling' && target.hasType('Poison') && move.secondaries{status} == 'tox') {
-				source.setStatus('tox',target,move,true)
-			}
-			if (move.id == 'psychoshift' && target.hasType('Poison')) {
-				source.setStatus('tox',target,move,true)
-			}
-			if (move.id == 'magiccoat' && target.hasType('Poison')) {
-				source.setStatus('tox',target,move,true)
-			}
-			if (move.id == 'gmaxmalodor' && target.hasType('Poison')) {
-				source.setStatus('tox',target,move,true)
-			}
-		*/
-		},
-		onModifyMove(move, pokemon, target) {
-			this.add('-message',  `ONMODIFY move ${move.id} pokemon ${pokemon.name} condition${move.condition} status${move.status} secondary${move.secondary} secondaries${move.secondaries}!`)
-			if (move.secondaries) {
-				for (const secondary of move.secondaries) {
-					this.add('-message',  `secondary ${secondary.onHit} and ${secondary.status}`)
-				}			
 			}
 		},
 		onHit(target, source, move) {
-				this.add('-message',  `ONHIT move ${move.id} target ${target.name} source ${source.name} condition${move.condition} status${move.status} secondary${move.secondary} secondaries${move.secondaries}!`)
+			// Allow these moves to poison whoever it hits
+			this.add('-message',  `ONHIT! ${move.status}`)
+			if (move.secondaries) {
+				for (const secondary of move.secondaries) {
+					if (secondary.status !== undefined && ['tox', 'psn'].includes(secondary.status)) {
+						this.add('-message',  `secondary ${secondary.ability} and ${secondary.status} and ${secondary.chance}`)
+						if (secondary.chance && this.randomChance(secondary.chance,2))
+							this.add('-message',  `this would've applied poison btw`)
+					}
+				}			
+			}
 		},
 		onResidual(target, source, effect) {
-			if (effect !== null){
-				this.add('-message',  `ONRESIDUAL effect ${effect.id} target ${target.name} source ${source.name} status${effect.status}!`)
-			}
+			// this is just for toxic orb poisoning poison users for some reason
 			for (const side of this.sides) {
 				for (const pokemon of side.active) {
 					if (!pokemon || pokemon.fainted) continue;
@@ -326,9 +305,6 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 					}
 				}
 			}
-		},
-		onAfterHit(source, target, move) {
-			this.add('-message',  `ONAFTERHIT target ${target.name} source ${source.name}!`)
 		},
 		
 	},
