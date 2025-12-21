@@ -276,7 +276,8 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		desc: "Poison type pokemon get Corrosion.",
 		onTryHit(source, target, move) {
 			this.add('-message',  `ONTRYHIT move ${move.id} target ${target.name} source ${source.name} condition${move.condition} status${move.status} secondary${move.secondary} secondaries${move.secondaries}!`)
-			if (move.id == 'Toxic' && target.hasType('Poison')) {
+			if (move.id == 'toxic' && target.hasType('Poison')) {
+				this.add('-message',  `TOXIC TIME!`)
 				source.setStatus('tox',target,move,true)
 			}
 		},
