@@ -280,8 +280,10 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		},
 		onTryHit(source, target, move) {
 			this.add('-message',  `ONTRYHIT move ${move.id} target ${target.name} source ${source.name} condition${move.condition} status${move.status} secondary${move.secondary} secondaries${move.secondaries}!`)
-			if (move.id == 'toxic' && target.hasType('Poison')) {
-				source.setStatus('tox',target,move,true)
+			if (['toxic', 'mortalspin'].includes(move.id)  && target.hasType('Poison')) {
+				this.add('-message',  `toxic time!`)
+				move.ignoreImmunity = true;
+				//source.setStatus('tox',target,move,true)
 			}
 			/*
 			if (move.id == 'banefulbunker' && target.hasType('Poison')) {
@@ -301,12 +303,28 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			}
 		*/
 		},
+		onModifyMove(move, pokemon, target) {
+			this.add('-message',  `ONMODIFY move ${move.id} pokemon ${pokemon.name} condition${move.condition} status${move.status} secondary${move.secondary} secondaries${move.secondaries}!`)
+			if (move.secondaries) {
+				for (const secondary of move.secondaries) {
+					this.add('-message',  `secondary ${secondary.onHit} and ${secondary.status}`)
+				}			
+			}
+		},
 		onHit(target, source, move) {
 				this.add('-message',  `ONHIT move ${move.id} target ${target.name} source ${source.name} condition${move.condition} status${move.status} secondary${move.secondary} secondaries${move.secondaries}!`)
 		},
 		onResidual(target, source, effect) {
 			if (effect !== null){
 				this.add('-message',  `ONRESIDUAL effect ${effect.id} target ${target.name} source ${source.name} status${effect.status}!`)
+			}
+			for (const side of this.sides) {
+				for (const pokemon of side.active) {
+					if (!pokemon || pokemon.fainted) continue;
+					if (pokemon.hasType('Poison') && pokemon.getItem().id == 'toxicorb') {
+						pokemon.setStatus('tox', null,null, true)
+					}
+				}
 			}
 		},
 		onAfterHit(source, target, move) {
