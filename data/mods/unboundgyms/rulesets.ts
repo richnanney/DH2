@@ -274,14 +274,14 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		effectType: 'Rule',
 		name: 'Poison Gym',
 		desc: "Poison type pokemon get Corrosion.",
-		onAnyTryMove(source, target, move) {
-			this.add('-message',  `what ${move.id} ${target.name} ${source.name} ${move.condition} ${move.status} ${move.forceStatus} help!`)
-		},
-		onTryAddVolatile(status, target, source, sourceEffect) {
-			this.add('-message',  `man ${status.id} ${target.name} ${source.name} ${sourceEffect.id} oh no!`)
-		},
 		onTryMove(source, target, move) {
-			this.add('-message',  `pee ${move.id} ${target.name} ${source.name} ${move.condition} ${move.status} ${move.forceStatus} poo!`)
+			this.add('-message',  `move ${move.id} target ${target.name} source ${source.name} condition${move.condition} status${move.status} secondary${move.secondary} secondaries${move.secondaries}!`)
+		},
+		onTryHit(source, target, move) {
+			this.add('-message',  `HIT move ${move.id} target ${target.name} source ${source.name} condition${move.condition} status${move.status} secondary${move.secondary} secondaries${move.secondaries}!`)
+		},
+		onResidual(target, source, effect) {
+			this.add('-message',  `move ${effect.id} target ${target.name} source ${source.name} status${effect.status}!`)
 		},
 	},
 	dragongym: {
