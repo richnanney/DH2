@@ -274,12 +274,32 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		effectType: 'Rule',
 		name: 'Poison Gym',
 		desc: "Poison type pokemon get Corrosion.",
+
+		onAnyImmunity(type, pokemon) {
+			this.add('-message', `IMMUNE MOMENT ${this.lastMove?.name} ${this.activeMove?.name} ${type} ${pokemon.name}`)
+		},
 		onTryHit(source, target, move) {
 			this.add('-message',  `ONTRYHIT move ${move.id} target ${target.name} source ${source.name} condition${move.condition} status${move.status} secondary${move.secondary} secondaries${move.secondaries}!`)
 			if (move.id == 'toxic' && target.hasType('Poison')) {
-				this.add('-message',  `TOXIC TIME!`)
 				source.setStatus('tox',target,move,true)
 			}
+			/*
+			if (move.id == 'banefulbunker' && target.hasType('Poison')) {
+				source.setStatus('tox',target,move,true)
+			}
+			if (move.id == 'fling' && target.hasType('Poison') && move.secondaries{status} == 'tox') {
+				source.setStatus('tox',target,move,true)
+			}
+			if (move.id == 'psychoshift' && target.hasType('Poison')) {
+				source.setStatus('tox',target,move,true)
+			}
+			if (move.id == 'magiccoat' && target.hasType('Poison')) {
+				source.setStatus('tox',target,move,true)
+			}
+			if (move.id == 'gmaxmalodor' && target.hasType('Poison')) {
+				source.setStatus('tox',target,move,true)
+			}
+		*/
 		},
 		onHit(target, source, move) {
 				this.add('-message',  `ONHIT move ${move.id} target ${target.name} source ${source.name} condition${move.condition} status${move.status} secondary${move.secondary} secondaries${move.secondaries}!`)
@@ -289,6 +309,10 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				this.add('-message',  `ONRESIDUAL effect ${effect.id} target ${target.name} source ${source.name} status${effect.status}!`)
 			}
 		},
+		onAfterHit(source, target, move) {
+			this.add('-message',  `ONAFTERHIT target ${target.name} source ${source.name}!`)
+		},
+		
 	},
 	dragongym: {
 		effectType: 'Rule',
