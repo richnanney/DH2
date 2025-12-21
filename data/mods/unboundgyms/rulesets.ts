@@ -64,7 +64,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			}
 		},
 	},
-		electricgym: {
+	electricgym: {
 		effectType: 'Rule',
 		name: 'Electric Gym',
 		desc: "Permanent Electric Terrain.",
@@ -82,6 +82,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			}
 		},
 	},
+	/*
 	ghostgym: {
 		effectType: 'Rule',
 		name: 'Ghost Gym',
@@ -103,7 +104,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			}
 		},
 	},
-	/*
+	*/
 	ghostgym: {
 		effectType: 'Rule',
 		name: 'Ghost Gym',
@@ -117,19 +118,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				return this.chainModify(0.5);
 			}
 		},
-		onSwitchIn(pokemon) {
-			if (pokemon.hasType('Ghost')) {
-				const sideConditions = ['spikes', 'toxicspikes', 'stealthrock', 'stickyweb', 'gmaxsteelsurge'];
-				for (const condition of sideConditions) {
-					if (pokemon.side.removeSideCondition(condition)){
-						this.add('-sideend', pokemon.side, this.dex.conditions.get(condition).name);
-						this.add('-message', `Mysterious fources made the ${condition} vanish!`)
-					}
-				}
-			};
-		},
 	},
-	*/
 	flyinggym: {
 		effectType: 'Rule',
 		name: 'Flying Gym',
@@ -192,15 +181,25 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'Steel Gym',
 		desc: "All Steel type pokemon get magnet rise.",
 		onSwitchIn(pokemon) {
-			if (pokemon.hasType(['Steel'])) {
+			if (pokemon.hasType(['Steel', 'Electric'])) {
 				this.add('-message', `${pokemon.name} started levitating from the magnetic field!`)
 				pokemon.addVolatile('magnetrise');
 			}
 		},
 		onModifyType(move, pokemon, target) {
-			if (pokemon.hasType(['Steel'])) {
+			if (pokemon.hasType(['Steel', 'Electric'])) {
 				this.add('-message', `${pokemon.name} started levitating from the magnetic field!`)
 				pokemon.addVolatile('magnetrise');
+			}
+		},
+		onResidual(target, source, effect) {
+			for (const side of this.sides) {
+				for (const pokemon of side.active) {
+					if (!pokemon || pokemon.fainted) continue;
+					if (pokemon.hasType(['Steel','Electric']) && !pokemon.volatiles['magnetrise']) {
+						pokemon.addVolatile('magnetrise');
+					}
+				}
 			}
 		},
 	},
@@ -274,14 +273,11 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 	poisongym: {
 		effectType: 'Rule',
 		name: 'Poison Gym',
-		desc: "Poison type pokemon get toxic debris.",
-		onDamagingHit(damage, target, source, move) {
-			const side = source.isAlly(target) ? source.side.foe : source.side;
-			const toxicSpikes = side.sideConditions['toxicspikes'];
-			if (move.category === 'Physical' && (!toxicSpikes || toxicSpikes.layers < 2) && target.hasType('Poison')) {
-				this.add('-activate', target, 'ability: Toxic Debris');
-				side.addSideCondition('toxicspikes', target);
-				this.add('-message', `Toxic spikes broke off of ${target.name} and were scattered across the opponent's side of the field!`)
+		desc: "Poison type pokemon get Corrosion.",
+		onSetStatus(status, target, source, effect) {
+			if (['tox', 'psn'].includes(status.id) && source.hasType('Poison')) {
+				this.add('-message',  `${status.id} ${target.name} ${source.name} ${effect.name}`)
+				target.setStatus(status, target, effect, true)
 			}
 		},
 	},

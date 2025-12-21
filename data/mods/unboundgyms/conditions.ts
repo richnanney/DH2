@@ -55,6 +55,11 @@ export const Conditions: {[k: string]: ModdedConditionData} = {
 		onFieldStart(field, source, effect) {
 			this.add('-weather', 'Vicious Sandstorm');
 		},
+		onModifySpD(spd, pokemon) {
+			if (pokemon.hasType('Rock') && this.field.isWeather('vicioussandstorm')) {
+				return this.modify(spd, 1.5);
+			}
+		},
 		onFieldResidualOrder: 1,
 		onFieldResidual() {
 			this.add('-weather', 'Vicious Sandstorm', '[upkeep]');
