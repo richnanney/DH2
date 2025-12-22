@@ -276,15 +276,17 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		desc: "Poison type pokemon get Corrosion.",
 		onTryHitPriority: 4,
 		onTryHit(source, target, move) {
+			//TARGET IS DOING THE HITTING
+			//SOURCE IS GETTING HIT
 			if (move.id == 'toxic' && target.hasType('Poison')) {
-				target.setStatus('tox',null,null,true)
+				source.setStatus('tox',null,null,true)
 			}
 			if (source.getVolatile('banefulbunker') && this.checkMoveMakesContact(move, target, source)){
 				target.setStatus('psn', null,null, true)
 			}
-			if (move.id == 'psychoshift' && ['tox', 'psn'].includes(source.status) && source.hasType('Poison')) {
-				target.setStatus(source.status, null,null, true)
-				source.setStatus('')
+			if (move.id == 'psychoshift' && ['tox', 'psn'].includes(target.status) && target.hasType('Poison')) {
+				source.setStatus(target.status, null,null, true)
+				target.setStatus('')
 			}
 
 		},
