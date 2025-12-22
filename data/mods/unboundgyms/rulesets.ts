@@ -274,22 +274,17 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		effectType: 'Rule',
 		name: 'Poison Gym',
 		desc: "Poison type pokemon get Corrosion.",
-
 		onTryHitPriority: 4,
 		onTryHit(source, target, move) {
-		// allow these moves to hit
-			this.add('-message',  `ONTRYHIT!`)
-			if (move.status && ['tox','psn'].includes(move.status) && target.hasType('Poison')) {
-				move.ignoreImmunity = true;
+			if (move.id == 'toxic' && target.hasType('Poison')) {
+				target.setStatus('tox',null,null,true)
 			}
 			if (source.getVolatile('banefulbunker') && this.checkMoveMakesContact(move, target, source)){
 				target.setStatus('psn', null,null, true)
 			}
+			
 		},
-		
 		onHit(target, source, move) {
-			// Allow these moves to poison whoever it hits
-			this.add('-message',  `ONHIT! ${move.status}`)
 			if (move.secondaries) {
 				for (const secondary of move.secondaries) {
 					if (secondary.status !== undefined && ['tox', 'psn'].includes(secondary.status)) {
