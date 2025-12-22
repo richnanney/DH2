@@ -277,12 +277,16 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 
 		onTryHitPriority: 4,
 		onTryHit(source, target, move) {
-		// allow these moves to hit steel types
+		// allow these moves to hit
 			this.add('-message',  `ONTRYHIT!`)
-			if (['toxic', 'poisongas', 'poisonpowder','toxicthread','gmaxmalodor'].includes(move.id)  && target.hasType('Poison')) {
+			if (move.status && ['tox','psn'].includes(move.status) && target.hasType('Poison')) {
 				move.ignoreImmunity = true;
 			}
+			if (source.getVolatile('banefulbunker') && this.checkMoveMakesContact(move, target, source)){
+				target.setStatus('psn', null,null, true)
+			}
 		},
+		
 		onHit(target, source, move) {
 			// Allow these moves to poison whoever it hits
 			this.add('-message',  `ONHIT! ${move.status}`)
