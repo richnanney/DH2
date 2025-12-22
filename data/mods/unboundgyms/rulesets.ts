@@ -275,6 +275,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'Poison Gym',
 		desc: "Poison type pokemon get Corrosion.",
 
+		onTryHitPriority: 4,
 		onTryHit(source, target, move) {
 		// allow these moves to hit steel types
 			this.add('-message',  `ONTRYHIT!`)
@@ -288,9 +289,8 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			if (move.secondaries) {
 				for (const secondary of move.secondaries) {
 					if (secondary.status !== undefined && ['tox', 'psn'].includes(secondary.status)) {
-						this.add('-message',  `secondary ${secondary.ability} and ${secondary.status} and ${secondary.chance}`)
-						if (secondary.chance && this.randomChance(secondary.chance,2))
-							this.add('-message',  `this would've applied poison btw`)
+						if (secondary.chance && this.randomChance(secondary.chance,100))
+							target.setStatus(secondary.status,null,null,true)
 					}
 				}			
 			}
