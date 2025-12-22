@@ -286,7 +286,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			}
 			if (move.id == 'psychoshift' && ['tox', 'psn'].includes(target.status) && target.hasType('Poison')) {
 				source.setStatus(target.status, null,null, true)
-				target.setStatus('')
+				target.cureStatus();
 			}
 
 		},
