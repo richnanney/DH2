@@ -282,7 +282,11 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			if (source.getVolatile('banefulbunker') && this.checkMoveMakesContact(move, target, source)){
 				target.setStatus('psn', null,null, true)
 			}
-			
+			if (move.id == 'psychoshift' && ['tox', 'psn'].includes(source.status) && source.hasType('Poison')) {
+				target.setStatus(source.status, null,null, true)
+				source.setStatus('')
+			}
+
 		},
 		onHit(target, source, move) {
 			if (move.secondaries) {
