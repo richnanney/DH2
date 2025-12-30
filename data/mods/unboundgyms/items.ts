@@ -1,55 +1,20 @@
 export const Items: {[k: string]: ModdedItemData} = {
-	snowball: {
-		inherit: true,
+	safetygoggles: {
+		name: "Safety Goggles",
+		spritenum: 604,
 		fling: {
-			basePower: 30,
-			status: 'frz',
+			basePower: 80,
 		},
-	},
-	aguavberry: {
-		inherit: true,
-		onEat(pokemon) {
-			this.heal(pokemon.baseMaxhp / 2);
-			if (pokemon.getNature().minus === 'spd') {
-				pokemon.addVolatile('confusion');
+		onImmunity(type, pokemon) {
+			if (type === 'sandstorm' || type === 'hail' || type === 'powder' || type === 'vicioussandstorm') return false;
+		},
+		onTryHit(pokemon, source, move) {
+			if (move.flags['powder'] && pokemon !== source && this.dex.getImmunity('powder', pokemon)) {
+				this.add('-activate', pokemon, 'item: Safety Goggles', move.name);
+				return null;
 			}
 		},
-	},
-	figyberry: {
-		inherit: true,
-		onEat(pokemon) {
-			this.heal(pokemon.baseMaxhp / 2);
-			if (pokemon.getNature().minus === 'atk') {
-				pokemon.addVolatile('confusion');
-			}
-		},
-	},
-	iapapaberry: {
-		inherit: true,
-		onEat(pokemon) {
-			this.heal(pokemon.baseMaxhp / 2);
-			if (pokemon.getNature().minus === 'def') {
-				pokemon.addVolatile('confusion');
-			}
-		},
-	},
-	magoberry: {
-		inherit: true,
-		onEat(pokemon) {
-			this.heal(pokemon.baseMaxhp / 2);
-			if (pokemon.getNature().minus === 'spe') {
-				pokemon.addVolatile('confusion');
-			}
-		},
-	},
-	wikiberry: {
-		inherit: true,
-		isNonstandard: null,
-		onEat(pokemon) {
-			this.heal(pokemon.baseMaxhp / 2);
-			if (pokemon.getNature().minus === 'spa') {
-				pokemon.addVolatile('confusion');
-			}
-		},
+		num: 650,
+		gen: 6,
 	},
 }

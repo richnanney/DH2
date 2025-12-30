@@ -43,13 +43,6 @@ export const Abilities: {[k: string]: ModdedAbilityData} = {
 		rating: 3.5,
 		num: 308,
 	},
-	galewings: {
-		inherit: true,
-		onModifyPriority(priority, pokemon, target, move) {
-			if (move && move.type === 'Flying') return priority + 1;
-		},
-		rating: 4,
-	},
 	drillbeak: {
 		onModifyMove(move) {
 			if (move.name.includes("Drill")) {
@@ -102,54 +95,6 @@ export const Abilities: {[k: string]: ModdedAbilityData} = {
 		name: "Portal Power",
 		rating: 3.5,
 		num: 312,
-	},
-	ripen: {
-		onTryHeal(damage, target, source, effect) {
-			if (!effect) return;
-			if (effect.name === 'Berry Juice' || effect.name === 'Leftovers') {
-				this.add('-activate', target, 'ability: Ripen');
-			}
-			const confuse_heal_berries = [
-				"Figy Berry", "Wiki Berry", "Mago Berry", "Aguav Berry", "Iapapa Berry",
-			];
-			if ((effect as Item).isBerry){
-				if (confuse_heal_berries.includes(effect.name)){
-					return this.chainModify(1.32);
-				} else {
-					return this.chainModify(2);
-				}
-			} 
-		},
-		onChangeBoost(boost, target, source, effect) {
-			if (effect && (effect as Item).isBerry) {
-				let b: BoostID;
-				for (b in boost) {
-					boost[b]! *= 2;
-				}
-			}
-		},
-		onSourceModifyDamagePriority: -1,
-		onSourceModifyDamage(damage, source, target, move) {
-			if (target.abilityState.berryWeaken) {
-				target.abilityState.berryWeaken = false;
-				return this.chainModify(0.5);
-			}
-		},
-		onTryEatItemPriority: -1,
-		onTryEatItem(item, pokemon) {
-			this.add('-activate', pokemon, 'ability: Ripen');
-		},
-		onEatItem(item, pokemon) {
-			const weakenBerries = [
-				'Babiri Berry', 'Charti Berry', 'Chilan Berry', 'Chople Berry', 'Coba Berry', 'Colbur Berry', 'Haban Berry', 'Kasib Berry', 'Kebia Berry', 'Occa Berry', 'Passho Berry', 'Payapa Berry', 'Rindo Berry', 'Roseli Berry', 'Shuca Berry', 'Tanga Berry', 'Wacan Berry', 'Yache Berry',
-			];
-			// Record if the pokemon ate a berry to resist the attack
-			pokemon.abilityState.berryWeaken = weakenBerries.includes(item.name);
-		},
-		flags: {},
-		name: "Ripen",
-		rating: 2,
-		num: 247,
 	},
 	overcoat: {
 		onImmunity(type, pokemon) {
@@ -243,5 +188,30 @@ export const Abilities: {[k: string]: ModdedAbilityData} = {
 		shortDesc: "Weather priority and bonuses.",
 		rating: 3.0,
 		num: 407,
-	}
+	},
+	mintcondition: {
+		name: "Mint Condition",
+		desc: "When hit by a grass type move, or when grassy terrain is set, gain attack and speed.",
+		shortDesc: "Grass immunity and buffs when hit by grass.",
+		rating: 4.0,
+		num: 407,
+		onStart(pokemon) {
+			this.singleEvent('TerrainChange', this.effect, this.effectState, pokemon);
+		},
+		onTerrainChange(target, source, sourceEffect) {
+			if (this.field.isTerrain('grassyterrain')) {
+				this.debug('terrain buff');
+				this.boost({atk: 1,spe: 1,});
+			}		
+		},
+		onTryHit(target, source, move) {
+			if (target !== source && move.type === 'Fire') {
+				move.accuracy = true;
+				this.add('-immune', target, '[from] ability: Mint Condition"');
+				this.boost({atk: 1,spe: 1,});
+				return null;
+			}
+		},
+	},
+
 };
