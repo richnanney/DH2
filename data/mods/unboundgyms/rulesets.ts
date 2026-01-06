@@ -269,6 +269,22 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				return false;
 			}
 		},
+		onAfterTerastallization(pokemon) {
+			if (pokemon.baseSpecies.name == 'Terapagos-Stellar') {
+				this.add('Terapagos clears the field! The vicious sandstorm will return once Terapagos exits the battle!')
+			};
+		},
+		onResidual(battle) {
+			for (const side of this.sides) {
+				for (const pokemon of side.active) {
+					if (!pokemon || pokemon.fainted) continue;
+					if (pokemon.baseSpecies.name == 'Terapagos-Stellar') return;
+				}
+			}
+			this.add('-weather', 'vicioussandstorm');
+			this.field.weather = 'vicioussandstorm' as ID;
+			this.field.weatherState = { id: 'vicioussandstorm'};
+		},
 	},
 	poisongym: {
 		effectType: 'Rule',
