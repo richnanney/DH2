@@ -87,14 +87,8 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			this.field.terrainState = { id: 'grassyterrain'};
 		},
 		onTerrainChange(target, source, sourceEffect) {
+			if (sourceEffect.name == 'Teraform Zero') return;
 			if (sourceEffect.name != 'grassyterrain') {
-			    this.add('-message', `${sourceEffect.name}`)
-				for (const side of this.sides) {
-					for (const pokemon of side.active) {
-							if (!pokemon || pokemon.fainted) continue;
-							if (pokemon.baseSpecies.name == 'Terapagos-Stellar') return;
-						}
-					}
 			    this.add('-message', 'The grassy terrain regrew instantly!')
 			    this.add('-fieldstart', 'Grassy Terrain')
 			    this.field.terrain = 'grassyterrain' as ID;
@@ -129,6 +123,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			this.field.terrainState = { id: 'electricterrain'};
 		},
 		onTerrainChange(target, source, sourceEffect) {
+			if (sourceEffect.name == 'Teraform Zero') return;
 			if (sourceEffect.name != 'electricterrain') {
 			    this.add('-message', 'The electric terrain was restored instantly!')
 			    this.add('-fieldstart', 'Electric Terrain')
