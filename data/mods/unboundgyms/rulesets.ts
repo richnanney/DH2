@@ -88,7 +88,13 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		},
 		onTerrainChange(target, source, sourceEffect) {
 			if (sourceEffect.name != 'grassyterrain') {
-				this.add('-message', `source ${source.name}`)
+			    this.add('-message', `${sourceEffect.name}`)
+				for (const side of this.sides) {
+					for (const pokemon of side.active) {
+							if (!pokemon || pokemon.fainted) continue;
+							if (pokemon.baseSpecies.name == 'Terapagos-Stellar') return;
+						}
+					}
 			    this.add('-message', 'The grassy terrain regrew instantly!')
 			    this.add('-fieldstart', 'Grassy Terrain')
 			    this.field.terrain = 'grassyterrain' as ID;
