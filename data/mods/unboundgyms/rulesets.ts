@@ -16,6 +16,16 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 					}
 				}
 			}
+			if (this.field.weather == 'raindance') return;
+			for (const side of this.sides) {
+				for (const pokemon of side.active) {
+					if (!pokemon || pokemon.fainted) continue;
+					if (pokemon.baseSpecies.name == 'Terapagos-Stellar') return;
+				}
+			}
+			this.add('-weather', 'raindance');
+			this.field.weather = 'raindance' as ID;
+			this.field.weatherState = { id: 'raindance'};
 		},
 		onBegin() {
 			this.add('-weather', 'Rain Dance');
@@ -28,7 +38,11 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				return false;
 			}
 		},
-
+		onAfterTerastallization(pokemon) {
+			if (pokemon.baseSpecies.name == 'Terapagos-Stellar') {
+				this.add('-message', 'Terapagos clears the field! The rain will return once Terapagos exits the battle!')
+			};
+		},
 	},
 	firegym: {
 		effectType: 'Rule',
@@ -44,6 +58,23 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				this.add('-message', `The heat from the volcano evaporated the ${weather.name}!`)
 				return false;
 			}
+		},
+		onAfterTerastallization(pokemon) {
+			if (pokemon.baseSpecies.name == 'Terapagos-Stellar') {
+				this.add('-message', 'Terapagos clears the field! The sun will return once Terapagos exits the battle!')
+			};
+		},
+		onResidual(battle) {
+			if (this.field.weather == 'sunnyday') return;
+			for (const side of this.sides) {
+				for (const pokemon of side.active) {
+					if (!pokemon || pokemon.fainted) continue;
+					if (pokemon.baseSpecies.name == 'Terapagos-Stellar') return;
+				}
+			}
+			this.add('-weather', 'sunnyday');
+			this.field.weather = 'sunnyday' as ID;
+			this.field.weatherState = { id: 'sunnyday'};
 		},
 	},
 	grassgym: {
@@ -63,6 +94,23 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			    this.field.terrainState = { id: 'grassyterrain'};
 			}
 		},
+		onAfterTerastallization(pokemon) {
+			if (pokemon.baseSpecies.name == 'Terapagos-Stellar') {
+				this.add('-message', 'Terapagos clears the field! The grassy terrain will return once Terapagos exits the battle!')
+			};
+		},
+		onResidual(battle) {
+			if (this.field.terrain == 'grassyterrain') return;
+			for (const side of this.sides) {
+				for (const pokemon of side.active) {
+					if (!pokemon || pokemon.fainted) continue;
+					if (pokemon.baseSpecies.name == 'Terapagos-Stellar') return;
+				}
+			}
+			this.add('-fieldstart', 'Grassy Terrain')
+			this.field.terrain = 'grassyterrain' as ID;
+			this.field.terrainState = { id: 'grassyterrain'};
+		},
 	},
 	electricgym: {
 		effectType: 'Rule',
@@ -80,6 +128,23 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			    this.field.terrain = 'electricterrain' as ID;
 			    this.field.terrainState = { id: 'electricterrain'};
 			}
+		},
+		onAfterTerastallization(pokemon) {
+			if (pokemon.baseSpecies.name == 'Terapagos-Stellar') {
+				this.add('-message', 'Terapagos clears the field! The electric terrain will return once Terapagos exits the battle!')
+			};
+		},
+		onResidual(battle) {
+			if (this.field.terrain == 'electricterrain') return;
+			for (const side of this.sides) {
+				for (const pokemon of side.active) {
+					if (!pokemon || pokemon.fainted) continue;
+					if (pokemon.baseSpecies.name == 'Terapagos-Stellar') return;
+				}
+			}
+			this.add('-fieldstart', 'Electric Terrain')
+			this.field.terrain = 'electricterrain' as ID;
+			this.field.terrainState = { id: 'electricterrain'};
 		},
 	},
 	/*
@@ -108,7 +173,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 	ghostgym: {
 		effectType: 'Rule',
 		name: 'Ghost Gym',
-		desc: "All Ghost-Type Pokemon also benefit from MultiScale and are immune to hazards.",
+		desc: "All Ghost-Type Pokemon benefit from MultiScale.",
 		onBegin() {
 			this.add('-message', `A shadowy veil protects all ghost type pokemon!`)
 		},
@@ -248,6 +313,23 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				return false;
 			}
 		},
+		onAfterTerastallization(pokemon) {
+			if (pokemon.baseSpecies.name == 'Terapagos-Stellar') {
+				this.add('-message', 'Terapagos clears the field! The snow will return once Terapagos exits the battle!')
+			};
+		},
+		onResidual(battle) {
+			if (this.field.weather == 'snow') return;
+			for (const side of this.sides) {
+				for (const pokemon of side.active) {
+					if (!pokemon || pokemon.fainted) continue;
+					if (pokemon.baseSpecies.name == 'Terapagos-Stellar') return;
+				}
+			}
+			this.add('-weather', 'snow');
+			this.field.weather = 'snow' as ID;
+			this.field.weatherState = { id: 'snow'};
+		},
 	},
 	groundgym: {
 		effectType: 'Rule',
@@ -271,7 +353,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		},
 		onAfterTerastallization(pokemon) {
 			if (pokemon.baseSpecies.name == 'Terapagos-Stellar') {
-				this.add('Terapagos clears the field! The vicious sandstorm will return once Terapagos exits the battle!')
+				this.add('-message', 'Terapagos clears the field! The vicious sandstorm will return once Terapagos exits the battle!')
 			};
 		},
 		onResidual(battle) {
