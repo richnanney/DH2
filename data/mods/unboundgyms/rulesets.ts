@@ -275,6 +275,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			};
 		},
 		onResidual(battle) {
+			if (this.field.weather == 'vicioussandstorm') return;
 			for (const side of this.sides) {
 				for (const pokemon of side.active) {
 					if (!pokemon || pokemon.fainted) continue;
