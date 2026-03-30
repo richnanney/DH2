@@ -16,7 +16,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 					}
 				}
 			}
-			if (this.field.weather == 'raindance') return;
+			if (this.field.weather in ['raindance','primordialsea']) return;
 			for (const side of this.sides) {
 				for (const pokemon of side.active) {
 					if (!pokemon || pokemon.fainted) continue;
@@ -33,7 +33,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			this.field.weatherState = { id: 'raindance'};
 		},
 		onSetWeather(target, source, weather) {
-			if (this.field.weather == 'raindance') {
+			if (this.field.weather == 'raindance','primordialsea') {
 				this.add('-message', 'The downpour is too strong to be removed!')
 				return false;
 			}
@@ -149,7 +149,41 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			this.field.terrainState = { id: 'electricterrain'};
 		},
 	},
+	ghostgym: {
+		effectType: 'Rule',
+		name: 'Ghost Gym',
+		desc: "All Ghost-Type Pokemon benefit from a slightly worse Multiscale, and pokemon are slowed when fainting a ghost type.",
+		onBegin() {
+			this.add('-message', `A shadowy veil protects all ghost type pokemon!`)
+		},
+		onModifyDamage(relayVar, source, target, move) {
+			if (target.hp >= target.maxhp && target.hasType('Ghost')) {
+				this.add('-message', `${target.name} takes less damage thanks to the gym effect!`)
+				return this.chainModify(0.7);
+			}
+		},
+		onDamagingHit(damage, target, source, move) {
+			if (!target.hp && target.hasType("Ghost")) {
+				this.add('-message', `${this.getPokemon.name} is haunted by ${target.name}!`);
+				this.boost({spe: -1,}, source, target, null, true);
+			}
+		},
+	},
 	/*
+	ghostgym: {
+		effectType: 'Rule',
+		name: 'Ghost Gym',
+		desc: "All Ghost-Type Pokemon benefit from Multiscale.",
+		onBegin() {
+			this.add('-message', `A shadowy veil protects all ghost type pokemon!`)
+		},
+		onModifyDamage(relayVar, source, target, move) {
+			if (target.hp >= target.maxhp && target.hasType('Ghost')) {
+				this.add('-message', `${target.name} takes less damage thanks to the gym effect!`)
+				return this.chainModify(0.5);
+			}
+		},
+	},
 	ghostgym: {
 		effectType: 'Rule',
 		name: 'Ghost Gym',
@@ -172,21 +206,25 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		},
 	},
 	*/
-	ghostgym: {
+	flyinggym: {
 		effectType: 'Rule',
-		name: 'Ghost Gym',
-		desc: "All Ghost-Type Pokemon benefit from MultiScale.",
+		name: 'Flying Gym',
+		desc: "Flying type pokemon get permanent tail wind.",
 		onBegin() {
-			this.add('-message', `A shadowy veil protects all ghost type pokemon!`)
+			this.add('-message', `A tailwind blows in behind all Flying type pokemon!`);
 		},
-		onModifyDamage(relayVar, source, target, move) {
-			if (target.hp >= target.maxhp && target.hasType('Ghost')) {
-				this.add('-message', `${target.name} takes less damage thanks to the gym effect!`)
-				return this.chainModify(0.5);
+		onDamage(damage, target, source, effect) {
+			if (target.hasType("Flying") && effect.name == 'stealthrock') {
+				return false;
+			}
+		},
+		onModifySpe(spe, pokemon) {
+			if (pokemon.hasType('Flying')) {
+				return this.modify(spe, 1.25);
 			}
 		},
 	},
-	flyinggym: {
+	/*flyinggym: {
 		effectType: 'Rule',
 		name: 'Flying Gym',
 		desc: "Flying type pokemon get permanent tail wind.",
@@ -198,7 +236,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				return this.modify(spe, 2);
 			}
 		},
-	},
+	},*/
 	psychicgym: {
 		effectType: 'Rule',
 		name: 'Psychic Gym',
@@ -248,13 +286,13 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'Steel Gym',
 		desc: "All Steel type pokemon get magnet rise.",
 		onSwitchIn(pokemon) {
-			if (pokemon.hasType(['Steel', 'Electric'])) {
+			if (pokemon.hasType(['Steel'])) {
 				this.add('-message', `${pokemon.name} started levitating from the magnetic field!`)
 				pokemon.addVolatile('magnetrise');
 			}
 		},
 		onModifyType(move, pokemon, target) {
-			if (pokemon.hasType(['Steel', 'Electric'])) {
+			if (pokemon.hasType(['Steel'])) {
 				this.add('-message', `${pokemon.name} started levitating from the magnetic field!`)
 				pokemon.addVolatile('magnetrise');
 			}
@@ -263,13 +301,41 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			for (const side of this.sides) {
 				for (const pokemon of side.active) {
 					if (!pokemon || pokemon.fainted) continue;
-					if (pokemon.hasType(['Steel','Electric']) && !pokemon.volatiles['magnetrise']) {
+					if (pokemon.hasType(['Steel']) && !pokemon.volatiles['magnetrise']) {
 						pokemon.addVolatile('magnetrise');
 					}
 				}
 			}
 		},
 	},
+	darkgym: {
+		effectType: 'Rule',
+		name: 'Dark Gym',
+		desc: "All Dark type pokemon benefit from Supreme Overlord.",
+		onSwitchIn(pokemon) {
+			if (pokemon.hasType("Dark") && pokemon.side.totalFainted) {
+				this.add('-activate', pokemon, 'Gym: Supreme Overlord');
+				const fallen = Math.min(pokemon.side.totalFainted, 5);
+				this.add('-start', pokemon, `fallen${fallen}`, '[silent]');
+				this.effectState.fallen = fallen;
+			}
+		},
+		onModifyType(move, pokemon, target) {
+			if (pokemon.hasType("Dark") && pokemon.side.totalFainted) {
+				this.add('-activate', pokemon, 'Gym: Supreme Overlord');
+				const fallen = Math.min(pokemon.side.totalFainted, 5);
+				this.add('-start', pokemon, `fallen${fallen}`, '[silent]');
+				this.effectState.fallen = fallen;
+			}
+		},
+		onBasePower(basePower, attacker, defender, move) {
+			if (this.effectState.fallen) {
+				const powMod = [4096, 4506, 4915, 5325, 5734, 6144];
+				return this.chainModify([powMod[this.effectState.fallen], 4096]);
+			}
+		},
+	},
+	/*
 	darkgym: {
 		effectType: 'Rule',
 		name: 'Dark Gym',
@@ -281,7 +347,6 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			}
 		},
 	},
-	/*
 	darkgym: {
 		effectType: 'Rule',
 		name: 'Dark Gym',
@@ -469,4 +534,72 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			}
 		},
 	},
+	fightinggym: {
+		effectType: 'Rule',
+		name: 'Fighting Gym',
+		desc: "Fighting type pokemon take stances that either let them deal more damage, take less damage, or move faster.",
+		onSwitchIn(pokemon) {
+			if (pokemon.hasType("Fighting")) {
+				this.add('-activate', pokemon, 'Gym: Fighting Stance');
+				const stance = this.turn % 3;
+				this.add('-start', pokemon, 'Stance');
+				this.effectState.stance = stance;
+			}
+		},
+		onModifyType(move, pokemon, target) {
+			if (pokemon.hasType("Fighting")) {
+				this.add('-activate', pokemon, 'Gym: Fighting Stance');
+				const stance = this.turn % 3;
+				this.add('-start', pokemon, 'Stance');
+				this.effectState.stance = stance;
+			}
+		},
+		onModifyDamage(damage, source, target, move) {
+			if (this.effectState.stance == 1) {
+				this.add('-message', `debug more damage stance`);
+				return this.chainModify(1.2);
+			}
+			if (this.effectState.stance == 2) {
+				this.add('-message', `debug less damage stance`);
+				return this.chainModify(.8);
+			}
+		},
+		onModifySpe(spe, pokemon) {
+			if (this.effectState.stance == 3) {
+				this.add('-message', `debug fast stance`);
+				return this.modify(spe, 1.2);
+			}
+		},
+		onResidual(target, source, effect) {
+			if (this.effectState.stance) {
+				this.effectState.stance = this.turn + 1 % 3;
+				this.add('-message', `changing stance to ${this.effectState.stance}`);
+
+			}
+		},
+	},
+	/*
+	fightinggym: {
+		effectType: 'Rule',
+		name: 'Fighting Gym',
+		desc: "Fighting type pokemon take less damage from super effective moves.",
+		onModifyDamage(damage, source, target, move) {
+			if (target.hasType('Fighting') && target.getMoveHitData(move).typeMod > 0) {
+				this.add('-message', `${target.name} takes less damage from the super-effective move!`)
+				return this.chainModify(0.875); //Meant to be 1.75x instead of 2x damage
+			}
+		},
+	},
+	*/
+	normalgym: {
+		effectType: 'Rule',
+		name: 'Normal Gym',
+		desc: "Abilities are disabled.",
+		onBegin() {
+			this.add('-message', `Neutralizing gas fills the room!`)
+		},
+		onSwitchIn(pokemon) {
+			pokemon.addVolatile('gastroacid');
+		},
+	}
 };

@@ -80,13 +80,14 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 		priority: 0,
 		flags: {contact: 1, protect: 1, mirror: 1, metronome: 1},
 		secondary: {
-			chance: 100,
+			chance: 20,
 			self: {
 				boosts: {
 					spe: 1,
 				},
 			},
 		},
+		overrideOffensiveStat: 'spe',
 		target: "normal",
 		type: "Fire",
 		contestType: "Cool",
@@ -109,5 +110,20 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 		},
 		target: "normal",
 		type: "Grass",
+	},
+	manafangs: {
+		accuracy: 100,
+		basePower: 60,
+		category: "Physical",
+		desc: "Mana charged fangs strike at the target, which absorb HP equal to 75% of dmg dealt.",
+		shortDesc: "Deal damage, heal a 75% of the damage.",
+		name: "Mana Fangs",
+		pp: 10,
+		priority: 0,
+		flags: {bite: 1, contact: 1, heal:1},
+		drain: [3, 4],
+		secondary: null,
+		target: "normal",
+		type: "Dragon",
 	},
 };
