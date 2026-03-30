@@ -164,7 +164,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		},
 		onDamagingHit(damage, target, source, move) {
 			if (!target.hp && target.hasType("Ghost")) {
-				this.add('-message', `${this.getPokemon.name} is haunted by ${target.name}!`);
+				this.add('-message', `${source.name} is haunted by ${target.name}!`);
 				this.boost({spe: -1,}, source, target, null, true);
 			}
 		},
@@ -214,13 +214,13 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			this.add('-message', `A tailwind blows in behind all Flying type pokemon!`);
 		},
 		onDamage(damage, target, source, effect) {
-			if (target.hasType("Flying") && effect.name == 'stealthrock') {
+			if (source.hasType("Flying") && effect.name == 'stealthrock') {
 				return false;
 			}
 		},
 		onModifySpe(spe, pokemon) {
 			if (pokemon.hasType('Flying')) {
-				return this.modify(spe, 1.25);
+				return this.chainModify(1.25);
 			}
 		},
 	},

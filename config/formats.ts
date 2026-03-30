@@ -111,6 +111,16 @@ export const Formats: FormatList = [
 		ruleset: ['electricgym']
 	},
 	{
+		name: "[Gen 9] Unbound Fighting Gym",
+		mod: 'unboundgyms',
+		ruleset: ['fightinggym']
+	},
+		{
+		name: "[Gen 9] Unbound Normal Gym",
+		mod: 'unboundgyms',
+		ruleset: ['normalgym']
+	},
+	{
 		section: "Gym Gimmick Testing Doubles",
 		column: 2,
 	},
