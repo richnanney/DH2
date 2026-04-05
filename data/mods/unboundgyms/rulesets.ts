@@ -557,6 +557,54 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				this.add('-message', `${pokemon.name}'s stance lets it move faster this turn!`)
 			}
 		},
+		onSwitchIn(pokemon) {
+			if (pokemon.hasType("Fighting")) {
+				this.add('-activate', pokemon, 'Gym: Fighting Stance');
+				switch(this.turn % 3)  {
+					case 1:
+						this.add('-start', pokemon, `Attack Stance`, '[silent]');
+						break;
+					case 2:
+						this.add('-start', pokemon, `Defense Stance`, '[silent]');
+						break;
+					case 0:
+						this.add('-start', pokemon, `Speed Stance`, '[silent]');
+						break;
+				}
+			}
+		},
+		onModifyType(move, pokemon, target) {
+			if (pokemon.hasType("Fighting")) {
+				this.add('-activate', pokemon, 'Gym: Fighting Stance');
+				switch(this.turn % 3)  {
+					case 1:
+						this.add('-start', pokemon, `Attack Stance`, '[silent]');
+						break;
+					case 2:
+						this.add('-start', pokemon, `Defense Stance`, '[silent]');
+						break;
+					case 0:
+						this.add('-start', pokemon, `Speed Stance`, '[silent]');
+						break;
+				}
+			}
+		},
+		onResidual(target, source, effect) {
+			if (source.hasType("Fighting")) {
+				this.add('-activate', source, 'Gym: Fighting Stance');
+				switch((this.turn + 1) % 3)  {
+					case 1:
+						this.add('-start', source, `Attack Stance`, '[silent]');
+						break;
+					case 2:
+						this.add('-start', source, `Defense Stance`, '[silent]');
+						break;
+					case 0:
+						this.add('-start', source, `Speed Stance`, '[silent]');
+						break;
+				}
+			}
+		},
 	},
 	/*
 	fightinggym: {
