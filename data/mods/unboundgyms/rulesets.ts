@@ -561,22 +561,21 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				}
 			}
 		},
-		onResidual(target, source, effect) {
-			if (target) {this.add('-message', `${target.name}`)
-}			if (source && source.hasType("Fighting")) {
-				this.add('-message', `${source.name} is residually changing stance!`)
+		onResidual(target, source, effect) {			
+			if (target && target.hasType("Fighting")) {
+				this.add('-message', `${target.name} is residually changing stance!`)
 				switch((this.turn + 1) % 3)  {
 					case 1:
-						this.add('-end', source, `Speed Stance`, '[silent]');
-						this.add('-start', source, `Attack Stance`, '[silent]');
+						this.add('-end', target, `Speed Stance`, '[silent]');
+						this.add('-start', target, `Attack Stance`, '[silent]');
 						break;
 					case 2:
-						this.add('-end', source, `Attack Stance`, '[silent]');
-						this.add('-start', source, `Defense Stance`, '[silent]');
+						this.add('-end', target, `Attack Stance`, '[silent]');
+						this.add('-start', target, `Defense Stance`, '[silent]');
 						break;
 					case 0:
-						this.add('-end', source, `Defense Stance`, '[silent]');
-						this.add('-start', source, `Speed Stance`, '[silent]');
+						this.add('-end', target, `Defense Stance`, '[silent]');
+						this.add('-start', target, `Speed Stance`, '[silent]');
 						break;
 				}
 			}
