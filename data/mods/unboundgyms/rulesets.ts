@@ -505,15 +505,6 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		effectType: 'Rule',
 		name: 'Fighting Gym',
 		desc: "Fighting type pokemon take stances that either let them deal more damage, take less damage, or move faster.",
-		onBattleStart() {
-			for (const side of this.sides) {
-				for (const pokemon of side.active) {
-					if (pokemon.hasType('Fighting')) {
-						this.add('-start', pokemon, `Attack Stance`, '[silent]');
-					}
-				}
-			}
-		},
 		onModifyDamage(damage, source, target, move) {
 			if (source.hasType("Fighting") && this.turn % 3 == 1) {
 				this.add('-message', `${source.name}'s stance allows it to do more damage!`)
@@ -535,10 +526,11 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			}
 		},
 		onSwitchIn(pokemon) {
-			if (this.turn == 0) {return;}
 			if (pokemon.hasType("Fighting")) {
-				this.add('-activate', pokemon, 'Gym: Fighting Stance');
-				this.add('-message', `${pokemon.name} just switched in and is taking a stance!`)	
+				if (this.turn == 0) {
+					this.add('-start', pokemon, `Attack Stance`, '[silent]');
+					return;
+				}
 				switch(this.turn % 3)  {
 					case 1:
 						this.add('-start', pokemon, `Attack Stance`, '[silent]');
