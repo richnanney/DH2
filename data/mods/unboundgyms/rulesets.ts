@@ -214,7 +214,9 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			this.add('-message', `A tailwind blows in behind all Flying type pokemon!`);
 		},
 		onDamage(damage, target, source, effect) {
-			if (source.hasType("Flying") && effect.name == 'stealthrock') {
+			this.add('-message', `${target.name}}`);
+			this.add('-message', `${effect.name}}`);
+			if (target.hasType("Flying") && effect.name == 'stealthrock') {
 				return false;
 			}
 		},
@@ -538,43 +540,20 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		effectType: 'Rule',
 		name: 'Fighting Gym',
 		desc: "Fighting type pokemon take stances that either let them deal more damage, take less damage, or move faster.",
-		onSwitchIn(pokemon) {
-			if (pokemon.hasType("Fighting")) {
-				this.add('-activate', pokemon, 'Gym: Fighting Stance');
-				const stance = this.turn % 3;
-				this.add('-start', pokemon, 'Stance');
-				this.effectState.stance = stance;
-			}
-		},
-		onModifyType(move, pokemon, target) {
-			if (pokemon.hasType("Fighting")) {
-				this.add('-activate', pokemon, 'Gym: Fighting Stance');
-				const stance = this.turn % 3;
-				this.add('-start', pokemon, 'Stance');
-				this.effectState.stance = stance;
-			}
-		},
 		onModifyDamage(damage, source, target, move) {
-			if (this.effectState.stance == 1) {
+			if (target.hasType("Fighting") && this.turn % 3 == 1) {
 				this.add('-message', `debug more damage stance`);
 				return this.chainModify(1.2);
 			}
-			if (this.effectState.stance == 2) {
+			if (source.hasType("Fighting") && this.turn % 3 == 2) {
 				this.add('-message', `debug less damage stance`);
 				return this.chainModify(.8);
 			}
 		},
 		onModifySpe(spe, pokemon) {
-			if (this.effectState.stance == 3) {
+			if (pokemon.hasType("Fighting") && this.turn % 3 == 0) {
 				this.add('-message', `debug fast stance`);
 				return this.modify(spe, 1.2);
-			}
-		},
-		onResidual(target, source, effect) {
-			if (this.effectState.stance) {
-				this.effectState.stance = this.turn + 1 % 3;
-				this.add('-message', `changing stance to ${this.effectState.stance}`);
-
 			}
 		},
 	},
