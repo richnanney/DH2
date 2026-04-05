@@ -1,5 +1,3 @@
-import { EffectState } from "../../../sim/pokemon";
-
 export const Rulesets: {[k: string]: ModdedFormatData} = {
 	watergym: {
 		effectType: 'Rule',
@@ -154,17 +152,17 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'Ghost Gym',
 		desc: "All Ghost-Type Pokemon benefit from a slightly worse Multiscale, and pokemon are slowed when fainting a ghost type.",
 		onBegin() {
-			this.add('-message', `A shadowy veil protects all ghost type pokemon!`)
+			this.add('-message', `Sinners are shown no mercy.`)
 		},
 		onModifyDamage(relayVar, source, target, move) {
 			if (target.hp >= target.maxhp && target.hasType('Ghost')) {
-				this.add('-message', `${target.name} takes less damage thanks to the gym effect!`)
+				this.add('-message', `${target.name} must still repent and is preserved from damage.`)
 				return this.chainModify(0.7);
 			}
 		},
 		onDamagingHit(damage, target, source, move) {
 			if (!target.hp && target.hasType("Ghost")) {
-				this.add('-message', `${source.name} is haunted by ${target.name}!`);
+				this.add('-message', `${source.name} is slowed the weight of sin...`);
 				this.boost({spe: -1,}, source, target, null, true);
 			}
 		},
@@ -214,14 +212,19 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			this.add('-message', `A tailwind blows in behind all Flying type pokemon!`);
 		},
 		onDamage(damage, target, source, effect) {
-			this.add('-message', `${target.name}}`);
-			this.add('-message', `${effect.name}}`);
-			if (target.hasType("Flying") && effect.name == 'stealthrock') {
+			this.add('-message', `${effect.name}`);
+			this.add('-message', `${effect.fullname}`);
+			if (target.hasType("Flying") && effect.fullname == 'stealthrock') {
 				return false;
 			}
 		},
 		onModifySpe(spe, pokemon) {
+			this.add('-message', `${spe}`);
+			this.add('-message', `${pokemon.name}`);
 			if (pokemon.hasType('Flying')) {
+				this.add('-message', `${pokemon.name} is flying type apparently`);
+				this.add('-message', `${this.chainModify(1.25)}`);
+				this.add('-message', `${this.modify(spe,1.25)}`);
 				return this.chainModify(1.25);
 			}
 		},
@@ -553,6 +556,10 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		onModifySpe(spe, pokemon) {
 			if (pokemon.hasType("Fighting") && this.turn % 3 == 0) {
 				this.add('-message', `debug fast stance`);
+				this.add('-message', `${pokemon.name} is fighting type apparently`);
+				this.add('-message', `${spe}`);
+				this.add('-message', `${this.chainModify(1.2)}`);
+				this.add('-message', `${this.modify(spe,1.2)}`);
 				return this.modify(spe, 1.2);
 			}
 		},
@@ -578,6 +585,9 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			this.add('-message', `Neutralizing gas fills the room!`)
 		},
 		onSwitchIn(pokemon) {
+			if (pokemon.hasItem("abilityshield")) {
+				pokemon.setItem('');
+			};
 			pokemon.addVolatile('gastroacid');
 		},
 	}
