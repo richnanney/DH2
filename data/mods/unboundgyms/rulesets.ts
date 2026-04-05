@@ -285,13 +285,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'Steel Gym',
 		desc: "All Steel type pokemon get magnet rise.",
 		onSwitchIn(pokemon) {
-			if (pokemon.hasType(['Steel'])) {
-				this.add('-message', `${pokemon.name} started levitating from the magnetic field!`)
-				pokemon.addVolatile('magnetrise');
-			}
-		},
-		onModifyType(move, pokemon, target) {
-			if (pokemon.hasType(['Steel'])) {
+			if (pokemon.hasType('Steel')) {
 				this.add('-message', `${pokemon.name} started levitating from the magnetic field!`)
 				pokemon.addVolatile('magnetrise');
 			}
@@ -300,7 +294,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			for (const side of this.sides) {
 				for (const pokemon of side.active) {
 					if (!pokemon || pokemon.fainted) continue;
-					if (pokemon.hasType(['Steel']) && !pokemon.volatiles['magnetrise']) {
+					if (pokemon.hasType('Steel') && !pokemon.volatiles['magnetrise']) {
 						pokemon.addVolatile('magnetrise');
 					}
 				}
@@ -312,14 +306,6 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'Dark Gym',
 		desc: "All Dark type pokemon benefit from Supreme Overlord.",
 		onSwitchIn(pokemon) {
-			if (pokemon.hasType("Dark") && pokemon.side.totalFainted) {
-				this.add('-activate', pokemon, 'Gym: Supreme Overlord');
-				const fallen = Math.min(pokemon.side.totalFainted, 5);
-				this.add('-start', pokemon, `fallen${fallen}`, '[silent]');
-				this.effectState.fallen = fallen;
-			}
-		},
-		onModifyType(move, pokemon, target) {
 			if (pokemon.hasType("Dark") && pokemon.side.totalFainted) {
 				this.add('-activate', pokemon, 'Gym: Supreme Overlord');
 				const fallen = Math.min(pokemon.side.totalFainted, 5);
@@ -575,26 +561,9 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				}
 			}
 		},
-		onModifyType(move, pokemon, target) {
-			this.add('-message', `${pokemon.name}'s type changed!`)
-			if (pokemon.hasType("Fighting")) {
-				this.add('-message', `${pokemon.name}'s type changed to fighting!`)
-				this.add('-activate', pokemon, 'Gym: Fighting Stance');
-				switch(this.turn % 3)  {
-					case 1:
-						this.add('-start', pokemon, `Attack Stance`, '[silent]');
-						break;
-					case 2:
-						this.add('-start', pokemon, `Defense Stance`, '[silent]');
-						break;
-					case 0:
-						this.add('-start', pokemon, `Speed Stance`, '[silent]');
-						break;
-				}
-			}
-		},
 		onResidual(target, source, effect) {
-			if (source && source.hasType("Fighting")) {
+			if (target) {this.add('-message', `${target.name}`)
+}			if (source && source.hasType("Fighting")) {
 				this.add('-message', `${source.name} is residually changing stance!`)
 				switch((this.turn + 1) % 3)  {
 					case 1:
