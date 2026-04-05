@@ -212,20 +212,14 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			this.add('-message', `A tailwind blows in behind all Flying type pokemon!`);
 		},
 		onDamage(damage, target, source, effect) {
-			this.add('-message', `${effect.name}`);
-			this.add('-message', `${effect.fullname}`);
-			if (target.hasType("Flying") && effect.fullname == 'stealthrock') {
+			if (target.hasType("Flying") && effect.fullname == 'Stealth Rock') {
+				this.add('-message', `The tailwind lets ${target.name} dodge the stealth rocks!`);
 				return false;
 			}
 		},
 		onModifySpe(spe, pokemon) {
-			this.add('-message', `${spe}`);
-			this.add('-message', `${pokemon.name}`);
 			if (pokemon.hasType('Flying')) {
-				this.add('-message', `${pokemon.name} is flying type apparently`);
-				this.add('-message', `${this.chainModify(1.25)}`);
-				this.add('-message', `${this.modify(spe,1.25)}`);
-				return this.chainModify(1.25);
+				return this.modify(spe, 1.25);
 			}
 		},
 	},
@@ -544,22 +538,17 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'Fighting Gym',
 		desc: "Fighting type pokemon take stances that either let them deal more damage, take less damage, or move faster.",
 		onModifyDamage(damage, source, target, move) {
-			if (target.hasType("Fighting") && this.turn % 3 == 1) {
-				this.add('-message', `debug more damage stance`);
+			if (source.hasType("Fighting") && this.turn % 3 == 1) {
+				this.add('-message', `${source.name}'s stance allows it to do more damage!`)
 				return this.chainModify(1.2);
 			}
-			if (source.hasType("Fighting") && this.turn % 3 == 2) {
-				this.add('-message', `debug less damage stance`);
+			if (target.hasType("Fighting") && this.turn % 3 == 2) {
+				this.add('-message', `${source.name}'s stance allows it take less damage!`)
 				return this.chainModify(.8);
 			}
 		},
 		onModifySpe(spe, pokemon) {
 			if (pokemon.hasType("Fighting") && this.turn % 3 == 0) {
-				this.add('-message', `debug fast stance`);
-				this.add('-message', `${pokemon.name} is fighting type apparently`);
-				this.add('-message', `${spe}`);
-				this.add('-message', `${this.chainModify(1.2)}`);
-				this.add('-message', `${this.modify(spe,1.2)}`);
 				return this.modify(spe, 1.2);
 			}
 		},
@@ -584,8 +573,12 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		onBegin() {
 			this.add('-message', `Neutralizing gas fills the room!`)
 		},
+		onBattleStart() {
+			this.add('-message', `Neutralizing gas fills the room 2!`)
+		},
 		onSwitchIn(pokemon) {
 			if (pokemon.hasItem("abilityshield")) {
+				this.add('-message', `${pokemon.name}'s Ability Shield was dissolved to nothing!`)
 				pokemon.setItem('');
 			};
 			pokemon.addVolatile('gastroacid');
