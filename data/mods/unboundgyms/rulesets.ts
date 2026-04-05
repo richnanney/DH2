@@ -543,13 +543,18 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				return this.chainModify(1.2);
 			}
 			if (target.hasType("Fighting") && this.turn % 3 == 2) {
-				this.add('-message', `${source.name}'s stance allows it take less damage!`)
+				this.add('-message', `${target.name}'s stance allows it take less damage!`)
 				return this.chainModify(.8);
 			}
 		},
 		onModifySpe(spe, pokemon) {
 			if (pokemon.hasType("Fighting") && this.turn % 3 == 0) {
 				return this.modify(spe, 1.2);
+			}
+		},
+		onBeforeTurn(pokemon) {
+			if (pokemon.hasType("Fighting") && this.turn % 3 == 0) {
+				this.add('-message', `${pokemon.name}'s stance lets it move faster this turn!`)
 			}
 		},
 	},
@@ -572,9 +577,6 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		desc: "Abilities are disabled.",
 		onBegin() {
 			this.add('-message', `Neutralizing gas fills the room!`)
-		},
-		onBattleStart() {
-			this.add('-message', `Neutralizing gas fills the room 2!`)
 		},
 		onSwitchIn(pokemon) {
 			if (pokemon.hasItem("abilityshield")) {
