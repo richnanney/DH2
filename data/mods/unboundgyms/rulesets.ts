@@ -558,8 +558,10 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			}
 		},
 		onSwitchIn(pokemon) {
+			if (this.turn == 0) {return;}
 			if (pokemon.hasType("Fighting")) {
 				this.add('-activate', pokemon, 'Gym: Fighting Stance');
+				this.add('-message', `${pokemon.name} just switched in and is taking a stance!`)	
 				switch(this.turn % 3)  {
 					case 1:
 						this.add('-start', pokemon, `Attack Stance`, '[silent]');
@@ -574,7 +576,9 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			}
 		},
 		onModifyType(move, pokemon, target) {
+			this.add('-message', `${pokemon.name}'s type changed!`)
 			if (pokemon.hasType("Fighting")) {
+				this.add('-message', `${pokemon.name}'s type changed to fighting!`)
 				this.add('-activate', pokemon, 'Gym: Fighting Stance');
 				switch(this.turn % 3)  {
 					case 1:
@@ -590,16 +594,19 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			}
 		},
 		onResidual(target, source, effect) {
-			if (source.hasType("Fighting")) {
-				this.add('-activate', source, 'Gym: Fighting Stance');
+			if (source && source.hasType("Fighting")) {
+				this.add('-message', `${source.name} is residually changing stance!`)
 				switch((this.turn + 1) % 3)  {
 					case 1:
+						this.add('-end', source, `Speed Stance`, '[silent]');
 						this.add('-start', source, `Attack Stance`, '[silent]');
 						break;
 					case 2:
+						this.add('-end', source, `Attack Stance`, '[silent]');
 						this.add('-start', source, `Defense Stance`, '[silent]');
 						break;
 					case 0:
+						this.add('-end', source, `Defense Stance`, '[silent]');
 						this.add('-start', source, `Speed Stance`, '[silent]');
 						break;
 				}
