@@ -291,13 +291,8 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			}
 		},
 		onResidual(target, source, effect) {
-			for (const side of this.sides) {
-				for (const pokemon of side.active) {
-					if (!pokemon || pokemon.fainted) continue;
-					if (pokemon.hasType('Steel') && !pokemon.volatiles['magnetrise']) {
-						pokemon.addVolatile('magnetrise');
-					}
-				}
+			if (target && target.hasType("Steel") && !target.volatiles['magnetrise']) {
+				target.addVolatile('magnetrise');
 			}
 		},
 	},
@@ -427,8 +422,6 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		desc: "Poison type pokemon get Corrosion.",
 		onTryHitPriority: 4,
 		onTryHit(source, target, move) {
-			//TARGET IS DOING THE HITTING
-			//SOURCE IS GETTING HIT
 			if (move.id == 'toxic' && target.hasType('Poison')) {
 				source.setStatus('tox',null,null,true)
 			}
@@ -449,17 +442,6 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 							target.setStatus(secondary.status,null,null,true)
 					}
 				}			
-			}
-		},
-		onResidual(target, source, effect) {
-			// this is just for toxic orb poisoning poison users for some reason
-			for (const side of this.sides) {
-				for (const pokemon of side.active) {
-					if (!pokemon || pokemon.fainted) continue;
-					if (pokemon.hasType('Poison') && pokemon.getItem().id == 'toxicorb') {
-						pokemon.setStatus('tox', null,null, true)
-					}
-				}
 			}
 		},
 		
@@ -523,6 +505,15 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		effectType: 'Rule',
 		name: 'Fighting Gym',
 		desc: "Fighting type pokemon take stances that either let them deal more damage, take less damage, or move faster.",
+		onBattleStart() {
+			for (const side of this.sides) {
+				for (const pokemon of side.active) {
+					if (pokemon.hasType('Fighting')) {
+						this.add('-start', pokemon, `Attack Stance`, '[silent]');
+					}
+				}
+			}
+		},
 		onModifyDamage(damage, source, target, move) {
 			if (source.hasType("Fighting") && this.turn % 3 == 1) {
 				this.add('-message', `${source.name}'s stance allows it to do more damage!`)
@@ -563,7 +554,6 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		},
 		onResidual(target, source, effect) {			
 			if (target && target.hasType("Fighting")) {
-				this.add('-message', `${target.name} is residually changing stance!`)
 				switch((this.turn + 1) % 3)  {
 					case 1:
 						this.add('-end', target, `Speed Stance`, '[silent]');
