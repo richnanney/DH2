@@ -506,22 +506,22 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'Fighting Gym',
 		desc: "Fighting type pokemon take stances that either let them deal more damage, take less damage, or move faster.",
 		onModifyDamage(damage, source, target, move) {
-			if (source.hasType("Fighting") && this.turn % 3 == 1) {
+			if (source.hasType("Fighting") && (this.turn % 6 == 1 || this.turn % 6 == 2  )) {
 				this.add('-message', `${source.name}'s stance allows it to do more damage!`)
 				return this.chainModify(1.2);
 			}
-			if (target.hasType("Fighting") && this.turn % 3 == 2) {
+			if (target.hasType("Fighting") && (this.turn % 6 == 3 || this.turn % 6 == 4  )) {
 				this.add('-message', `${target.name}'s stance allows it take less damage!`)
 				return this.chainModify(.8);
 			}
 		},
 		onModifySpe(spe, pokemon) {
-			if (pokemon.hasType("Fighting") && this.turn % 3 == 0) {
+			if (pokemon.hasType("Fighting") && (this.turn % 6 == 5 || this.turn % 6 == 0  )) {
 				return this.modify(spe, 1.2);
 			}
 		},
 		onBeforeTurn(pokemon) {
-			if (pokemon.hasType("Fighting") && this.turn % 3 == 0) {
+			if (pokemon.hasType("Fighting") && (this.turn % 6 == 5 || this.turn % 6 == 0  )) {
 				this.add('-message', `${pokemon.name}'s stance lets it move faster this turn!`)
 			}
 		},
@@ -531,14 +531,20 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 					this.add('-start', pokemon, `Attack Stance`, '[silent]');
 					return;
 				}
-				switch(this.turn % 3)  {
+				switch(this.turn % 6)  {
 					case 1:
+					case 2:
+						this.add('-end', pokemon, `Speed Stance`, '[silent]');
 						this.add('-start', pokemon, `Attack Stance`, '[silent]');
 						break;
-					case 2:
+					case 3:
+					case 4:
+						this.add('-end', pokemon, `Attack Stance`, '[silent]');
 						this.add('-start', pokemon, `Defense Stance`, '[silent]');
 						break;
+					case 5:
 					case 0:
+						this.add('-end', pokemon, `Defense Stance`, '[silent]');
 						this.add('-start', pokemon, `Speed Stance`, '[silent]');
 						break;
 				}
@@ -546,15 +552,18 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		},
 		onResidual(target, source, effect) {			
 			if (target && target.hasType("Fighting")) {
-				switch((this.turn + 1) % 3)  {
+				switch((this.turn + 1) % 6)  {
 					case 1:
+					case 2:
 						this.add('-end', target, `Speed Stance`, '[silent]');
 						this.add('-start', target, `Attack Stance`, '[silent]');
 						break;
-					case 2:
+					case 3:
+					case 4:
 						this.add('-end', target, `Attack Stance`, '[silent]');
 						this.add('-start', target, `Defense Stance`, '[silent]');
 						break;
+					case 5:
 					case 0:
 						this.add('-end', target, `Defense Stance`, '[silent]');
 						this.add('-start', target, `Speed Stance`, '[silent]');
