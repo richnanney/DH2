@@ -1,69 +1,4 @@
 export const Abilities: {[k: string]: ModdedAbilityData} = {
-	overcoat: {
-		onImmunity(type, pokemon) {
-			if (type === 'sandstorm' || type === 'hail' || type === 'powder' || type === 'vicioussandstorm') return false;
-		},
-		onTryHitPriority: 1,
-		onTryHit(target, source, move) {
-			if (move.flags['powder'] && target !== source && this.dex.getImmunity('powder', target)) {
-				this.add('-immune', target, '[from] ability: Overcoat');
-				return null;
-			}
-		},
-		flags: {breakable: 1},
-		name: "Overcoat",
-		rating: 2,
-		num: 142,
-	},
-	sandforce: {
-		onBasePowerPriority: 21,
-		onBasePower(basePower, attacker, defender, move) {
-			if (this.field.isWeather('sandstorm') || this.field.isWeather('vicioussandstorm') ) {
-				if (move.type === 'Rock' || move.type === 'Ground' || move.type === 'Steel') {
-					this.debug('Sand Force boost');
-					return this.chainModify([5325, 4096]);
-				}
-			}
-		},
-		onImmunity(type, pokemon) {
-			if (type === 'sandstorm' || type === 'vicioussandstorm') return false;
-		},
-		flags: {},
-		name: "Sand Force",
-		rating: 2,
-		num: 159,
-	},
-	sandrush: {
-		onModifySpe(spe, pokemon) {
-			if (this.field.isWeather('sandstorm') || this.field.isWeather('vicioussandstorm')) {
-				return this.chainModify(2);
-			}
-		},
-		onImmunity(type, pokemon) {
-			if (type === 'sandstorm' || type ==='vicioussandstorm') return false;
-		},
-		flags: {},
-		name: "Sand Rush",
-		rating: 3,
-		num: 146,
-	},
-	sandveil: {
-		onImmunity(type, pokemon) {
-			if (type === 'sandstorm' || type === 'vicioussandstorm') return false;
-		},
-		onModifyAccuracyPriority: -1,
-		onModifyAccuracy(accuracy) {
-			if (typeof accuracy !== 'number') return;
-			if (this.field.isWeather('sandstorm') || this.field.isWeather('vicioussandstorm')) {
-				this.debug('Sand Veil - decreasing accuracy');
-				return this.chainModify([3277, 4096]);
-			}
-		},
-		flags: {breakable: 1},
-		name: "Sand Veil",
-		rating: 1.5,
-		num: 8,
-	},
 	rainmaker: {
 		onModifyPriority(priority, pokemon, target, move) {
 			if (['Sunny Day', 'Rain Dance', 'Sandstorm', 'Hail', 'Snowscape','Chilly Reception'].includes(move.name)) {
@@ -116,8 +51,8 @@ export const Abilities: {[k: string]: ModdedAbilityData} = {
 			}
 		},
 	},
-	flashierfire: {
-		name: "",
+	hotstreak: {
+		name: "Hot Streak",
 		desc: "Immune to fire type moves, and gains a boost of speed when hit by them.",
 		shortDesc: "Fire immunity and buffs when hit by fire.",
 		rating: 4.0,
@@ -125,10 +60,44 @@ export const Abilities: {[k: string]: ModdedAbilityData} = {
 		onTryHit(target, source, move) {
 			if (target !== source && move.type === 'Fire') {
 				move.accuracy = true;
-				this.add('-immune', target, '[from] ability: Flashier Fire');
+				this.add('-immune', target, '[from] ability: Hot Streak');
 				this.boost({spe: 1,});
 				return null;
 			}
 		},
 	},
+	sandbath: {
+		name: "Sand Bath",
+		desc: "Hydration but for sand.",
+		shortDesc: "Hydration but for sand.",
+		rating: 4.0,
+		num: 408,
+		onResidual(pokemon) {
+			if (pokemon.status && this.field.isWeather('sandstorm')) {
+				this.add('-activate', pokemon, 'ability: Sand Bath');
+				pokemon.cureStatus();
+			}
+		},
+	},
+	encaptivate: {
+		name: "Encaptivate",
+		desc: "Intimidate but for Special Attack.",
+		shortDesc: "Intimidate but for Special Attack.",
+		rating: 4.0,
+		num: 409,
+		onStart(pokemon) {
+			let activated = false;
+			for (const target of pokemon.adjacentFoes()) {
+				if (!activated) {
+					this.add('-ability', pokemon, 'Encaptivate', 'boost');
+					activated = true;
+				}
+				if (target.volatiles['substitute']) {
+					this.add('-immune', target);
+				} else {
+					this.boost({spa: -1}, target, pokemon, null, true);
+				}
+			}
+		},
+	}
 };

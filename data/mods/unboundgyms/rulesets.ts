@@ -381,39 +381,39 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 	groundgym: {
 		effectType: 'Rule',
 		name: 'Ground Gym',
-		desc: "A vicious sandstorm takes place and deals 1/8th hp of damage to non-ground/rock types.",
+		desc: "Permanent sandstorm. Also ground types benefit from the spdef increase that sandstorm gives.",
 		onBegin() {
-			this.add('-weather', 'vicioussandstorm');
-			this.field.weather = 'vicioussandstorm' as ID;
-			this.field.weatherState = { id: 'vicioussandstorm'};
+			this.add('-weather', 'sandstorm');
+			this.field.weather = 'sandstorm' as ID;
+			this.field.weatherState = { id: 'sandstorm'};
 		},
 		onSetWeather(target, source, weather) {
-			if (this.field.weather == 'vicioussandstorm') {
+			if (this.field.weather == 'sandstorm') {
 				this.add('-message', `The sandstorm is too strong to set up ${weather.name}!`)
 				return false;
 			}
 		},
-		onWeather(target, source, effect) {
-			if (target.hasType(['ground','rock','steel']) && effect.id == 'vicioussandstorm') {
-				return false;
+		onModifySpD(spd, pokemon) {
+			if (pokemon.hasType('ground') && !pokemon.hasType('rock') && this.field.isWeather('sandstorm')) {
+				return this.modify(spd, 1.5);
 			}
 		},
 		onAfterTerastallization(pokemon) {
 			if (pokemon.baseSpecies.name == 'Terapagos-Stellar') {
-				this.add('-message', 'Terapagos clears the field! The vicious sandstorm will return once Terapagos exits the battle!')
+				this.add('-message', 'Terapagos clears the field! The sandstorm will return once Terapagos exits the battle!')
 			};
 		},
 		onResidual(battle) {
-			if (this.field.weather == 'vicioussandstorm') return;
+			if (this.field.weather == 'sandstorm') return;
 			for (const side of this.sides) {
 				for (const pokemon of side.active) {
 					if (!pokemon || pokemon.fainted) continue;
 					if (pokemon.baseSpecies.name == 'Terapagos-Stellar') return;
 				}
 			}
-			this.add('-weather', 'vicioussandstorm');
-			this.field.weather = 'vicioussandstorm' as ID;
-			this.field.weatherState = { id: 'vicioussandstorm'};
+			this.add('-weather', 'sandstorm');
+			this.field.weather = 'sandstorm' as ID;
+			this.field.weatherState = { id: 'sandstorm'};
 		},
 	},
 	poisongym: {
