@@ -118,6 +118,9 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		onEffectiveness(typeMod, target, type, move) {
 			if (move.type == 'electric' && target?.hasType('ground')) return typeMod + 1;
 		},
+		onNegateImmunity(pokemon, type) {
+			if (pokemon.hasType('ground') && type == 'electric') return false;
+		},
 	},
 	/*
 	electricgym: {
