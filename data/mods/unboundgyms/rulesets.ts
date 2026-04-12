@@ -120,7 +120,10 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		},
 		onNegateImmunity(pokemon, type) {
 			this.add('-message', `${pokemon.name} ${type}`)
-			if (pokemon.hasType('ground') && type == 'Electric') return false;
+			if (pokemon.hasType('ground') && type == 'Electric'){
+				this.add('-message', `we triggered baby`)
+				return true;
+			}
 		},
 	},
 	/*
