@@ -119,6 +119,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			if (move.type == 'electric' && target?.hasType('ground')) return typeMod + 1;
 		},
 		onNegateImmunity(pokemon, type) {
+			this.add('-message', `${pokemon.name} ${type}`)
 			if (pokemon.hasType('ground') && type == 'electric') return false;
 		},
 	},
