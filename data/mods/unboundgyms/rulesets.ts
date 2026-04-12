@@ -116,13 +116,13 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		name: 'Electric Gym',
 		desc: "Electric is super-effective to ground-types.",
 		onEffectiveness(typeMod, target, type, move) {
-			if (move.type == 'electric' && target?.hasType('ground')) return typeMod + 1;
+			if (move.type == "Electric" && target?.hasType("Ground")) return typeMod + 1;
 		},
 		onNegateImmunity(pokemon, type) {
 			this.add('-message', `${pokemon.name} ${type}`)
-			if (pokemon.hasType('ground') && type == 'Electric'){
+			if (pokemon.hasType("Ground") && type == "Electric"){
 				this.add('-message', `we triggered baby`)
-				return true;
+				return false;
 			}
 		},
 	},
