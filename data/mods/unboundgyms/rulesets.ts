@@ -114,7 +114,17 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 	electricgym: {
 		effectType: 'Rule',
 		name: 'Electric Gym',
+		desc: "Electric is super-effective to ground-types.",
+		onEffectiveness(typeMod, target, type, move) {
+			if (move.type == 'electric' && target?.hasType('ground')) return typeMod + 1;
+		},
+	},
+	/*
+	electricgym: {
+		effectType: 'Rule',
+		name: 'Electric Gym',
 		desc: "Permanent Electric Terrain.",
+	
 		onBegin() {
 			this.add('-fieldstart', 'Electric Terrain')
 			this.field.terrain = 'electricterrain' as ID;
@@ -146,7 +156,9 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			this.field.terrain = 'electricterrain' as ID;
 			this.field.terrainState = { id: 'electricterrain'};
 		},
+		
 	},
+	*/
 	ghostgym: {
 		effectType: 'Rule',
 		name: 'Ghost Gym',
@@ -159,7 +171,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 				this.add('-message', `${target.name} must still repent and is preserved from damage.`)
 				return this.chainModify(0.7);
 			}
-		},
+		}, 
 		onDamagingHit(damage, target, source, move) {
 			if (!target.hp && target.hasType("Ghost")) {
 				this.add('-message', `${source.name} is slowed the weight of sin...`);
