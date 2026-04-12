@@ -115,13 +115,14 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		effectType: 'Rule',
 		name: 'Electric Gym',
 		desc: "Electric is super-effective to ground-types.",
+		onBegin() {
+			this.add('-message', "Electricity arcs across the ground below!")
+		},
 		onEffectiveness(typeMod, target, type, move) {
-			if (move.type == "Electric" && target?.hasType("Ground")) return typeMod + 1;
+			if (move.type == "Electric" && type == "Ground") return typeMod + 1;
 		},
 		onNegateImmunity(pokemon, type) {
-			this.add('-message', `${pokemon.name} ${type}`)
 			if (pokemon.hasType("Ground") && type == "Electric"){
-				this.add('-message', `we triggered baby`)
 				return false;
 			}
 		},
@@ -181,7 +182,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		}, 
 		onDamagingHit(damage, target, source, move) {
 			if (!target.hp && target.hasType("Ghost")) {
-				this.add('-message', `${source.name} is slowed the weight of sin...`);
+				this.add('-message', `${source.name} is slowed by the weight of sin...`);
 				this.boost({spe: -1,}, source, target, null, true);
 			}
 		},
