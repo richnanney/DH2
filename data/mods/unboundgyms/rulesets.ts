@@ -414,7 +414,8 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			}
 		},
 		onModifySpD(spd, pokemon) {
-			if (pokemon.hasType('ground') && !pokemon.hasType('rock') && this.field.isWeather('sandstorm')) {
+			if (pokemon.hasType('Ground') && !pokemon.hasType('Rock') && this.field.isWeather('sandstorm')) {
+				this.add('-message', `${pokemon.name} takes reduced damage!`)
 				return this.chainModify(spd, 1.5);
 			}
 		},
@@ -481,7 +482,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 					if (secondary.chance) secondary.chance *= 2;
 				}
 			}
-			if (move.self?.chance && pokemon.hasType('dragon')) {
+			if (move.self?.chance && pokemon.hasType('Dragon')) {
 				this.add('-message', `${move.name} is a little luckier thanks to the gym effect!`)
 				move.self.chance *= 2;
 			}
@@ -546,14 +547,12 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			}
 		},
 		onSwitchIn(pokemon) {
-			if (this.midTurn) {this.add('-message', `mid turn`)}
-			else {this.add('-message', `end turn`)}
 			if (pokemon.hasType("Fighting")) {
 				if (this.turn == 0) {
 					this.add('-start', pokemon, `Attack Stance`, '[silent]');
 					return;
 				}
-				switch(this.turn % 6)  {
+				switch(this.turn + Number(pokemon.side.faintedThisTurn) % 6)  {
 					case 1:
 					case 2:
 						this.add('-end', pokemon, `Speed Stance`, '[silent]');
