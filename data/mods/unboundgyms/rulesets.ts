@@ -176,7 +176,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		},
 		onModifyDamage(relayVar, source, target, move) {
 			if (target.hp >= target.maxhp && target.hasType('Ghost')) {
-				this.add('-message', `${target.name} must still repent and is preserved from damage.`)
+				this.add('-message', `${target.name}'s drive to torment preserves it from damage.`)
 				return this.chainModify(0.7);
 			}
 		}, 
@@ -415,7 +415,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		},
 		onModifySpD(spd, pokemon) {
 			if (pokemon.hasType('ground') && !pokemon.hasType('rock') && this.field.isWeather('sandstorm')) {
-				return this.modify(spd, 1.5);
+				return this.chainModify(spd, 1.5);
 			}
 		},
 		onAfterTerastallization(pokemon) {
@@ -546,6 +546,8 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 			}
 		},
 		onSwitchIn(pokemon) {
+			if (this.midTurn) {this.add('-message', `mid turn`)}
+			else {this.add('-message', `end turn`)}
 			if (pokemon.hasType("Fighting")) {
 				if (this.turn == 0) {
 					this.add('-start', pokemon, `Attack Stance`, '[silent]');
