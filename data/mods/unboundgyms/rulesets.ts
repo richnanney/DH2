@@ -415,8 +415,7 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 		},
 		onModifySpD(spd, pokemon) {
 			if (pokemon.hasType('Ground') && !pokemon.hasType('Rock') && this.field.isWeather('sandstorm')) {
-				this.add('-message', `${pokemon.name} takes reduced damage!`)
-				return this.chainModify(spd, 1.5);
+				return this.modify(spd, 1.5);
 			}
 		},
 		onAfterTerastallization(pokemon) {
@@ -552,7 +551,27 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 					this.add('-start', pokemon, `Attack Stance`, '[silent]');
 					return;
 				}
-				switch(this.turn + Number(pokemon.side.faintedThisTurn) % 6)  {
+				if (pokemon.side.faintedThisTurn) { 
+					this.add('-message', `debug: fighting type pokemon switching in after faint`)
+					switch((this.turn + 1 ) % 6)  {
+						case 1:
+						case 2:
+							this.add('-end', pokemon, `Speed Stance`, '[silent]');
+							this.add('-start', pokemon, `Attack Stance`, '[silent]');
+							break;
+						case 3:
+						case 4:
+							this.add('-end', pokemon, `Attack Stance`, '[silent]');
+							this.add('-start', pokemon, `Defense Stance`, '[silent]');
+							break;
+						case 5:
+						case 0:
+							this.add('-end', pokemon, `Defense Stance`, '[silent]');
+							this.add('-start', pokemon, `Speed Stance`, '[silent]');
+							break;
+					}
+				}
+				switch(this.turn % 6)  {
 					case 1:
 					case 2:
 						this.add('-end', pokemon, `Speed Stance`, '[silent]');
