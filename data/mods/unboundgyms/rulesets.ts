@@ -552,7 +552,6 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 					return;
 				}
 				if (pokemon.side.faintedThisTurn) { 
-					this.add('-message', `debug: fighting type pokemon switching in after faint`)
 					switch((this.turn + 1 ) % 6)  {
 						case 1:
 						case 2:
@@ -571,22 +570,24 @@ export const Rulesets: {[k: string]: ModdedFormatData} = {
 							break;
 					}
 				}
-				switch(this.turn % 6)  {
-					case 1:
-					case 2:
-						this.add('-end', pokemon, `Speed Stance`, '[silent]');
-						this.add('-start', pokemon, `Attack Stance`, '[silent]');
-						break;
-					case 3:
-					case 4:
-						this.add('-end', pokemon, `Attack Stance`, '[silent]');
-						this.add('-start', pokemon, `Defense Stance`, '[silent]');
-						break;
-					case 5:
-					case 0:
-						this.add('-end', pokemon, `Defense Stance`, '[silent]');
-						this.add('-start', pokemon, `Speed Stance`, '[silent]');
-						break;
+				else {
+					switch(this.turn % 6)  {
+						case 1:
+						case 2:
+							this.add('-end', pokemon, `Speed Stance`, '[silent]');
+							this.add('-start', pokemon, `Attack Stance`, '[silent]');
+							break;
+						case 3:
+						case 4:
+							this.add('-end', pokemon, `Attack Stance`, '[silent]');
+							this.add('-start', pokemon, `Defense Stance`, '[silent]');
+							break;
+						case 5:
+						case 0:
+							this.add('-end', pokemon, `Defense Stance`, '[silent]');
+							this.add('-start', pokemon, `Speed Stance`, '[silent]');
+							break;
+						}
 				}
 			}
 		},
