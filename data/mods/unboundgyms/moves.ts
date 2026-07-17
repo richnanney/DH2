@@ -126,4 +126,95 @@ export const Moves: {[k: string]: ModdedMoveData} = {
 		target: "normal",
 		type: "Dragon",
 	},
+	astralinfection : {
+		num: 5711,
+		accuracy: 100,
+		basePower: 0,
+		category: "Status",
+		name: "Astral Infection",
+		pp: 20,
+		priority: 0,
+		flags: {protect: 1, reflectable: 1, mirror: 1, allyanim: 1, metronome: 1},
+		onHit(target) {
+			if (target.hasType('Poison')) return false;
+			if (!target.addType('Poison')) return false;
+			this.add('-start', target, 'typeadd', 'Poison', '[from] move: Astral Infection');
+		},
+		secondary: null,
+		target: "normal",
+		type: "Poison",
+		zMove: {boost: {atk: 1, def: 1, spa: 1, spd: 1, spe: 1}},
+		contestType: "Clever",
+	},
+	judgementcut: {
+		num: 5711,
+		accuracy: 100,
+		basePower: 70,
+		category: "Physical",
+		name: "Judgement Cut",
+		pp: 20,
+		flags: {contact: 1, protect: 1, mirror: 1, metronome: 1, },
+		priority: 0,
+		onHit(target) {
+			target.addVolatile('Taunt')
+		},
+		secondary: null,
+		target: "normal",
+		type: "Normal",
+	},
+	dragonscurse: {
+		num: 5713,
+		accuracy: 100,
+		basePower: 0,
+		category: "Status",
+		name: "Dragon's Curse",
+		pp: 20,
+		flags: {protect: 1, reflectable: 1, mirror: 1, sound: 1, bypasssub: 1, metronome: 1},
+		priority: 0,
+		onHit(target) {
+			const bestStat = target.getBestStat(false, true);
+			this.boost({[bestStat]: -1}, target);
+		},
+		target: "allAdjacentFoes",
+		secondary: null,
+		type: "Normal",
+	},
+	royalmaelstrom: {
+		num: 5714,
+		accuracy: 90,
+		basePower: 130,
+		category: "Physical",
+		name: "Royal Maelstrom",
+		pp: 5,
+		priority: 0,
+		flags: {protect: 1, mirror: 1, metronome: 1},
+		self: {
+			boosts: {
+				spa: -2,
+			},
+		},
+		secondary: null,
+		target: "normal",
+		type: "Water",
+		contestType: "Beautiful",
+	},
+	faeflare: {
+		num: 5715,
+		accuracy: 100,
+		basePower: 150,
+		basePowerCallback(pokemon, target, move) {
+			const bp = move.basePower * pokemon.hp / pokemon.maxhp;
+			this.debug('BP: ' + bp);
+			return bp;
+		},
+		category: "Special",
+		name: "Fae Flare",
+		pp: 5,
+		priority: 0,
+		flags: {protect: 1, mirror: 1, metronome: 1},
+		secondary: null,
+		target: "allAdjacentFoes",
+		type: "Fairy",
+		contestType: "Beautiful",
+	},
 };
