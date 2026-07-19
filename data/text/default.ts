@@ -1,4 +1,4 @@
-export const DefaultText: {[k: string]: DefaultText} = {
+export const DefaultText: {[id: IDEntry]: DefaultText} = {
 	default: {
 		startBattle: "Battle started between [TRAINER] and [TRAINER]!",
 		winBattle: "**[TRAINER]** won the battle!",
@@ -316,13 +316,6 @@ export const DefaultText: {[k: string]: DefaultText} = {
 		end: "  The mysterious strong winds have dissipated!",
 		activate: "  The mysterious strong winds weakened the attack!",
 		block: "  The mysterious strong winds blow on regardless!",
-	},
-	vicioussandstorm: {
-		weatherName: "Vicious Sandstorm",
-		start: "  A vicious sandstorm has blown in!",
-		end: "  The vicious sandstorm subsided.",
-		upkeep: "  (The vicious sandstorm blusters.)",
-		damage: "  [POKEMON] is blasted by the vicious sandstorm!",
 	},
 
 	// terrain

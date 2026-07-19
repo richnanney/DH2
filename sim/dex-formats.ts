@@ -11,12 +11,26 @@ export interface FormatData extends Partial<Format>, EventMethods {
 
 export type FormatList = (FormatData | {section: string, column?: number})[];
 export type ModdedFormatData = FormatData | Omit<FormatData, 'name'> & {inherit: true};
+export interface FormatDataTable {[id: IDEntry]: FormatData}
+export interface ModdedFormatDataTable {[id: IDEntry]: ModdedFormatData}
 
 type FormatEffectType = 'Format' | 'Ruleset' | 'Rule' | 'ValidatorRule';
 
 /** rule, source, limit, bans */
 export type ComplexBan = [string, string, number, string[]];
 export type ComplexTeamBan = ComplexBan;
+
+export interface GameTimerSettings {
+	dcTimer: boolean;
+	dcTimerBank: boolean;
+	starting: number;
+	grace: number;
+	addPerTurn: number;
+	maxPerTurn: number;
+	maxFirstTurn: number;
+	timeoutAutoChoose: boolean;
+	accelerate: boolean;
+}
 
 /**
  * A RuleTable keeps track of the rules that a format has. The key can be:
@@ -69,13 +83,13 @@ export class RuleTable extends Map<string, string> {
 		if (this.has(`+basepokemon:${toID(species.baseSpecies)}`)) return false;
 		if (this.has(`-basepokemon:${toID(species.baseSpecies)}`)) return true;
 		for (const tagid in Tags) {
-			const tag = Tags[tagid];
+			const tag = Tags[tagid as ID];
 			if (this.has(`-pokemontag:${tagid}`)) {
 				if ((tag.speciesFilter || tag.genericFilter)!(species)) return true;
 			}
 		}
 		for (const tagid in Tags) {
-			const tag = Tags[tagid];
+			const tag = Tags[tagid as ID];
 			if (this.has(`+pokemontag:${tagid}`)) {
 				if ((tag.speciesFilter || tag.genericFilter)!(species)) return false;
 			}
@@ -94,13 +108,13 @@ export class RuleTable extends Map<string, string> {
 		if (this.has(`+basepokemon:${toID(species.baseSpecies)}`)) return false;
 		if (this.has(`*basepokemon:${toID(species.baseSpecies)}`)) return true;
 		for (const tagid in Tags) {
-			const tag = Tags[tagid];
+			const tag = Tags[tagid as ID];
 			if (this.has(`*pokemontag:${tagid}`)) {
 				if ((tag.speciesFilter || tag.genericFilter)!(species)) return true;
 			}
 		}
 		for (const tagid in Tags) {
-			const tag = Tags[tagid];
+			const tag = Tags[tagid as ID];
 			if (this.has(`+pokemontag:${tagid}`)) {
 				if ((tag.speciesFilter || tag.genericFilter)!(species)) return false;
 			}
@@ -212,7 +226,8 @@ export class RuleTable extends Map<string, string> {
 		this.defaultLevel = Number(this.valueRules.get('defaultlevel')) || 0;
 		this.adjustLevel = Number(this.valueRules.get('adjustlevel')) || null;
 		this.adjustLevelDown = Number(this.valueRules.get('adjustleveldown')) || null;
-		this.evLimit = Number(this.valueRules.get('evlimit')) || null;
+		this.evLimit = Number(this.valueRules.get('evlimit'));
+		if (isNaN(this.evLimit)) this.evLimit = null;
 
 		if (this.valueRules.get('pickedteamsize') === 'Auto') {
 			this.pickedTeamSize = (
@@ -358,6 +373,12 @@ export class Format extends BasicEffect implements Readonly<BasicEffect> {
 	readonly unbanlist: string[];
 	/** List of ruleset and banlist changes in a custom format. */
 	readonly customRules: string[] | null;
+	/**
+	* The teambuilder slice the client should respect.
+	* Can honor "OU", "Ubers", "AG", or "National Dex" for Natdex based mods,
+	* but is not typechecked nor server validated.
+	* */
+	readonly teambuilderFormat: string | null;
 	/** Table of rule names and banned effects. */
 	ruleTable: RuleTable | null;
 	/** An optional function that runs at the start of a battle. */
@@ -430,6 +451,7 @@ export class Format extends BasicEffect implements Readonly<BasicEffect> {
 		this.restricted = data.restricted || [];
 		this.unbanlist = data.unbanlist || [];
 		this.customRules = data.customRules || null;
+		this.teambuilderFormat = data.teambuilderFormat || null;
 		this.ruleTable = null;
 		this.onBegin = data.onBegin || undefined;
 		this.noLog = !!data.noLog;
@@ -511,22 +533,15 @@ export class DexFormats {
 		const formatsList = [];
 
 		// Load formats
-		let customFormats;
-		try {
-			customFormats = require(`${__dirname}/../config/custom-formats`).Formats;
-			if (!Array.isArray(customFormats)) {
-				throw new TypeError(`Exported property 'Formats' from "./config/custom-formats.ts" must be an array`);
-			}
-		} catch (e: any) {
-			if (e.code !== 'MODULE_NOT_FOUND' && e.code !== 'ENOENT') {
-				throw e;
-			}
+		let officialFormats = require(`${__dirname}/../config/official-formats`).Formats;
+		if (!Array.isArray(officialFormats)) {
+			throw new TypeError(`Exported property 'Formats' from "./config/official-formats.ts" must be an array`);
 		}
 		let Formats: AnyObject[] = require(`${__dirname}/../config/formats`).Formats;
 		if (!Array.isArray(Formats)) {
 			throw new TypeError(`Exported property 'Formats' from "./config/formats.ts" must be an array`);
 		}
-		if (customFormats) Formats = mergeFormatLists(Formats as any, customFormats);
+		if (officialFormats) Formats = mergeFormatLists(Formats as any, officialFormats);
 
 		let section = '';
 		let column = 1;
