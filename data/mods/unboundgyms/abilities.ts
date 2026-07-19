@@ -1,4 +1,4 @@
-export const Abilities: {[k: string]: ModdedAbilityData} = {
+export const Abilities: import('../../../sim/dex-abilities').ModdedAbilityDataTable = {
 	rainmaker: {
 		onModifyPriority(priority, pokemon, target, move) {
 			if (['Sunny Day', 'Rain Dance', 'Sandstorm', 'Hail', 'Snowscape','Chilly Reception'].includes(move.name)) {
