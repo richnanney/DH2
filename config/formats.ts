@@ -38,8 +38,6 @@ export const Formats: import('../sim/dex-formats').FormatList = [
 	{
 		name: "[Gen 9] Stundera Testing",
 		mod: 'unboundgyms',
-		gameType: 'singles',
-		ruleset: ['']
 	},
 	{
 		name: "[Gen 9] Stundera Testing 2",
