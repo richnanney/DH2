@@ -31,13 +31,20 @@ export const Formats: import('../sim/dex-formats').FormatList = [
 		mod: 'unbound',
 		gameType: 'doubles',
 	},
-		{
+	{
 		section: "Gym Gimmick Testing",
 		column: 1,
 	},
 	{
-		name: "[Gen 9] Stundera Testing (No Gimmicks)",
-		mod: "unboundgyms"
+		name: "[Gen 9] Stundera Testing",
+		mod: 'unboundgyms',
+		gameType: 'singles',
+		ruleset: ['']
+	},
+	{
+		name: "[Gen 9] Stundera Testing 2",
+		mod: 'unboundgyms',
+		gameType: 'singles',
 	},
 	{
 		name: "[Gen 9] Unbound Water Gym",
