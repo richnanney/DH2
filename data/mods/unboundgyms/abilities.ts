@@ -118,6 +118,7 @@ export const Abilities: import('../../../sim/dex-abilities').ModdedAbilityDataTa
 				}
 				pokemon.removeVolatile('Iron Ambassador');
 			}
+			this.add('-message', move.name);
 			if (move.name === 'Gigaton Hammer') {
 				pokemon.addVolatile('Iron Ambassador');
 			}

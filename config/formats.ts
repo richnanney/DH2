@@ -17,7 +17,7 @@ New sections will be added to the bottom of the specified column.
 The column value will be ignored for repeat sections.
 */
 
-export const Formats: FormatList = [
+export const Formats: import('../sim/dex-formats').FormatList = [
 	{
 		section: "Pokemon Unbound",
 		column: 1,
@@ -37,7 +37,7 @@ export const Formats: FormatList = [
 	},
 	{
 		name: "[Gen 9] Stundera Testing (No Gimmicks)",
-		mod: 'unboundgyms'
+		mod: "unboundgyms"
 	},
 	{
 		name: "[Gen 9] Unbound Water Gym",
