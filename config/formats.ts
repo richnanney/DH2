@@ -36,6 +36,10 @@ export const Formats: FormatList = [
 		column: 1,
 	},
 	{
+		name: "[Gen 9] Stundera Testing (No Gimmicks)",
+		mod: 'unboundgyms'
+	},
+	{
 		name: "[Gen 9] Unbound Water Gym",
 		mod: 'unboundgyms',
 		ruleset: ['watergym']
