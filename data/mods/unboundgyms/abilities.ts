@@ -107,7 +107,7 @@ export const Abilities: import('../../../sim/dex-abilities').ModdedAbilityDataTa
 		rating: 4.0,
 		num: 410,
 		onModifyMove(move, pokemon, target) {
-			if (pokemon.volatiles['gigatonhammer']){
+			if (pokemon.volatiles['Iron Ambassador']){
 				if (move.category == "Status"){
 					this.add('-ability', pokemon, 'Iron Ambassador', 'boost');
 					this.boost({def: 1, spd:1});
@@ -116,6 +116,10 @@ export const Abilities: import('../../../sim/dex-abilities').ModdedAbilityDataTa
 					this.add('-ability', pokemon, 'Iron Ambassador', 'boost');
 					this.boost({atk: 1, spa:1});
 				}
+				pokemon.removeVolatile('Iron Ambassador');
+			}
+			if (move.id == 'gigatonhammer') {
+				pokemon.addVolatile('Iron Ambassador');
 			}
 		},
 	}
