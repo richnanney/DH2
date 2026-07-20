@@ -99,5 +99,24 @@ export const Abilities: import('../../../sim/dex-abilities').ModdedAbilityDataTa
 				}
 			}
 		},
+	},
+	ironambassador: {
+		name: "Iron Ambassador",
+		desc: "While Gigaton Hammer is on cooldown, using a damaging move will increase attack and using a status move will increase defense.",
+		shortDesc: "poppy hammer moment",
+		rating: 4.0,
+		num: 410,
+		onModifyMove(move, pokemon, target) {
+			if (pokemon.lastMoveUsed?.name == "Gigaton Hammer"){
+				if (move.category == "Status"){
+					this.add('-ability', pokemon, 'Iron Ambassador', 'boost');
+					this.boost({def: 1, spd:1});
+				}
+				else {
+					this.add('-ability', pokemon, 'Iron Ambassador', 'boost');
+					this.boost({atk: 1, spa:1});
+				}
+			}
+		}
 	}
 };
