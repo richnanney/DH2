@@ -1,4 +1,4 @@
-export const Abilities: {[k: string]: ModdedAbilityData} = {
+export const Abilities: import('../../../sim/dex-abilities').ModdedAbilityDataTable = {
 	grassdash: {
 		onModifyPriority(priority, pokemon, target, move) {
 			if (move && move.type === 'Grass') return priority + 1;

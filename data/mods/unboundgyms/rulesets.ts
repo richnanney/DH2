@@ -1,4 +1,4 @@
-export const Rulesets: {[k: string]: ModdedFormatData} = {
+export const Rulesets: import('../../../sim/dex-formats').FormatDataTable = {
 	watergym: {
 		effectType: 'Rule',
 		name: 'Water Gym',

@@ -1,4 +1,4 @@
-export const Moves: {[k: string]: ModdedMoveData} = {
+export const Moves: import('../../../sim/dex-moves').ModdedMoveDataTable = {
 	fourofakind : {
 		num:	1111,
 		accuracy: 100,
