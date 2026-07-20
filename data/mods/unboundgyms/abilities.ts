@@ -108,7 +108,7 @@ export const Abilities: import('../../../sim/dex-abilities').ModdedAbilityDataTa
 		num: 410,
 		onModifyMove(move, pokemon, target) {
 			if (pokemon.volatiles['Iron Ambassador']){
-				if (move.category == "Status"){
+				if (move.category === "Status"){
 					this.add('-ability', pokemon, 'Iron Ambassador', 'boost');
 					this.boost({def: 1, spd:1});
 				}
@@ -118,7 +118,7 @@ export const Abilities: import('../../../sim/dex-abilities').ModdedAbilityDataTa
 				}
 				pokemon.removeVolatile('Iron Ambassador');
 			}
-			if (move.id == 'gigatonhammer') {
+			if (move.name === 'Gigaton Hammer') {
 				pokemon.addVolatile('Iron Ambassador');
 			}
 		},
