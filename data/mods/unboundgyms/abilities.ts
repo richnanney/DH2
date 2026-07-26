@@ -106,7 +106,7 @@ export const Abilities: import('../../../sim/dex-abilities').ModdedAbilityDataTa
 		shortDesc: "poppy hammer moment",
 		rating: 4.0,
 		num: 410,
-		onTryMove(source, target, move){
+		onBeforeMove(source, target, move) {
 			if (source.lastMove?.name === "Gigaton Hammer"){
 				if (move.category === "Status"){
 					this.add('-ability', source, 'Iron Ambassador', 'boost');
@@ -115,6 +115,27 @@ export const Abilities: import('../../../sim/dex-abilities').ModdedAbilityDataTa
 				else {
 					this.add('-ability', source, 'Iron Ambassador', 'boost');
 					this.boost({atk: 1, spa:1});
+				}
+			}
+		},
+	},
+	secondhandhaze: {
+		name: "Secondhand Haze",
+		desc: "Intimidate but for accuracy.",
+		shortDesc: "Intimidate but for accuracy.",
+		rating: 4.0,
+		num: 410,
+		onStart(pokemon) {
+			let activated = false;
+			for (const target of pokemon.adjacentFoes()) {
+				if (!activated) {
+					this.add('-ability', pokemon, 'Secondhand Haze', 'boost');
+					activated = true;
+				}
+				if (target.volatiles['substitute']) {
+					this.add('-immune', target);
+				} else {
+					this.boost({accuracy: -1}, target, pokemon, null, true);
 				}
 			}
 		},
