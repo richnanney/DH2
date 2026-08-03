@@ -175,7 +175,7 @@ export const Moves: import('../../../sim/dex-moves').ModdedMoveDataTable = {
 			const bestStat = target.getBestStat(false, true);
 			this.boost({[bestStat]: -1}, target);
 		},
-		target: "allAdjacentFoes",
+		target: "all",
 		secondary: null,
 		type: "Normal",
 	},
@@ -190,7 +190,7 @@ export const Moves: import('../../../sim/dex-moves').ModdedMoveDataTable = {
 		flags: {protect: 1, mirror: 1, metronome: 1},
 		self: {
 			boosts: {
-				spa: -2,
+				atk: -2,
 			},
 		},
 		secondary: null,
@@ -215,6 +215,23 @@ export const Moves: import('../../../sim/dex-moves').ModdedMoveDataTable = {
 		secondary: null,
 		target: "allAdjacentFoes",
 		type: "Fairy",
+		contestType: "Beautiful",
+	},
+	bellslash: {
+		num: 5716,
+		accuracy: 90,
+		basePower: 95,
+		category: "Physical",
+		name: "Bell Slash",
+		pp: 10,
+		priority: 0,
+		flags: {protect: 1, mirror: 1, metronome: 1, slicing: 1},
+		onHit(target) {
+			target.addVolatile('Embargo')
+		},
+		secondary: null,
+		target: "normal",
+		type: "Dark",
 		contestType: "Beautiful",
 	},
 };
