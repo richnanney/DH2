@@ -169,15 +169,14 @@ export const Moves: import('../../../sim/dex-moves').ModdedMoveDataTable = {
 		category: "Status",
 		name: "Dragon's Curse",
 		pp: 20,
-		flags: {protect: 1, reflectable: 1, mirror: 1, sound: 1, bypasssub: 1, metronome: 1},
+		flags: {protect: 1, reflectable: 1, mirror: 1, sound: 1, bypasssub: 1},
 		priority: 0,
 		onHit(target) {
-			const bestStat = target.getBestStat(false, true);
-			this.boost({[bestStat]: -1}, target);
+			this.boost({[target.getBestStat()]: -1}, target);
 		},
 		target: "all",
 		secondary: null,
-		type: "Normal",
+		type: "Dragon",
 	},
 	royalmaelstrom: {
 		num: 5714,
