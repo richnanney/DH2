@@ -172,11 +172,12 @@ export const Moves: import('../../../sim/dex-moves').ModdedMoveDataTable = {
 		flags: {protect: 1, reflectable: 1, mirror: 1, sound: 1, bypasssub: 1},
 		priority: 0,
 		onHit(target) {
-			this.boost({[target.getBestStat()]: -1}, target);
+			target.boosts
+			this.boost({[target.getBestStat()]: -1});
 		},
 		self: {
 			onHit(target, source, move) {
-				this.boost({[target.getBestStat()]: -1}, target);
+				this.boost({[target.getBestStat()]: -1});
 			},
 		},
 		target: "allAdjacent",
