@@ -171,15 +171,12 @@ export const Moves: import('../../../sim/dex-moves').ModdedMoveDataTable = {
 		pp: 20,
 		flags: {protect: 1, reflectable: 1, mirror: 1, sound: 1, bypasssub: 1},
 		priority: 0,
-		boosts: {
-			atk: -1,
+		onHitField(target, source) {
+			for (const pokemon of this.getAllActive()) {
+				this.boost({[pokemon.getBestStat()]: -1}, pokemon, source);
+			}
 		},
-		self: {
-			onHit(target, source, move) {
-				this.boost({[target.getBestStat()]: -1});
-			},
-		},
-		target: "allAdjacent",
+		target: "all",
 		secondary: null,
 		type: "Dragon",
 	},
