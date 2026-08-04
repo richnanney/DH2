@@ -171,9 +171,8 @@ export const Moves: import('../../../sim/dex-moves').ModdedMoveDataTable = {
 		pp: 20,
 		flags: {protect: 1, reflectable: 1, mirror: 1, sound: 1, bypasssub: 1},
 		priority: 0,
-		onHit(target) {
-			target.boosts
-			this.boost({[target.getBestStat()]: -1});
+		boosts: {
+			atk: -1,
 		},
 		self: {
 			onHit(target, source, move) {
