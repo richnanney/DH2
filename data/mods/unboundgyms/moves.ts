@@ -173,7 +173,8 @@ export const Moves: import('../../../sim/dex-moves').ModdedMoveDataTable = {
 		priority: 0,
 		onHitField(target, source) {
 			for (const pokemon of this.getAllActive()) {
-				this.boost({[pokemon.getBestStat()]: -1}, pokemon, source);
+				const bestStat = pokemon.getBestStat(true, true);
+				this.boost({[bestStat]: -1}, pokemon);
 			}
 		},
 		target: "all",
