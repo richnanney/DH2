@@ -440,6 +440,7 @@ export const Rulesets: import('../../../sim/dex-formats').FormatDataTable = {
 		effectType: 'Rule',
 		name: 'Poison Gym',
 		desc: "Randomizes non-Poison secondary types, or assigns a random type to the secondary type.",
+		onModifySpeciesPriority: 2,
 		onModifySpecies(species, target, source, effect) {
 			if (this.turn > 0) return;
 			if (!target) return; // Chat command
@@ -474,6 +475,12 @@ export const Rulesets: import('../../../sim/dex-formats').FormatDataTable = {
 			}
 			//const types = [...new Set(target.baseMoveSlots.slice(0, 2).map(move => this.dex.moves.get(move.id).type))];
 			return { ...species, newtypes};
+		},
+		onSwitchIn(pokemon) {
+			this.add('-start', pokemon, 'typechange', (pokemon.illusion || pokemon).getTypes(true).join('/'), '[silent]', '[from] format: Camomons Mod');
+		},
+		onAfterMega(pokemon) {
+			this.add('-start', pokemon, 'typechange', (pokemon.illusion || pokemon).getTypes(true).join('/'), '[silent]', '[from] format: Camomons Mod');
 		},
 		/*
 		effectType: 'Rule',
