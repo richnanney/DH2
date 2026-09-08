@@ -439,6 +439,37 @@ export const Rulesets: import('../../../sim/dex-formats').FormatDataTable = {
 	poisongym: {
 		effectType: 'Rule',
 		name: 'Poison Gym',
+		desc: "Randomizes non-Poison secondary types, or assigns a random type to the secondary type.",
+		onModifySpecies(species, target, source, effect) {
+			if (!target) return; // Chat command
+			if (effect && ['imposter', 'transform'].includes(effect.id)) return;
+			const allTypes = [ 'Normal','Grass','Fire','Water','Electric','Bug','Flying','Rock','Poison','Ground','Ice','Fighting','Psychic','Ghost','Dragon','Dark','Steel','Fairy']
+			const thisTypes = target.getTypes()
+			if (thisTypes.length > 1)
+			{
+				this.add('-message', `${target.name} has two types. Those types are ${thisTypes[0]} and ${thisTypes[1]}.`)
+				if(thisTypes[1] != 'Poison'){
+					const validTypes = allTypes.filter(item => !thisTypes[0].includes(item))
+					this.add('-message', `Here's a random type that this pokemon might get assigned to replace ${thisTypes[1]}: ${validTypes[Math.floor(Math.random() * validTypes.length)]}.`)
+				}
+				else{
+					const validTypes = allTypes.filter(item => !thisTypes[1].includes(item))
+					this.add('-message', `Here's a random type that this pokemon might get assigned to replace ${thisTypes[0]}: ${validTypes[Math.floor(Math.random() * validTypes.length)]}.`)
+				}
+				
+			}
+			else 
+			{
+				const validTypes = allTypes.filter(item => !thisTypes[0].includes(item))
+				this.add('-message', `${target.name} has one type. That type is ${thisTypes[0]}.`)
+				this.add('-message', `Here's a random type that this pokemon might get assigned as a secondary type: ${validTypes[Math.floor(Math.random() * validTypes.length)]}.`)
+			}
+			//const types = [...new Set(target.baseMoveSlots.slice(0, 2).map(move => this.dex.moves.get(move.id).type))];
+			return { ...species, thisTypes};
+		},
+		/*
+		effectType: 'Rule',
+		name: 'Poison Gym',
 		desc: "Poison type pokemon get Corrosion.",
 		onTryHitPriority: 4,
 		onTryHit(source, target, move) {
@@ -452,7 +483,6 @@ export const Rulesets: import('../../../sim/dex-formats').FormatDataTable = {
 				source.setStatus(target.status, null,null, true)
 				target.cureStatus();
 			}
-
 		},
 		onHit(target, source, move) {
 			if (move.secondaries) {
@@ -464,6 +494,8 @@ export const Rulesets: import('../../../sim/dex-formats').FormatDataTable = {
 				}			
 			}
 		},
+		*/
+		
 		
 	},
 	dragongym: {

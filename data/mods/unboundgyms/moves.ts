@@ -236,4 +236,22 @@ export const Moves: import('../../../sim/dex-moves').ModdedMoveDataTable = {
 		type: "Dark",
 		contestType: "Beautiful",
 	},
+	jaggedfangs: {
+		num: 5717,
+		accuracy: 90,
+		basePower: 70,
+		category: "Physical",
+		name: "Jagged Fangs",
+		pp: 10,
+		priority: 0,
+		flags: {protect: 1, mirror: 1, metronome: 1, bite: 1},
+		secondary: {
+			chance: 100,
+			onHit(target, source, move) {
+				if (source.isActive) target.addVolatile('trapped', source, move, 'trapper');
+			},
+		},		target: "normal",
+		type: "Rock",
+		contestType: "Beautiful",
+	},
 };

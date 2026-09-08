@@ -139,5 +139,45 @@ export const Abilities: import('../../../sim/dex-abilities').ModdedAbilityDataTa
 				}
 			}
 		},
+	},
+	kinglyraiment: {
+		name: "Kingly Raiment",
+		desc: "Fluffy + Strong Jaw.",
+		rating: 5.0,
+		num: 411,
+		onSourceModifyDamage(damage, source, target, move) {
+			let mod = 1;
+			if (move.type === 'Fire') mod *= 2;
+			if (move.flags['contact']) mod /= 2;
+			return this.chainModify(mod);
+		},
+		onBasePower(basePower, attacker, defender, move) {
+			if (move.flags['bite']) {
+				return this.chainModify(1.5);
+			}
+		},
+		flags: {breakable: 1},
+	},
+	queenofrime: {
+		name: "Queen of Rime",
+		desc: "Filter + electric, ice, and psychic type moves do 30% more damage in snow",
+		rating: 5.0,
+		num: 412,
+		onSourceModifyDamage(damage, source, target, move) {
+		if (target.getMoveHitData(move).typeMod > 0) {
+			this.debug('Filter neutralize');
+			return this.chainModify(0.75);
+		}
+		},
+		onBasePower(basePower, attacker, defender, move) {
+		if (this.field.isWeather(['hail', 'snow'])) {
+			if (move.type === 'Ice' || move.type === 'Psychic' || move.type === 'Electric') {
+				this.debug('Queen of Rime boost');
+				return this.chainModify([5325, 4096]);
+			}
+		}
+		},
+		flags: {breakable: 1},
 	}
+
 };
