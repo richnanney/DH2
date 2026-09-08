@@ -172,17 +172,17 @@ export const Rulesets: import('../../../sim/dex-formats').FormatDataTable = {
 		name: 'Ghost Gym',
 		desc: "All Ghost-Type Pokemon benefit from a slightly worse Multiscale, and pokemon are slowed when fainting a ghost type.",
 		onBegin() {
-			this.add('-message', `Sinners are shown no mercy.`)
+			this.add('-message', `Error: missing trainer texture.`)
 		},
 		onModifyDamage(relayVar, source, target, move) {
 			if (target.hp >= target.maxhp && target.hasType('Ghost')) {
-				this.add('-message', `${target.name}'s drive to torment preserves it from damage.`)
+				this.add('-message', `${target.name}, some things can't be undone.`)
 				return this.chainModify(0.7);
 			}
 		}, 
 		onDamagingHit(damage, target, source, move) {
 			if (!target.hp && target.hasType("Ghost")) {
-				this.add('-message', `${source.name} is slowed by the weight of sin...`);
+				this.add('-message', `${source.name} looks around uneasily...`);
 				this.boost({spe: -1,}, source, target, null, true);
 			}
 		},
@@ -444,7 +444,7 @@ export const Rulesets: import('../../../sim/dex-formats').FormatDataTable = {
 		onModifySpecies(species, target, source, effect) {
 			if (!target) return; // Chat command
 			if (effect && ['imposter', 'transform'].includes(effect.id)) return;
-			if (this.turn > 0) return {...species, types: target.getTypes(true)};
+			//if (this.turn > 0) return {...species, types: target.getTypes(true)};
 			const allTypes = [ 'Normal','Grass','Fire','Water','Electric','Bug','Flying','Rock','Poison','Ground','Ice','Fighting','Psychic','Ghost','Dragon','Dark','Steel','Fairy'];
 			const thisTypes = target.getTypes();
 			var newtypes = [];
@@ -469,14 +469,13 @@ export const Rulesets: import('../../../sim/dex-formats').FormatDataTable = {
 				newtypes = [thisTypes[0], thisNewType];
 			}
 			//const types = [...new Set(target.baseMoveSlots.slice(0, 2).map(move => this.dex.moves.get(move.id).type))];
-			this.add('-message', `${newtypes}.`);
 			return { ...species, types: newtypes};
 		},
 		onSwitchIn(pokemon) {
-			this.add('-start', pokemon, 'typechange', (pokemon.illusion || pokemon).getTypes(true).join('/'), '[silent]', '[from] format: Camomons Mod');
+			this.add('-start', pokemon, 'typechange', (pokemon.illusion || pokemon).getTypes(true).join('/'), '[silent]', '[from] format: Poison Type Gym');
 		},
 		onAfterMega(pokemon) {
-			this.add('-start', pokemon, 'typechange', (pokemon.illusion || pokemon).getTypes(true).join('/'), '[silent]', '[from] format: Camomons Mod');
+			this.add('-start', pokemon, 'typechange', (pokemon.illusion || pokemon).getTypes(true).join('/'), '[silent]', '[from] format: Poison Type Gym');
 		},
 		/*
 		effectType: 'Rule',
@@ -568,13 +567,16 @@ export const Rulesets: import('../../../sim/dex-formats').FormatDataTable = {
 		effectType: 'Rule',
 		name: 'Fighting Gym',
 		desc: "Fighting type pokemon take stances that either let them deal more damage, take less damage, or move faster.",
+		onBegin() {
+			this.add('-message', `The Flow of the Force shapes the battlefield.`)
+		},
 		onModifyDamage(damage, source, target, move) {
 			if (source.hasType("Fighting") && (this.turn % 6 == 1 || this.turn % 6 == 2  )) {
-				this.add('-message', `${source.name}'s stance allows it to do more damage!`)
+				this.add('-message', `The Force surges. Power answers power. Djem So.`)
 				return this.chainModify(1.2);
 			}
 			if (target.hasType("Fighting") && (this.turn % 6 == 3 || this.turn % 6 == 4  )) {
-				this.add('-message', `${target.name}'s stance allows it take less damage!`)
+				this.add('-message', `The Force steadies. Patience becomes strength. Soresu.`)
 				return this.chainModify(.8);
 			}
 		},
@@ -585,7 +587,7 @@ export const Rulesets: import('../../../sim/dex-formats').FormatDataTable = {
 		},
 		onBeforeTurn(pokemon) {
 			if (pokemon.hasType("Fighting") && (this.turn % 6 == 5 || this.turn % 6 == 0  )) {
-				this.add('-message', `${pokemon.name}'s stance lets it move faster this turn!`)
+				this.add('-message', `The Force sharpens. Precision becomes speed. Makashi.`)
 			}
 		},
 		onSwitchIn(pokemon) {
