@@ -444,6 +444,7 @@ export const Rulesets: import('../../../sim/dex-formats').FormatDataTable = {
 		onModifySpecies(species, target, source, effect) {
 			if (!target) return; // Chat command
 			if (effect && ['imposter', 'transform'].includes(effect.id)) return;
+			if (this.turn > 0) return;
 			const allTypes = [ 'Normal','Grass','Fire','Water','Electric','Bug','Flying','Rock','Poison','Ground','Ice','Fighting','Psychic','Ghost','Dragon','Dark','Steel','Fairy'];
 			const thisTypes = target.getTypes();
 			var newtypes = [];
