@@ -469,7 +469,7 @@ export const Rulesets: import('../../../sim/dex-formats').FormatDataTable = {
 			}
 			//const types = [...new Set(target.baseMoveSlots.slice(0, 2).map(move => this.dex.moves.get(move.id).type))];
 			this.add('-message', `${newtypes}.`);
-			return { ...species, newtypes};
+			return { ...species, types: newtypes};
 		},
 		onSwitchIn(pokemon) {
 			this.add('-start', pokemon, 'typechange', (pokemon.illusion || pokemon).getTypes(true).join('/'), '[silent]', '[from] format: Camomons Mod');
