@@ -1,4 +1,4 @@
-export const Rulesets: import('../../../sim/dex-formats').FormatDataTable = {
+export const Rulesets: import('../../../sim/dex-formats').ModdedFormatDataTable = {
 	watergym: {
 		effectType: 'Rule',
 		name: 'Water Gym',
@@ -383,9 +383,9 @@ export const Rulesets: import('../../../sim/dex-formats').FormatDataTable = {
 			}
 		},
 	},
-	electricefour: {
+	electric_e4: {
 		effectType: 'Rule',
-		name: 'electricefour',
+		name: 'electric_e4',
 		desc: "Electric is super-effective to ground-types. All electric moves crit.",
 		onBegin() {
 			this.add('-message', "Electricity arcs across the ground below!");
