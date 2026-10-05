@@ -27,22 +27,12 @@ export const Formats: import('../sim/dex-formats').FormatList = [
 		mod: 'unbound',
 	},
 	{
-		name: "[Gen 8] Unbound Doubles",
-		mod: 'unbound',
-		gameType: 'doubles',
-	},
-	{
 		section: "Gym Gimmick Testing",
 		column: 1,
 	},
 	{
-		name: "[Gen 9] Stundera Testing",
+		name: "[Gen 9] Generic Stundera Testing",
 		mod: 'unboundgyms',
-	},
-	{
-		name: "[Gen 9] Stundera Testing 2",
-		mod: 'unboundgyms',
-		gameType: 'singles',
 	},
 	{
 		name: "[Gen 9] Unbound Water Gym",
@@ -50,30 +40,11 @@ export const Formats: import('../sim/dex-formats').FormatList = [
 		ruleset: ['watergym']
 	},
 	{
-		name: "[Gen 9] Unbound Fire Gym",
-		mod: 'unboundgyms',
-		ruleset: ['firegym']
-	},
-	{
-		name: "[Gen 9] Unbound Grass Gym",
-		mod: 'unboundgyms',
-		ruleset: ['grassgym']
-	},
-	{
 		name: "[Gen 9] Unbound Ghost Gym",
 		mod: 'unboundgyms',
 		ruleset: ['ghostgym']
 	},
-	{
-		name: "[Gen 9] Unbound Flying Gym",
-		mod: 'unboundgyms',
-		ruleset: ['flyinggym']
-	},
-	{
-		name: "[Gen 9] Unbound Psychic Gym",
-		mod: 'unboundgyms',
-		ruleset: ['psychicgym']
-	},
+
 	{
 		name: "[Gen 9] Unbound Steel Gym",
 		mod: 'unboundgyms',
@@ -90,19 +61,9 @@ export const Formats: import('../sim/dex-formats').FormatList = [
 		ruleset: ['icegym']
 	},
 	{
-		name: "[Gen 9] Unbound Ground Gym",
-		mod: 'unboundgyms',
-		ruleset: ['groundgym']
-	},
-	{
 		name: "[Gen 9] Unbound Poison Gym",
 		mod: 'unboundgyms',
 		ruleset: ['poisongym']
-	},
-	{
-		name: "[Gen 9] Unbound Dragon Gym",
-		mod: 'unboundgyms',
-		ruleset: ['dragongym']
 	},
 	{
 		name: "[Gen 9] Unbound Fairy Gym",
@@ -110,117 +71,28 @@ export const Formats: import('../sim/dex-formats').FormatList = [
 		ruleset: ['fairygym']
 	},
 	{
-		name: "[Gen 9] Unbound Bug Gym",
-		mod: 'unboundgyms',
-		ruleset: ['buggym']
-	},
-	{
-		name: "[Gen 9] Unbound Electric Gym",
-		mod: 'unboundgyms',
-		ruleset: ['electricgym']
-	},
-	{
-		name: "[Gen 9] Unbound Fighting Gym",
-		mod: 'unboundgyms',
-		ruleset: ['fightinggym']
-	},
-		{
 		name: "[Gen 9] Unbound Normal Gym",
 		mod: 'unboundgyms',
 		ruleset: ['normalgym']
 	},
 	{
-		section: "Gym Gimmick Testing Doubles",
-		column: 2,
+		name: "[Gen 9] Unbound Electric E4",
+		mod: 'unboundgyms',
+		ruleset: ['electric_e4']
 	},
 	{
-		name: "[Gen 9] Unbound Water Gym Doubles",
+		name: "[Gen 9] Unbound Fighting E4",
 		mod: 'unboundgyms',
-		gameType: 'doubles',
-		ruleset: ['watergym']
+		ruleset: ['fighting_e4']
 	},
 	{
-		name: "[Gen 9] Unbound Fire Gym Doubles",
+		name: "[Gen 9] Unbound Fire E4",
 		mod: 'unboundgyms',
-		gameType: 'doubles',
-		ruleset: ['firegym']
+		ruleset: ['fire_e4']
 	},
 	{
-		name: "[Gen 9] Unbound Grass Gym Doubles",
+		name: "[Gen 9] Unbound Flying E4",
 		mod: 'unboundgyms',
-		gameType: 'doubles',
-		ruleset: ['grassgym']
-	},
-	{
-		name: "[Gen 9] Unbound Ghost Gym Doubles",
-		mod: 'unboundgyms',
-		gameType: 'doubles',
-		ruleset: ['ghostgym']
-	},
-	{
-		name: "[Gen 9] Unbound Flying Gym Doubles",
-		mod: 'unboundgyms',
-		gameType: 'doubles',
-		ruleset: ['flyinggym']
-	},
-	{
-		name: "[Gen 9] Unbound Psychic Gym Doubles",
-		mod: 'unboundgyms',
-		gameType: 'doubles',
-		ruleset: ['psychicgym']
-	},
-	{
-		name: "[Gen 9] Unbound Steel Gym Doubles",
-		mod: 'unboundgyms',
-		gameType: 'doubles',
-		ruleset: ['steelgym']
-	},
-	{
-		name: "[Gen 9] Unbound Dark Gym Doubles",
-		mod: 'unboundgyms',
-		gameType: 'doubles',
-		ruleset: ['darkgym']
-	},
-	{
-		name: "[Gen 9] Unbound Ice Gym Doubles",
-		mod: 'unboundgyms',
-		gameType: 'doubles',
-		ruleset: ['icegym']
-	},
-	{
-		name: "[Gen 9] Unbound Ground Gym Doubles",
-		mod: 'unboundgyms',
-		gameType: 'doubles',
-		ruleset: ['groundgym']
-	},
-	{
-		name: "[Gen 9] Unbound Poison Gym Doubles",
-		mod: 'unboundgyms',
-		gameType: 'doubles',
-		ruleset: ['poisongym']
-	},
-	{
-		name: "[Gen 9] Unbound Dragon Gym Doubles",
-		mod: 'unboundgyms',
-		gameType: 'doubles',
-		ruleset: ['dragongym']
-	},
-	{
-		name: "[Gen 9] Unbound Fairy Gym Doubles",
-		mod: 'unboundgyms',
-		gameType: 'doubles',
-		ruleset: ['fairygym']
-	},
-	{
-		name: "[Gen 9] Unbound Bug Gym Doubles",
-		mod: 'unboundgyms',
-		gameType: 'doubles',
-		ruleset: ['buggym']
-	},
-	{
-		name: "[Gen 9] Unbound Electric Gym Doubles",
-		mod: 'unboundgyms',
-		gameType: 'doubles',
-		ruleset: ['electricgym']
+		ruleset: ['flying_e4']
 	},
 ];
