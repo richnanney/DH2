@@ -239,9 +239,9 @@ export const Rulesets: import('../../../sim/dex-formats').ModdedFormatDataTable 
 			this.add('-start', pokemon, 'typechange', (pokemon.illusion || pokemon).getTypes(true).join('/'), '[silent]', '[from] format: Poison Type Gym');
 		},
 	},
-	fighting_e4: {
+	fightinge4: {
 		effectType: 'Rule',
-		name: 'fighting_e4',
+		name: 'Fighting e4',
 		desc: "Fighting type pokemon take stances that either let them deal more damage, take less damage, or move faster.",
 		onBegin() {
 			this.add('-message', `The Flow of the Force shapes the battlefield.`);
@@ -312,9 +312,9 @@ export const Rulesets: import('../../../sim/dex-formats').ModdedFormatDataTable 
 			}
 		},
 	},
-	fire_e4: {
+	firee4: {
 		effectType: 'Rule',
-		name: 'fire_e4',
+		name: 'Fire e4',
 		desc: "Permanent sun. Burn chance doubled and landing a burn will destroy hazards.",
 		onBegin() {
 			this.add('-weather', 'Sunny Day');
@@ -364,9 +364,9 @@ export const Rulesets: import('../../../sim/dex-formats').ModdedFormatDataTable 
 			this.field.weatherState = { id: 'sunnyday' };
 		},
 	},
-	flying_e4: {
+	flyinge4: {
 		effectType: 'Rule',
-		name: 'flying_e4',
+		name: 'Flying e4',
 		desc: "Flying type pokemon get permanent tail wind.",
 		onBegin() {
 			this.add('-message', `A tailwind blows in behind all Flying type pokemon!`);
