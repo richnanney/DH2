@@ -16,12 +16,3 @@ If you specify a section that already exists, your format will be added to the b
 New sections will be added to the bottom of the specified column.
 The column value will be ignored for repeat sections.
 */
-import { Formats as unboundgyms } from '../data/mods/unboundgyms/formats';
-
-export const Formats: import('../sim/dex-formats').FormatList = [
-	{
-		section: "Stundera Gym Mods",
-		column: 1,
-	},
-	...unboundgyms
-];
