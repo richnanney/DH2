@@ -138,6 +138,7 @@ export const Moves: import('../../../sim/dex-moves').ModdedMoveDataTable = {
 		onHit(target) {
 			if (target.hasType('Poison')) return false;
 			if (!target.addType('Poison')) return false;
+			this.boost({atk : -1, spa: -1}, target);
 			this.add('-start', target, 'typeadd', 'Poison', '[from] move: Astral Infection');
 		},
 		secondary: null,

@@ -66,8 +66,8 @@ export const Rulesets: import('../../../sim/dex-formats').ModdedFormatDataTable 
 		},
 		onHit(target, source, move) {
 			if (move?.effectType === 'Move' && target.getMoveHitData(move).typeMod > 0 && target.hasType('Rock')) {
-				if (move.category = 'Physical') target.boostBy({ def: 2 });
-				if (move.category = 'Special') target.boostBy({ spd: 2 });
+				if (move.category = 'Physical') this.boost({ def: 2 }, target);
+				if (move.category = 'Special') this.boost({ spd: 2 }, target);
 			}
 		}
 	},
@@ -111,16 +111,19 @@ export const Rulesets: import('../../../sim/dex-formats').ModdedFormatDataTable 
 				this.boost({ def: 1, spd: 1 });
 			}
 		},
-		onEffectiveness(typeMod, target, type, move) {
-			if (move.type == "Fire" && type == "Steel" && target?.m?.cooled == false) {
-				return 0;
+		onTryHit(source, target, move) {
+			if (move.type == "Fire" && target.hasType("Steel") && target?.m?.cooled == false) {
+				return null;
 			}
 		},
 		onHit(target, source, move) {
 			if (move.type == 'Water' && target.hasType("Steel") && target?.m?.cooled == false) {
 				this.add('-message', `${target.name} has cooled off!`);
+				this.add('-end', target, `Gym: Smelted`, '[silent]');
+				this.add('-activate', target, 'Gym: Forged');
+				this.add('-start', target, `Gym: Forged`, '[silent]');
 				target.m.cooled = true;
-				target.boostBy({ def: 1, spd: 1 });
+				this.boost({ def: 1, spd: 1 }, target);
 			}
 		},
 
