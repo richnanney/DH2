@@ -112,7 +112,7 @@ export const Rulesets: import('../../../sim/dex-formats').ModdedFormatDataTable 
 			}
 		},
 		onTryHit(source, target, move) {
-			if (move.type == "Fire" && target.hasType("Steel") && target?.m?.cooled == false) {
+			if (move.type == "Fire" && source.hasType("Steel") && source?.m?.cooled == false) {
 				return null;
 			}
 		},
