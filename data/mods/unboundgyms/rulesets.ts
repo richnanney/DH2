@@ -241,7 +241,7 @@ export const Rulesets: import('../../../sim/dex-formats').FormatDataTable = {
 	},
 	fighting_e4: {
 		effectType: 'Rule',
-		name: 'Fighting Elite 4',
+		name: 'fighting_e4',
 		desc: "Fighting type pokemon take stances that either let them deal more damage, take less damage, or move faster.",
 		onBegin() {
 			this.add('-message', `The Flow of the Force shapes the battlefield.`);
@@ -314,7 +314,7 @@ export const Rulesets: import('../../../sim/dex-formats').FormatDataTable = {
 	},
 	fire_e4: {
 		effectType: 'Rule',
-		name: 'Fire Elite 4',
+		name: 'fire_e4',
 		desc: "Permanent sun. Burn chance doubled and landing a burn will destroy hazards.",
 		onBegin() {
 			this.add('-weather', 'Sunny Day');
@@ -366,7 +366,7 @@ export const Rulesets: import('../../../sim/dex-formats').FormatDataTable = {
 	},
 	flying_e4: {
 		effectType: 'Rule',
-		name: 'Flying Elite 4',
+		name: 'flying_e4',
 		desc: "Flying type pokemon get permanent tail wind.",
 		onBegin() {
 			this.add('-message', `A tailwind blows in behind all Flying type pokemon!`);
@@ -385,7 +385,7 @@ export const Rulesets: import('../../../sim/dex-formats').FormatDataTable = {
 	},
 	electric_e4: {
 		effectType: 'Rule',
-		name: 'Electric Elite 4',
+		name: 'electric_e4',
 		desc: "Electric is super-effective to ground-types. All electric moves crit.",
 		onBegin() {
 			this.add('-message', "Electricity arcs across the ground below!");
@@ -403,7 +403,7 @@ export const Rulesets: import('../../../sim/dex-formats').FormatDataTable = {
 				this.add('-message', `The ionized atmosphere conducts on ${pokemon.name}!`);
 				return false;
 			}
-		},
+		}
 	}
 	/*
 		groundgym: {

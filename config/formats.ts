@@ -44,7 +44,6 @@ export const Formats: import('../sim/dex-formats').FormatList = [
 		mod: 'unboundgyms',
 		ruleset: ['ghostgym']
 	},
-
 	{
 		name: "[Gen 9] Unbound Steel Gym",
 		mod: 'unboundgyms',
