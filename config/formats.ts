@@ -77,7 +77,7 @@ export const Formats: import('../sim/dex-formats').FormatList = [
 	{
 		name: "[Gen 9] Unbound Electric E4",
 		mod: 'unboundgyms',
-		ruleset: ['electric_e4']
+		ruleset: ['electricefour']
 	},
 	{
 		name: "[Gen 9] Unbound Fighting E4",
