@@ -54,7 +54,7 @@ export const Formats: FormatData[] = [
 	{
 		name: "[Gen 9] Unbound Electric E4",
 		mod: 'unboundgyms',
-		ruleset: ['electric_e4']
+		ruleset: ['Electric E4']
 	},
 	{
 		name: "[Gen 9] Unbound Fighting E4",

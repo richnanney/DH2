@@ -383,9 +383,9 @@ export const Rulesets: import('../../../sim/dex-formats').ModdedFormatDataTable 
 			}
 		},
 	},
-	electric_e4: {
+	electrice4: {
 		effectType: 'Rule',
-		name: 'electric_e4',
+		name: 'Electric E4',
 		desc: "Electric is super-effective to ground-types. All electric moves crit.",
 		onBegin() {
 			this.add('-message', "Electricity arcs across the ground below!");
