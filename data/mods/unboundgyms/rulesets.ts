@@ -156,10 +156,11 @@ export const Rulesets: import('../../../sim/dex-formats').ModdedFormatDataTable 
 			this.add('-weather', 'Snow');
 			this.field.weather = 'snow' as ID;
 			this.field.weatherState = { id: 'snow' };
+			this.add('-message', `The North wind blows... a massive snowstorm has formed!`);
 		},
 		onSetWeather(target, source, weather) {
 			if (this.field.weather == 'snow') {
-				this.add('-message', `The snow machine blew away the ${weather.name}!`);
+				this.add('-message', `The spirit of the North wind forbids ${weather.name}!`);
 				return false;
 			}
 		},
@@ -195,10 +196,12 @@ export const Rulesets: import('../../../sim/dex-formats').ModdedFormatDataTable 
 		onBegin() {
 			this.add('-fieldstart', 'move: Trick Room');
 			this.field.pseudoWeather.trickroom = { id: 'trickroom' };
+			this.add('-message', `The faeries twisted the dimensions!`);
+
 		},
 		onTryMove(source, target, move) {
 			if (['Wonder Room', 'Trick Room', 'Magic Room'].includes(move.name)) {
-				this.add('-message', `The spotlights are too strong to set up ${move.name}!`);
+				this.add('-message', `The tricky fae prevent the ${move.name}!`);
 				return false;
 			}
 		},

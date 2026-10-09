@@ -255,4 +255,33 @@ export const Moves: import('../../../sim/dex-moves').ModdedMoveDataTable = {
 		type: "Rock",
 		contestType: "Beautiful",
 	},
+	rubystarstorm: {
+		num: 5718,
+		accuracy: 90,
+		basePower: 100,
+		category: "Special",
+		name: "Ruby Starstorm",
+		pp: 5,
+		priority: 0,
+		flags: {protect: 1, mirror: 1, noassist: 1, failcopycat: 1, failmimic: 1, nosketch: 1},
+		onModifyType(move, pokemon) {
+			if (pokemon.getStat('atk', false, true) > pokemon.getStat('spa', false, true)) {
+				move.category = 'Physical';
+			}
+		},
+		secondary: {
+			chance: 20,
+			self: {
+				boosts: {
+					atk: 1,
+					def: 1,
+					spa: 1,
+					spd: 1,
+					spe: 1,
+				},
+			},
+		},
+		target: "allAdjacentFoes",
+		type: "Normal",
+	},
 };

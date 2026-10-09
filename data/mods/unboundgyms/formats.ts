@@ -52,6 +52,11 @@ export const Formats: FormatData[] = [
 		ruleset: ['normalgym']
 	},
 	{
+		name: "[Gen 9] Unbound Rock Gym",
+		mod: 'unboundgyms',
+		ruleset: ['rockgym']
+	},
+	{
 		name: "[Gen 9] Unbound Electric E4",
 		mod: 'unboundgyms',
 		ruleset: ['Electric E4']

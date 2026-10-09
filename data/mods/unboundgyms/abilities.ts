@@ -178,6 +178,35 @@ export const Abilities: import('../../../sim/dex-abilities').ModdedAbilityDataTa
 		}
 		},
 		flags: {breakable: 1},
+	},
+	nebulablight: {
+		name: "Nebula Blight",
+		desc: "User cannot be poisoned, clears toxic spikes, and takes half damage from Poison type pokemon.",
+		rating: 5.0,
+		num: 413,
+		onUpdate(pokemon) {
+			if (pokemon.status === 'psn' || pokemon.status === 'tox') {
+				this.add('-activate', pokemon, 'ability: Immunity');
+				pokemon.cureStatus();
+			}
+		},
+		onSetStatus(status, target, source, effect) {
+			if (status.id !== 'psn' && status.id !== 'tox') return;
+			if ((effect as Move)?.status) {
+				this.add('-immune', target, '[from] ability: Immunity');
+			}
+			return false;
+		},
+		onSourceModifyDamage(damage, source, target, move) {
+			if (source.hasType('Poison')) {
+				return this.chainModify(0.5);
+			}
+		},
+		onStart(pokemon) {
+			if (pokemon.side.getSideCondition('toxicspikes'))
+				pokemon.side.removeSideCondition('toxicspikes')
+		},
+		flags: {breakable: 1},
 	}
 
 };
